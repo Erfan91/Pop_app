@@ -51,10 +51,28 @@ const editComment = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({message: "Internal server error", error: error.message})
     }
-}
+};
+
+const deleteComment = async (req, res, next) => {
+    try {
+        await Comment.findByIdAndDelete(req.params.id)
+        .exec()
+        .then(result=>{
+            if(!result){
+                res.status(400).json({message: "comment id incorrect or not registred"})
+            }
+            res.status(200).json({message: "comment deleted successfuly"})
+        })
+    } catch (error) {
+        res.status(500).json({message: "Internal server error", error: error.message})
+    }
+};
+
 
 
 export {
     createComment,
-
+    getComment,
+    editComment,
+    deleteComment
 }

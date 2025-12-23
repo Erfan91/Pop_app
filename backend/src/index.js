@@ -8,8 +8,10 @@ dotenv.config({
     path: "./.env"
 });
 import userRouter from "./routes/user.route.js";
-import postRouter from "./routes/post.route.js"
+import postRouter from "./routes/post.route.js";
+import commentRouter from "./routes/comment.route.js";
 import passport from "passport";
+
 app.use(express.json());
 // app.use(session(
 //     {
@@ -24,6 +26,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use("/user", userRouter);
 app.use("/post", postRouter);
+app.use("/comment", commentRouter);
 
 
 //app.use("./images", express.static('images'))
