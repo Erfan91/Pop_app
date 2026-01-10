@@ -44,9 +44,11 @@ const Login = () => {
   const handleButtonClick = e => {
     e.preventDefault();
     e.target.classList.add('button-clicked');
+
       setTimeout(() => {
         e.target.classList.remove('button-clicked');
       }, 200);
+
     fetch("http://localhost:3001/user/login",{
       method: "POST",
       headers: {"content-type": "application/json"},
@@ -82,7 +84,7 @@ const Login = () => {
           </div>
           <div className="inst-div flex">
             <span>forgot password?</span>
-            <span>Create account</span>
+            <span onClick={()=>navigate('/signup')}>Create account</span>
           </div>
         </div>
         <div className="login-button-div flex">
