@@ -7,7 +7,7 @@
 
 .signup-main-div{
     width: 24%;
-    min-width: 24%;
+    min-width: 280px;
     min-height: 38%;
     background-color: rgba(202, 202, 202, 0.147);
     box-shadow: inset 0 0 .5px rgba(183, 183, 183, 0.466);
@@ -17,11 +17,48 @@
     align-items: center;
 }
 
+
+
 .signup-input-div{
-    flex-grow: 1;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .display-none{
     display: none;
+}
+
+.signup-form{
+    justify-content: space-between;
+    height: 6rem;
+}
+
+.justify-space{
+    justify-content: space-between;
+}
+
+.next-button{
+    height :2.5rem;
+    width: 2.5rem;
+    border-radius: 2rem;
+    border: none;
+    font-size: larger;
+   
+}
+
+.valid-button{
+    color: aquamarine;
+    background-color: rgba(202, 202, 202, 0.147);
+    box-shadow: inset 0 0 .5px rgba(192, 255, 225, 0.538);
+    backdrop-filter: blur(2px);
+    cursor: pointer;
+}
+
+.invalid-button{
+    background-color: rgb(219, 219, 219);
+    color: rgb(184, 181, 181);
+    cursor: not-allowed;
+    pointer-events: none;
+
 }
 
