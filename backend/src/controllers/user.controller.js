@@ -26,6 +26,22 @@ const createAccount = async (req, res) => {
     }
 }
 
+const usernameExists = async (req, res,next) => {
+    try {
+        const { username } = req.body;
+        await User.findOne({username})
+        .exec()
+        .then(user=>{
+            if(user){
+                res.status(400).json({message: "username already exists", state: false})
+            }
+            res.status(200).json({message: "username available", state: true})
+        })
+    } catch (error){
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
 const loginUser = async (req, res, next) => {
     try {
         const body = req.body;
@@ -35,12 +51,12 @@ const loginUser = async (req, res, next) => {
         })
     
                 if (!user) {
-                    res.status(400).json({ message: "Email not found" })
+                    res.status(400).json({ message: "Email not found", state: false })
                 }
 
         const isMatch = await user.comparePassword(body.password);
         if (!isMatch) {
-            res.status(400).json({ message: "incorrect password" })
+            res.status(400).json({ message: "incorrect password", state: false })
         }
 
         res.status(200).json({
@@ -49,7 +65,8 @@ const loginUser = async (req, res, next) => {
                 id: user._id,
                 email: user.email,
                 username: user.username
-            }
+            }, 
+            state: true
         })
 
 
@@ -110,5 +127,6 @@ export {
     createAccount,
     loginUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    usernameExists
 }
