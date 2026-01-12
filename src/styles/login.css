@@ -117,14 +117,7 @@
     border-radius: 15px;
     border: none;
     font-size: large;
-}
-
-
-.login-button{
-    background-image: linear-gradient(to right, #0066ff 0%, #0e70f0 51%, #00d2ff 100%)
-}
-
-.login-button {
+    background-image: linear-gradient(to right, #0066ff 0%, #0e70f0 51%, #00d2ff 100%);
     text-align: center;
     transition: 0.5s;
     background-size: 200% auto;
