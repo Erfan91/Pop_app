@@ -1,13 +1,13 @@
 import React, { useState, useEffect} from 'react'
-import { FaCircleUser } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom"
+import { AiOutlineExclamation } from "react-icons/ai";
+import { FaCircleUser, FaLock} from "react-icons/fa6";
 import { HiOutlineMail } from "react-icons/hi";
-import { FaLock } from "react-icons/fa6";
 import { GrFormNextLink } from "react-icons/gr";
-import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import { BsFacebook } from "react-icons/bs";
-import { BsApple } from "react-icons/bs";
-import { BsDiscord } from "react-icons/bs";
-
+import { BsFillEyeFill, BsFillEyeSlashFill, BsAlphabetUppercase, BsCurrencyDollar, BsDiscord, BsApple, BsFacebook} from "react-icons/bs";
+import { RxLetterCaseLowercase } from "react-icons/rx";
+import { TbNumber123 } from "react-icons/tb";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const Signup = () => {
 
@@ -21,6 +21,8 @@ const Signup = () => {
     const [inputType, setInputType] = useState('password');
     const [buttonClass, setButtonClass] = useState('invalid-button');
     const [usernameAvailable, setUsernameAvailable] = useState(null);
+    const [passwordValid, setPasswordValid] = useState(false);
+    const navigate = useNavigate()
 
     const togglePasswordVisibility = () => {
         if (!showPassword) {
@@ -117,14 +119,34 @@ const Signup = () => {
         setChecked(true);
     }
 
+
+     const reg =  /[A-Z]/
+         && /[a-z]/
+         && /[0-9]/ 
+         && /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
     const handlePasswordChange = e => {
         e.preventDefault();
+        if(e.target.value.length < 8){
+            setPasswordValid(<span className='password-mismatch'>Password must be at least 8 characters long</span>);
+        }else if(e.target.value == ""){
+            setPasswordValid(null);
+        }else{
+            setPasswordValid(null)
+        }
         setPassword(e.target.value);
         setChecked(true);
     }
 
     const handleConfirmPasswordChange = e => {
         e.preventDefault();
+        if(e.target.value !== password){
+            setPasswordValid(<span className='password-mismatch'>Passwords do not match</span>);
+        } else if(e.target.value == ""){
+            setPasswordValid(null);
+        }else{
+            setPasswordValid(<span className='password-match'><IoMdCheckmarkCircleOutline className='checkmark-icon valid-requirement-icon'/></span>);
+        }
         setConfirmPassword(e.target.value);
         setChecked(true);
     }
@@ -150,10 +172,11 @@ const Signup = () => {
             document.querySelector(".signup-password-div").classList.remove('display-none');
             document.querySelector(".signup-confirm-password-div").classList.remove('display-none');
             document.querySelector(".oauth-div").classList.add('display-none');
+            document.querySelector(".signup-form").classList.add('justify-space');
 
         }
         if (checked && (password !== '') && (password == confirmPassword)) {
-            fetch("http://localhost:3001/user/create-account", {
+            fetch("http://localhost:3001/user/create-user", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({
@@ -164,7 +187,13 @@ const Signup = () => {
                 })
             }).then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    if(data.state){
+                        console.log(data.message);
+                        navigate("/feed")
+                    } else {
+                        console.log(data.message);
+                        
+                    }
                 })
         }
     };
@@ -194,16 +223,31 @@ const Signup = () => {
                         <FaLock className='lock-icon signup-icon' />
                         <input type={inputType} placeholder='Password' onChange={handlePasswordChange} />
                         {showPassword ? <BsFillEyeFill className='eye-icon signup-eye-icon' onClick={togglePasswordVisibility} /> : <BsFillEyeSlashFill className='eye-icon signup-eye-icon' onClick={togglePasswordVisibility} />}
+                        <div className="password-requirement-div flex">
+                            <div className="password-icon-div uppercase-icon">
+                                <BsAlphabetUppercase className={/[A-Z]/.test(password) ? 'requirement-icon valid-requirement-icon' : 'requirement-icon invalid-requirement-icon'} />
+                            </div>
+                            <div className="password-icon-div lowercase-icon">
+                                <RxLetterCaseLowercase className={/[a-z]/.test(password) ? 'requirement-icon valid-requirement-icon' : 'requirement-icon invalid-requirement-icon'} />
+                            </div>
+                            <div className="password-icon-div number-icon">
+                                <TbNumber123 className={/[0-9]/.test(password) ? 'requirement-icon valid-requirement-icon' : 'requirement-icon invalid-requirement-icon'} />
+                            </div>
+                            <div className="password-icon-div special-character-icon">
+                                <BsCurrencyDollar className={/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password) ? 'requirement-icon valid-requirement-icon' : 'requirement-icon invalid-requirement-icon'} />
+                                <AiOutlineExclamation className={/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password) ? 'requirement-icon valid-requirement-icon' : 'requirement-icon invalid-requirement-icon'} />
+                            </div>
+                        </div>
                     </div>
                     <div className="input-div signup-input-div signup-confirm-password-div display-none">
                         <FaLock className='lock-icon signup-icon' />
                         <input type={inputType} placeholder='Confirm Password' onChange={handleConfirmPasswordChange} />
-                    </div>
                     <div className="password-correction-div">
-                        {confirmPassword !== password ? <span className='password-mismatch'>Passwords do not match</span> : null}
+                        {passwordValid}
+                    </div>
                     </div>
                     <div className="signup-button-div flex">
-                        {confirmPassword && password ? <button className='signup-button'>Sign Up</button> : <button className={"next-button " + buttonClass} onClick={handleSubmit}><GrFormNextLink className='next-icon ' /></button>}
+                        {confirmPassword && password ? <button className={!reg.test(password) || !reg.test(confirmPassword)  ? "signup-button event-none": "signup-button"} onClick={handleSubmit}>Sign Up</button> : <button className={"next-button " + buttonClass} onClick={handleSubmit}><GrFormNextLink className='next-icon ' /></button>}
                     </div>
                 </div>
                 <div className="oauth-div flex-column">

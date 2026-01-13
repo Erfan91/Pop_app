@@ -21,7 +21,7 @@
 
 .signup-form{
     align-items: center;
-   
+    width: 70%;
 }
 
 .signup-input-div{
@@ -54,7 +54,9 @@
 
 .justify-space{
     justify-content: space-between;
+    height: 12rem;
 }
+
 
 .next-button{
     height :2.5rem;
@@ -95,6 +97,52 @@
 
 }
 
+.signup-password-div{
+    position: relative;
+}
+
+.signup-confirm-password-div{
+    position: relative;
+}
+
+.password-correction-div{
+    position: absolute;
+    top: 2rem;
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+    width: 95%;
+}
+
+.password-requirement-div{
+    justify-content: space-around;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+    position: absolute;
+    top: 2rem;
+    font-size: larger;
+}
+
+.requirement-icon{
+    color-interpolation-filters: linearRGB;
+    color: rgb(185, 185, 185);
+    width: 1.5rem;
+}
+
+.valid-requirement-icon{
+    color: aquamarine;
+}
+
+.password-mismatch{
+    color: rgb(255, 102, 102);
+    font-size: small;
+}
+
+.event-none{
+    pointer-events: none;
+    opacity: 0.2;
+}
 
 .oauth-button{
     height: 2.5rem;
