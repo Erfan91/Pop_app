@@ -10,14 +10,15 @@ const createAccount = async (req, res) => {
 
         const existing = await User.findOne({ email: email.toLowerCase() });
         if (existing) {
-            return res.status(400).json({ message: "email already exists" })
+            return res.status(400).json({state: false, message: "email already exists" })
         }
 
-        User.create(req.body)
+       await User.create(req.body)
             .then(result => {
                 res.status(201).json({
                     message: "user created successfuly",
-                    user: result
+                    user: result,
+                    state: true,
                 })
             })
 
