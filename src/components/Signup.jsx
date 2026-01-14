@@ -1,10 +1,20 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom"
+import setAuth from '../auth/firebase.js';
+import {getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { AiOutlineExclamation } from "react-icons/ai";
-import { FaCircleUser, FaLock} from "react-icons/fa6";
+import { FaCircleUser, FaLock } from "react-icons/fa6";
 import { HiOutlineMail } from "react-icons/hi";
 import { GrFormNextLink } from "react-icons/gr";
-import { BsFillEyeFill, BsFillEyeSlashFill, BsAlphabetUppercase, BsCurrencyDollar, BsDiscord, BsApple, BsFacebook} from "react-icons/bs";
+import {
+        BsFillEyeFill,
+        BsFillEyeSlashFill,
+        BsAlphabetUppercase, 
+        BsCurrencyDollar, 
+        BsDiscord, 
+        BsApple, 
+        BsFacebook 
+       } from "react-icons/bs";
 import { RxLetterCaseLowercase } from "react-icons/rx";
 import { TbNumber123 } from "react-icons/tb";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -22,38 +32,42 @@ const Signup = () => {
     const [buttonClass, setButtonClass] = useState('invalid-button');
     const [usernameAvailable, setUsernameAvailable] = useState(null);
     const [passwordValid, setPasswordValid] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const auth = getAuth()
 
     const togglePasswordVisibility = () => {
+
         if (!showPassword) {
             setShowPassword(true);
             setInputType('text');
+
         } else {
             setShowPassword(false);
             setInputType('password');
         }
     }
 
-    useEffect(()=>{
-        if(username.length >= 3)
-        fetch("http://localhost:3001/user/username",{
-            method: "POST",
-            headers: {"content-type": "application/json"},
-            body: JSON.stringify({username})
-            }).then(res=>res.json())
-            .then(data=>{
-                if(data.state){
-                    document.querySelector('.username-available').classList.remove('display-none');
-                    setUsernameAvailable("username available");
-                } else {
-                    document.querySelector('.username-available').classList.remove('display-none');
-                    setUsernameAvailable("username already exists");
-                }
-        })
-    },[username]);
+    useEffect(() => {
+        if (username.length >= 3)
+            fetch("http://localhost:3001/user/username", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ username })
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.state) {
+                        document.querySelector('.username-available').classList.remove('display-none');
+                        setUsernameAvailable("username available");
+                    } else {
+                        document.querySelector('.username-available').classList.remove('display-none');
+                        setUsernameAvailable("username already exists");
+                    }
+                })
+    }, [username]);
 
     const handleUserNameChange = e => {
         e.preventDefault();
+
         if (e.target.value.length < 3) {
             e.target.placeholder = "At least 3 characters";
             document.querySelector('.signup-username-div').classList.add('error-border');
@@ -70,6 +84,7 @@ const Signup = () => {
             document.querySelector('.username-available').classList.add('display-none');
             setButtonClass("invalid-button")
         }
+
         setUsername(e.target.value);
         setChecked(true);
     }
@@ -77,26 +92,29 @@ const Signup = () => {
 
     const handleNameChange = e => {
         e.preventDefault();
+
         if (e.target.value.length < 3) {
             e.target.placeholder = "At least 3 characters";
             document.querySelector('.signup-name-div').classList.add('error-border');
-            setButtonClass(" invalid-button")
+            setButtonClass(" invalid-button");
+
         } else {
             setButtonClass("valid-button");
             document.querySelector('.signup-name-div').classList.remove('error-border');
-
         }
 
         if (e.target.value == "") {
             e.target.placeholder = "Name is required";
             setButtonClass("invalid-button")
         }
+
         setName(e.target.value);
         setChecked(true);
     }
 
     const handleEmailChange = e => {
         e.preventDefault();
+
         const target = e.target.value;
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
@@ -120,18 +138,18 @@ const Signup = () => {
     }
 
 
-     const reg =  /[A-Z]/
-         && /[a-z]/
-         && /[0-9]/ 
-         && /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const reg = /[A-Z]/
+        && /[a-z]/
+        && /[0-9]/
+        && /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
     const handlePasswordChange = e => {
         e.preventDefault();
-        if(e.target.value.length < 8){
+        if (e.target.value.length < 8) {
             setPasswordValid(<span className='password-mismatch'>Password must be at least 8 characters long</span>);
-        }else if(e.target.value == ""){
+        } else if (e.target.value == "") {
             setPasswordValid(null);
-        }else{
+        } else {
             setPasswordValid(null)
         }
         setPassword(e.target.value);
@@ -140,12 +158,12 @@ const Signup = () => {
 
     const handleConfirmPasswordChange = e => {
         e.preventDefault();
-        if(e.target.value !== password){
+        if (e.target.value !== password) {
             setPasswordValid(<span className='password-mismatch'>Passwords do not match</span>);
-        } else if(e.target.value == ""){
+        } else if (e.target.value == "") {
             setPasswordValid(null);
-        }else{
-            setPasswordValid(<span className='password-match'><IoMdCheckmarkCircleOutline className='checkmark-icon valid-requirement-icon'/></span>);
+        } else {
+            setPasswordValid(<span className='password-match'><IoMdCheckmarkCircleOutline className='checkmark-icon valid-requirement-icon' /></span>);
         }
         setConfirmPassword(e.target.value);
         setChecked(true);
@@ -187,12 +205,13 @@ const Signup = () => {
                 })
             }).then(res => res.json())
                 .then(data => {
-                    if(data.state){
-                        console.log(data.message);
-                        navigate("/feed")
+                    if (data.state) {
+                        createUserWithEmailAndPassword(auth, data.user.email, data.user.password)
+                        .then(userCredential=>{
+                        })
+                        navigate("/")
                     } else {
                         console.log(data.message);
-                        
                     }
                 })
         }
@@ -242,12 +261,12 @@ const Signup = () => {
                     <div className="input-div signup-input-div signup-confirm-password-div display-none">
                         <FaLock className='lock-icon signup-icon' />
                         <input type={inputType} placeholder='Confirm Password' onChange={handleConfirmPasswordChange} />
-                    <div className="password-correction-div">
-                        {passwordValid}
-                    </div>
+                        <div className="password-correction-div">
+                            {passwordValid}
+                        </div>
                     </div>
                     <div className="signup-button-div flex">
-                        {confirmPassword && password ? <button className={!reg.test(password) || !reg.test(confirmPassword)  ? "signup-button event-none": "signup-button"} onClick={handleSubmit}>Sign Up</button> : <button className={"next-button " + buttonClass} onClick={handleSubmit}><GrFormNextLink className='next-icon ' /></button>}
+                        {confirmPassword && password ? <button className={!reg.test(password) || !reg.test(confirmPassword) ? "signup-button event-none" : "signup-button"} onClick={handleSubmit}>Sign Up</button> : <button className={"next-button " + buttonClass} onClick={handleSubmit}><GrFormNextLink className='next-icon ' /></button>}
                     </div>
                 </div>
                 <div className="oauth-div flex-column">

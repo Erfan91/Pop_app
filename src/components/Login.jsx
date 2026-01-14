@@ -2,10 +2,12 @@ import React, {useState} from 'react'
 import { HiOutlineMail } from "react-icons/hi";
 import { FaLock } from "react-icons/fa6";
 import { BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs";
-import {data, useNavigate} from 'react-router-dom'
+import {data, useNavigate} from 'react-router-dom';
+import { getAuth, sendEmailVerification, } from 'firebase/auth';
+import setAuth from '../auth/firebase.js';
 
 const Login = () => {
-
+  const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [inputType, setInputType] = useState('password');
   const [email, setEmail] = useState('');
