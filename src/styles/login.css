@@ -136,6 +136,10 @@
     transform: scale(.9);
 }
 
+.send-code-button{
+    width: 60%;
+}
+
 .error-border{
     border: 1px solid red;
 }

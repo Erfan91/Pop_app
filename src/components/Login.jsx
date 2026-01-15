@@ -1,10 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { HiOutlineMail } from "react-icons/hi";
 import { FaLock } from "react-icons/fa6";
-import { BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs";
-import {data, useNavigate} from 'react-router-dom';
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { data, useNavigate } from 'react-router-dom';
 import { getAuth, sendEmailVerification, } from 'firebase/auth';
+import { IoIosCodeWorking } from "react-icons/io";
 import setAuth from '../auth/firebase.js';
+import emailjs from "emailjs-com";
+
+
+
 
 const Login = () => {
   const auth = getAuth();
@@ -13,12 +18,19 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  
+  const [forgotPassword, setForgotPasssword] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
+  const [code, setCode] = useState(null);
+  const [passCode, setPasscode] = useState(null);
+  const SERVICE_ID = "service_8i8k0fb";
+  const TEMPLATE_ID = "template_ab584df";
+  const PUBLIC_ID = "xgf6c53ybIKZehK7j";
+
   const togglePasswordVisibility = () => {
-    if(!showPassword) {
+    if (!showPassword) {
       setShowPassword(true);
       setInputType('text');
-    }else{
+    } else {
       setShowPassword(false);
       setInputType('password');
     }
@@ -27,15 +39,15 @@ const Login = () => {
   const handleEmailChange = e => {
     const target = e.target.value;
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if(!reg.test(target)){
+    if (!reg.test(target)) {
       e.target.classList.add('invalid-email');
       document.querySelector('.email-div').classList.add('error-border');
     }
-    if(reg.test(target)){
-      e.target.classList.remove('invalid-email') ;
+    if (reg.test(target)) {
+      e.target.classList.remove('invalid-email');
       document.querySelector('.email-div').classList.remove('error-border');
     }
-    if(target === ''){
+    if (target === '') {
       e.target.classList.remove('invalid-email');
       document.querySelector('.email-div').classList.remove('error-border');
     }
@@ -47,24 +59,49 @@ const Login = () => {
     e.preventDefault();
     e.target.classList.add('button-clicked');
 
-      setTimeout(() => {
-        e.target.classList.remove('button-clicked');
-      }, 200);
+    setTimeout(() => {
+      e.target.classList.remove('button-clicked');
+    }, 200);
 
-    fetch("http://localhost:3001/user/login",{
+    fetch("http://localhost:3001/user/login", {
       method: "POST",
-      headers: {"content-type": "application/json"},
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        email, 
+        email,
         password
       })
     }).then(res => res.json())
-    .then(data => {
-      if(!data.state){
-        console.log(data.message);
-      }
-      navigate("/feed", {state: {userId: data.id}})
+      .then(data => {
+        if (!data.state) {
+          console.log(data.message);
+        }
+        navigate("/feed", { state: { userId: data.id } })
+      })
+  }
+
+
+  const sendCode = e => {
+    e.preventDefault();
+    let random = Math.ceil(Math.random()*(1,1000000)+1)
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      email,
+      time: "15/01/2025",
+      passcode: JSON.stringify(random)
+    }, PUBLIC_ID)
+    .then(result=>{
+      console.log(result)
+      setCode(JSON.stringify(random));
+      setCodeSent(true);
     })
+    console.log(Math.ceil(Math.random()*(1,1000000)+1))
+  }
+
+  const checkCode = e =>{
+    e.preventDefault();
+    
+    if(e.target.value == code){
+      console.log(code, "heeeeye", e.target.value)
+    }
   }
 
   return (
@@ -76,21 +113,37 @@ const Login = () => {
         <div className="login-form flex-column">
           <div className="input-div email-div flex">
             <HiOutlineMail className="email-icon" />
-            <input type="text" className='email-input' placeholder='Email' onChange={handleEmailChange}/>
+            <input type="text" className='email-input' placeholder='Email' onChange={handleEmailChange} />
           </div>
-
-          <div className="input-div flex">
-            <FaLock className='lock-icon' />
-            <input type={inputType} placeholder='Password' onChange={e=>setPassword(e.target.value)}/>
-         {showPassword ? <BsFillEyeFill className='eye-icon'  onClick={togglePasswordVisibility}/> : <BsFillEyeSlashFill className='eye-icon'  onClick={togglePasswordVisibility}/>}
-          </div>
+          {
+            !forgotPassword ?
+              <div className="input-div flex">
+                <FaLock className='lock-icon' />
+                <input type={inputType} placeholder='Password' onChange={e => setPassword(e.target.value)} />
+                {showPassword ? <BsFillEyeFill className='eye-icon' onClick={togglePasswordVisibility} /> : <BsFillEyeSlashFill className='eye-icon' onClick={togglePasswordVisibility} />}
+              </div>
+              : null
+          }
+          {
+            codeSent ?
+              <div className="input-div flex">
+                <IoIosCodeWorking className='lock-icon' />
+                <input type="number" minLength={6} maxLength={6} placeholder='6 digit code' onChange={checkCode}/>
+              </div> : null
+          }
           <div className="inst-div flex">
-            <span>forgot password?</span>
-            <span onClick={()=>navigate('/signup')}>Create account</span>
+            <span onClick={() => setForgotPasssword(true)}>forgot password?</span>
+            <span onClick={() => navigate('/signup')}>Create account</span>
           </div>
         </div>
         <div className="login-button-div flex">
-          <button className='login-button' onClick={handleButtonClick}>Login</button>
+          {!forgotPassword ?
+            <button className='login-button' onClick={handleButtonClick}>Login</button>
+            :
+            <button className='login-button send-code-button' onClick={sendCode}>Send code</button>
+
+
+          }
         </div>
       </div>
     </div>
