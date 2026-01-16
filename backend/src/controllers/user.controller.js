@@ -10,10 +10,10 @@ const createAccount = async (req, res) => {
 
         const existing = await User.findOne({ email: email.toLowerCase() });
         if (existing) {
-            return res.status(400).json({state: false, message: "email already exists" })
+            return res.status(400).json({ state: false, message: "email already exists" })
         }
 
-       await User.create(req.body)
+        await User.create(req.body)
             .then(result => {
                 res.status(201).json({
                     message: "user created successfuly",
@@ -27,18 +27,34 @@ const createAccount = async (req, res) => {
     }
 }
 
-const usernameExists = async (req, res,next) => {
+const emailExists = async (req, res, next) => {
+    const { email } = req.body;
+    try {
+        await User.findOne({ email: email.toLowerCase() })
+            .exec()
+            .then(result => {
+                if (!result) {
+                    res.status(400).json({ state: false, message: "Email not found" });
+                }
+                res.status(200).json({ state: true, message: "Email match " });
+            })
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
+const usernameExists = async (req, res, next) => {
     try {
         const { username } = req.body;
-        await User.findOne({username})
-        .exec()
-        .then(user=>{
-            if(user){
-                res.status(400).json({message: "username already exists", state: false})
-            }
-            res.status(200).json({message: "username available", state: true})
-        })
-    } catch (error){
+        await User.findOne({ username })
+            .exec()
+            .then(user => {
+                if (user) {
+                    res.status(400).json({ message: "username already exists", state: false })
+                }
+                res.status(200).json({ message: "username available", state: true })
+            })
+    } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
@@ -50,10 +66,10 @@ const loginUser = async (req, res, next) => {
         const user = await User.findOne({
             email: body.email.toLowerCase(),
         })
-    
-                if (!user) {
-                    res.status(400).json({ message: "Email not found", state: false })
-                }
+
+        if (!user) {
+            res.status(400).json({ message: "Email not found", state: false })
+        }
 
         const isMatch = await user.comparePassword(body.password);
         if (!isMatch) {
@@ -66,7 +82,7 @@ const loginUser = async (req, res, next) => {
                 id: user._id,
                 email: user.email,
                 username: user.username
-            }, 
+            },
             state: true
         })
 
@@ -78,24 +94,42 @@ const loginUser = async (req, res, next) => {
 }
 
 
+const resetPassword = async (req, res, next) => {
+    const { email, password } = req.body;
+    try {
+        await User.findOneAndUpdate(email, { password }, { new: true })
+            .exec()
+            .then(result => {
+                if(!result){
+                    res.status(400).json({result, state: false});
+                }
+                res.status(200).json({state: true, message: "password updated successfuly"})
+            })
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+
+    }
+
+}
+
 const updateUser = async (req, res, next) => {
     try {
         const { password } = req.body;
 
-        const user = await User.findById( req.params.id)
-            if (!user) {
-                res.status(400).json({ message: "user not found" })
-            }
+        const user = await User.findById(req.params.id)
+        if (!user) {
+            res.status(400).json({ message: "user not found" })
+        }
 
         const isMatch = await user.comparePassword(password)
         if (!isMatch) {
             res.status(400).json({ message: "incorrect password" })
         }
-        
-        await User.findByIdAndUpdate(req.params.id, req.body, {new : true})
-        .then(result=>{
-            res.status(200).json({message: "updated yes", detail: result})
-        })
+
+        await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            .then(result => {
+                res.status(200).json({ message: "updated yes", detail: result })
+            })
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
@@ -103,24 +137,24 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
     try {
-        const {password} = req.body;
+        const { password } = req.body;
         const user = await User.findById(req.params.id)
-        if(!user){
-            res.status(400).json({message: "user not found"})
+        if (!user) {
+            res.status(400).json({ message: "user not found" })
         }
 
         const isMatch = await user.comparePassword(password);
-        if(!isMatch){
+        if (!isMatch) {
             res.status(400).json({ message: "incorrect password" })
         }
 
-       await User.findByIdAndDelete(req.params.id)
-        .then(result=>{
-            res.status(200).json({message: "user deleted successfuly"})
-        })
+        await User.findByIdAndDelete(req.params.id)
+            .then(result => {
+                res.status(200).json({ message: "user deleted successfuly" })
+            })
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
-        
+
     }
 }
 
@@ -129,5 +163,7 @@ export {
     loginUser,
     updateUser,
     deleteUser,
-    usernameExists
+    usernameExists,
+    emailExists,
+    resetPassword
 }
