@@ -30,7 +30,8 @@
 .login-main-div {
     background-color: rgba(202, 202, 202, 0.147);
     border-radius: 8px;
-    width: 22%;
+    width: 24%;
+    min-width: 280px;
     min-height: 35%;
     justify-content: space-around;
     align-items: center;
@@ -80,9 +81,13 @@
     padding-right: 5px;
 }
 
+.login-email-input:-internal-autofill-selected{
+    background-color: transparent;
+}
+
+
 .input-div input:focus {
     outline: none;
-
 }
 
 .input-div:focus-within {
