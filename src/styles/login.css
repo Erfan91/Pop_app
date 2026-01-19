@@ -81,6 +81,10 @@
     padding-right: 5px;
 }
 
+.selected-input-bg{
+    background-color: light-dark(rgb(232, 240, 254));
+}
+
 .login-email-input:-internal-autofill-selected{
     background-color: transparent;
 }

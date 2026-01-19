@@ -1,3 +1,14 @@
-.rst-pss-form{
-    height: 12rem;
+.rst-pss-container{
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+    min-width: 280px;
 }
+
+.rst-pss-form{
+    height: 13rem;
+    min-height: 14.5rem
+}
+
+.rst-match-span{
+    
+}
+

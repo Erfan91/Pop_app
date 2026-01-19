@@ -4,11 +4,13 @@ import Login from './components/Login.jsx';
 import Feed from './components/Feed.jsx';
 import Signup from './components/Signup.jsx';
 import Resetpassword from './components/Resetpassword.jsx';
+import Loader from './components/Loader.jsx';
 import './App.css';
 import "./styles/login.css";
 import "./styles/feed.css";
 import "./styles/signup.css";
 import "./styles/resetPass.css";
+import "./styles/loader.css";
 
 function App() {
 

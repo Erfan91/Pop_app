@@ -1,0 +1,31 @@
+.loader-div{
+    display: flex;
+    gap: 10px;
+    position: absolute;
+}
+
+.dot{
+    background-color: #414141;
+    height: 10px;
+    width: 10px;
+    border-radius: 5px;
+    animation: bounce .5s infinite alternate;
+}
+
+
+@keyframes bounce{
+    100%{
+        translate: 0 -10px;
+    }
+}
+
+
+.d2{
+    animation-delay: 100ms;
+}
+
+.d3{
+    animation-delay: 200ms;
+}
+
+/* .loader :nth-child(1) */

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaCircleUser, FaLock } from "react-icons/fa6";
 import {
     BsFillEyeFill,
@@ -20,6 +20,7 @@ const Resetpassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordValid, setPasswordValid] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate()
     const location = useLocation();
 
     const togglePasswordVisibility = () => {
@@ -38,6 +39,7 @@ const Resetpassword = () => {
         e.preventDefault();
         if (e.target.value.length < 8) {
             setPasswordValid(<span className='password-mismatch'>Password must be at least 8 characters long</span>);
+            document.querySelector(".reset-password-button").classList.add("invalid-button")
         } else if (e.target.value == "") {
             setPasswordValid(null);
         } else {
@@ -50,11 +52,14 @@ const Resetpassword = () => {
     const handleConfirmPasswordChange = e => {
         e.preventDefault();
         if (e.target.value !== password) {
-            setPasswordValid(<span className='password-mismatch'>Passwords do not match</span>);
+            setPasswordValid(<span className='password-mismatch rst-match-span'>Passwords do not match</span>);
+            document.querySelector(".reset-password-button").classList.add('invalid-button')
         } else if (e.target.value == "") {
             setPasswordValid(null);
         } else {
             setPasswordValid(<span className='password-match'><IoMdCheckmarkCircleOutline className='checkmark-icon valid-requirement-icon' /></span>);
+            document.querySelector(".reset-password-button").classList.remove("invalid-button");
+
         }
         setConfirmPassword(e.target.value);
         setChecked(true);
@@ -62,16 +67,18 @@ const Resetpassword = () => {
 
     const resetPassword = e => {
         e.preventDefault();
-        fetch("http://localhost:3001/user/reset-pasword", {
+        fetch("http://localhost:3001/user/reset-password", {
             method: "POST",
             headers: new Headers({"content-type" : "application/json"}),
             body: JSON.stringify({
                 email: location.state.email,
-                password: confirmPassword
+                password: confirmPassword,
             })
         }).then(result=>result.json())
         .then(data=>{
-            console.log(data.message)
+            if(data.state){
+                navigate("/")
+            }
         })
     }
 
@@ -110,7 +117,7 @@ const Resetpassword = () => {
                         </div>
                     </div>
                     <div className="login-button-div flex">
-                        <button className='login-button'>Reset Password</button>
+                        <button className='login-button reset-password-button invalid-button' onClick={resetPassword}>Reset Password</button>
                     </div>
                 </div>
             </div>

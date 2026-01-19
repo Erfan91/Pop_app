@@ -7,7 +7,7 @@ import { getAuth, sendEmailVerification, } from 'firebase/auth';
 import { IoIosCodeWorking } from "react-icons/io";
 import setAuth from '../auth/firebase.js';
 import emailjs from "emailjs-com";
-
+import Loader from './Loader.jsx';
 
 
 
@@ -22,8 +22,9 @@ const Login = () => {
   const [codeSent, setCodeSent] = useState(false);
   const [code, setCode] = useState(null);
   const [passCode, setPasscode] = useState(null);
-  const [emailMessage, setEmailMessage] = useState(null)
-  const [buttonClass, setButtonClass] = useState(null)
+  const [emailMessage, setEmailMessage] = useState(null);
+  const [buttonClass, setButtonClass] = useState(null);
+  const [loaderDisplay, setLoaderDisplay] = useState("none")
   const SERVICE_ID = "service_8i8k0fb";
   const TEMPLATE_ID = "template_ab584df";
   const PUBLIC_ID = "xgf6c53ybIKZehK7j";
@@ -83,7 +84,8 @@ const Login = () => {
 
   useEffect(() => {
 
-    fetch("http://localhost:3001/user/emailEx", {
+    if(email){
+      fetch("http://localhost:3001/user/emailEx", {
       method: "POST",
       headers: new Headers({ "content-type": "application/json" }),
       body: JSON.stringify({ email })
@@ -97,12 +99,14 @@ const Login = () => {
           setEmailMessage(data.message);
         }
       })
+    }
+    
   }, [email])
 
 
   const sendCode = async e => {
     e.preventDefault();
-
+    await setLoaderDisplay("flex");
     let random = Math.ceil(Math.random() * (1, 1000000) + 1)
    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
       email,
@@ -114,6 +118,12 @@ const Login = () => {
         setCode(JSON.stringify(random));
         setCodeSent(true);
       })
+      document.querySelector('.email-div').classList.add("selected-input-bg");
+
+      
+      setTimeout(() => {
+      setLoaderDisplay("none");
+      }, 1000);
   }
 
   const checkCode = e => {
@@ -156,12 +166,16 @@ const Login = () => {
           }
           {!forgotPassword ?
             <div className="inst-div flex">
-              <span onClick={() => setForgotPasssword(true)}>forgot password?</span>
+              <span onClick={() => {
+                setEmailMessage(null)
+                setForgotPasssword(true)
+                }}>forgot password?</span>
               <span onClick={() => navigate('/signup')}>Create account</span>
             </div> :
             null
           }
         </div>
+          <Loader display={loaderDisplay}/>
         <div className="login-button-div flex">
           {!forgotPassword ?
             <button className='login-button' onClick={handleButtonClick}>Login</button>
