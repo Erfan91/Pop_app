@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.js";
+import bcrypt from "bcrypt";
 
 const createAccount = async (req, res) => {
     try {
@@ -96,8 +97,9 @@ const loginUser = async (req, res, next) => {
 
 const resetPassword = async (req, res, next) => {
     const { email, password } = req.body;
+    const hashshedPassword = await bcrypt.hash(password, 10) 
     try {
-        await User.findOneAndUpdate(email, { password }, { new: true })
+        await User.findOneAndUpdate({email}, {password: hashshedPassword}, { new: true })
             .exec()
             .then(result => {
                 if(!result){
