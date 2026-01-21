@@ -1,0 +1,11 @@
+.feed-main-div{
+    height: 100vh;
+    width: 100vw;
+    background-image: url(../assets/gradient.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.feed-blur{
+    backdrop-filter: blur(3px);
+}

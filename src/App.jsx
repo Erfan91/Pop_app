@@ -5,12 +5,19 @@ import Feed from './components/Feed.jsx';
 import Signup from './components/Signup.jsx';
 import Resetpassword from './components/Resetpassword.jsx';
 import Loader from './components/Loader.jsx';
+import Popup from './components/pop-ups/Popup.jsx';
 import './App.css';
 import "./styles/login.css";
 import "./styles/feed.css";
 import "./styles/signup.css";
 import "./styles/resetPass.css";
 import "./styles/loader.css";
+
+import "./styles/pop-ups/bio.css";
+import "./styles/pop-ups/gettingStarted.css";
+import "./styles/pop-ups/phoneNum.css";
+import "./styles/pop-ups/popup.css";
+import "./styles/pop-ups/pp.css";
 
 function App() {
 

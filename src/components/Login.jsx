@@ -24,7 +24,8 @@ const Login = () => {
   const [passCode, setPasscode] = useState(null);
   const [emailMessage, setEmailMessage] = useState(null);
   const [buttonClass, setButtonClass] = useState(null);
-  const [loaderDisplay, setLoaderDisplay] = useState("none")
+  const [loaderDisplay, setLoaderDisplay] = useState("none");
+  const [passwordValid, setPasswordValid] = useState(null);
   const SERVICE_ID = "service_8i8k0fb";
   const TEMPLATE_ID = "template_ab584df";
   const PUBLIC_ID = "xgf6c53ybIKZehK7j";
@@ -76,31 +77,33 @@ const Login = () => {
     }).then(res => res.json())
       .then(data => {
         if (!data.state) {
-          console.log(data.message);
+          setPasswordValid(data.message)
         }
-        navigate("/feed", { state: { userId: data.id } })
+        if (data.state) {
+          navigate("/feed", { state: { user: data.user, login: data.login } })
+        }
       })
   }
 
   useEffect(() => {
 
-    if(email){
+    if (email) {
       fetch("http://localhost:3001/user/emailEx", {
-      method: "POST",
-      headers: new Headers({ "content-type": "application/json" }),
-      body: JSON.stringify({ email })
-    }).then(res => res.json())
-      .then(data => {
-        if (!data.state) {
-          setButtonClass("event-none invalid-button")
-          setEmailMessage(data.message);
-        } else {
-          setButtonClass(null)
-          setEmailMessage(data.message);
-        }
-      })
+        method: "POST",
+        headers: new Headers({ "content-type": "application/json" }),
+        body: JSON.stringify({ email })
+      }).then(res => res.json())
+        .then(data => {
+          if (!data.state) {
+            setButtonClass("event-none invalid-button")
+            setEmailMessage(data.message);
+          } else {
+            setButtonClass(null)
+            setEmailMessage(data.message);
+          }
+        })
     }
-    
+
   }, [email])
 
 
@@ -108,7 +111,7 @@ const Login = () => {
     e.preventDefault();
     await setLoaderDisplay("flex");
     let random = Math.ceil(Math.random() * (1, 1000000) + 1)
-   await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
       email,
       time: "15/01/2025",
       passcode: JSON.stringify(random)
@@ -118,19 +121,19 @@ const Login = () => {
         setCode(JSON.stringify(random));
         setCodeSent(true);
       })
-      document.querySelector('.email-div').classList.add("selected-input-bg");
+    document.querySelector('.email-div').classList.add("selected-input-bg");
 
-      
-      setTimeout(() => {
+
+    setTimeout(() => {
       setLoaderDisplay("none");
-      }, 1000);
+    }, 800);
   }
 
   const checkCode = e => {
     e.preventDefault();
     if (e.target.value == code) {
       document.querySelector(".code-div").classList.add("correct-border")
-      navigate("/reset-password", {state: {email}});
+      navigate("/reset-password", { state: { email } });
     } else {
       document.querySelector(".code-div").classList.add("error-border");
     }
@@ -147,16 +150,19 @@ const Login = () => {
             <HiOutlineMail className="email-icon" />
             <input type="text" className='login-email-input' placeholder='Email' onChange={handleEmailChange} />
           </div>
-            {forgotPassword ? <span className="email-message">{emailMessage}</span> : null}
+          {forgotPassword ? <span className="email-message">{emailMessage}</span> : null}
           {
             !forgotPassword ?
               <div className="input-div flex">
                 <FaLock className='lock-icon' />
-                <input type={inputType} placeholder='Password' onChange={e => setPassword(e.target.value)} />
+                <input type={inputType} placeholder='Password'  onChange={e => setPassword(e.target.value)} />
                 {showPassword ? <BsFillEyeFill className='eye-icon' onClick={togglePasswordVisibility} /> : <BsFillEyeSlashFill className='eye-icon' onClick={togglePasswordVisibility} />}
               </div>
               : null
           }
+          <div className="password-message-div" style={!forgotPassword? {display: "block"} : {display: "none"}}>
+            {passwordValid}
+          </div>
           {
             codeSent ?
               <div className="input-div code-div flex">
@@ -169,13 +175,13 @@ const Login = () => {
               <span onClick={() => {
                 setEmailMessage(null)
                 setForgotPasssword(true)
-                }}>forgot password?</span>
+              }}>forgot password?</span>
               <span onClick={() => navigate('/signup')}>Create account</span>
             </div> :
             null
           }
         </div>
-          <Loader display={loaderDisplay}/>
+        <Loader display={loaderDisplay} />
         <div className="login-button-div flex">
           {!forgotPassword ?
             <button className='login-button' onClick={handleButtonClick}>Login</button>
