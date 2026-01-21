@@ -82,9 +82,12 @@ const loginUser = async (req, res, next) => {
             user: {
                 id: user._id,
                 email: user.email,
-                username: user.username
+                username: user.username, 
+                name: user.name,
+                firstLogin: user.firstLogin,
             },
-            state: true
+            state: true,
+            login: true
         })
 
 

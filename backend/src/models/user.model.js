@@ -44,6 +44,18 @@ const userSchema = new mongoose.Schema(
         friends: {
             type: [mongoose.Types.ObjectId],
             ref: "User"
+        },
+
+        image: [String],
+        
+        bio: {
+            type: String,
+            maxLength: 160
+        },
+
+        firstLogin: {
+            type: Boolean,
+            default: true
         }
 
     },
