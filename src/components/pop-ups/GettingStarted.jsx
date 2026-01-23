@@ -1,9 +1,9 @@
 import React from 'react'
 
-const GettingStarted = () => {
+const GettingStarted = (props) => {
   return (
-    <div className='getting-started-div flex-column'>
-        <h2>Welcome to Pop!</h2>
+    <div className='getting-started-div flex-column' style={{display: props.display}}>
+        <h2 className='welcome-h2'>Welcome to Pop!</h2>
         <p>Here are some tips to get you started:</p>
         <ul className='gs-list flex-column'>
             <li>Explore your feed to see posts from people you follow.</li>
@@ -13,7 +13,6 @@ const GettingStarted = () => {
             <li>Check out notifications to stay updated on interactions.</li>
         </ul>
         <p>Enjoy your time on Pop!</p>
-        <button className="btn-grad">Get Started</button>
     </div>
   )
 }

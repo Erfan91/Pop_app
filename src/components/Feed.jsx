@@ -9,8 +9,8 @@ const Feed = () => {
   const [popupDisplay, setPopupDisplay] = useState(null);
 
 
-  useEffect(() => {
-    if(!location.state.login){
+ const handlePopupDisplay = () => {
+  if(!location.state.login){
       navigate("/");
     }
     if(user.firstLogin){
@@ -18,6 +18,10 @@ const Feed = () => {
     } else{
       setPopupDisplay("none");
     }
+ }
+
+  useEffect(() => {
+    handlePopupDisplay();
   },[])
 
   return (
