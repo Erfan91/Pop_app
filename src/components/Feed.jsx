@@ -9,8 +9,9 @@ const Feed = () => {
   const [popupDisplay, setPopupDisplay] = useState(null);
 
 
- const handlePopupDisplay = () => {
-  if(!location.state.login){
+
+  useEffect(() => {
+    if(!location.state.login){
       navigate("/");
     }
     if(user.firstLogin){
@@ -18,11 +19,7 @@ const Feed = () => {
     } else{
       setPopupDisplay("none");
     }
- }
-
-  useEffect(() => {
-    handlePopupDisplay();
-  },[])
+  }, [])
 
   return (
     <div className={user.firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>

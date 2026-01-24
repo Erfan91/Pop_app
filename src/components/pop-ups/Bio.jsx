@@ -1,12 +1,25 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 
 const Bio = (props) => {
+  const [text, setText] = useState("");
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+    if(e.target.value == ""){
+      props.buttonCCLass("invalid-button");
+    } else {
+      props.buttonCCLass("btn-grad");
+    }
+  };
+
+
   return (
-    <div className='bio-main-div flex-column' style={{display: props.display}}>
+    <div className='bio-main-div popup-main-child flex-column' style={{display: props.display}}>
         <h2>Bio</h2>
         <textarea 
         className='bio-textarea' 
         maxLength={150} 
+        onChange={handleChange}
         placeholder="Write a short bio about yourself (max 150 characters)"/>
 
     </div>

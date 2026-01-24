@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useLocation,  } from 'react-router-dom';
 import { HiOutlineMail } from "react-icons/hi";
 import { FaLock } from "react-icons/fa6";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
@@ -29,6 +30,9 @@ const Login = () => {
   const SERVICE_ID = "service_8i8k0fb";
   const TEMPLATE_ID = "template_ab584df";
   const PUBLIC_ID = "xgf6c53ybIKZehK7j";
+  const location = useLocation();
+
+ 
 
   const togglePasswordVisibility = () => {
     if (!showPassword) {

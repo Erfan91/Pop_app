@@ -2,7 +2,7 @@ import React from 'react'
 
 const GettingStarted = (props) => {
   return (
-    <div className='getting-started-div flex-column' style={{display: props.display}}>
+    <div className='getting-started-div popup-main-child flex-column' style={{display: props.display}}>
         <h2 className='welcome-h2'>Welcome to Pop!</h2>
         <p>Here are some tips to get you started:</p>
         <ul className='gs-list flex-column'>

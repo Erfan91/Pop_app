@@ -1,0 +1,22 @@
+.phoneNum-main-div{
+
+    align-items: center !important;
+    justify-content: center!important;
+}
+
+
+
+.phoneNum-input[type=number]::-webkit-inner-spin-button, 
+.phoneNum-input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.phoneNum-input{
+    color: black;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}

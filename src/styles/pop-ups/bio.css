@@ -1,0 +1,8 @@
+.bio-textarea {
+     height: 50%;
+     width: 80%;
+     border-radius: 7px;
+     outline: none;
+     border: 1px solid #ccc;
+}
+
