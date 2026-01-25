@@ -84,7 +84,7 @@ const loginUser = async (req, res, next) => {
             user: {
                 id: user._id,
                 email: user.email,
-                username: user.username, 
+                username: user.username,
                 name: user.name,
                 firstLogin: user.firstLogin,
             },
@@ -102,15 +102,15 @@ const loginUser = async (req, res, next) => {
 
 const resetPassword = async (req, res, next) => {
     const { email, password } = req.body;
-    const hashshedPassword = await bcrypt.hash(password, 10) 
+    const hashshedPassword = await bcrypt.hash(password, 10)
     try {
-        await User.findOneAndUpdate({email}, {password: hashshedPassword}, { new: true })
+        await User.findOneAndUpdate({ email }, { password: hashshedPassword }, { new: true })
             .exec()
             .then(result => {
-                if(!result){
-                    res.status(400).json({result, state: false});
+                if (!result) {
+                    res.status(400).json({ result, state: false });
                 }
-                res.status(200).json({state: true, message: "password updated successfuly"})
+                res.status(200).json({ state: true, message: "password updated successfuly" })
             })
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
@@ -141,6 +141,22 @@ const updateUser = async (req, res, next) => {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
+
+const createUserProfile = async (req, res, next) => {
+    try {
+        const { _id, bio, number, image } = req.body;
+
+        const user = await User.findByIdAndUpdate(_id, { bio, number, $push: { image }, firstLogin: false }, { new: true })
+        if (!user) {
+            res.status(400).json({ message: "user not found" });
+        }
+        res.status(200).json({ message: "profile created successfully", user: user })
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
 
 const deleteUser = async (req, res, next) => {
     try {
@@ -183,8 +199,8 @@ const upload = multer({
 
 const uploadImage = (req, res, next) => {
     upload(req, res, function (err) {
-        if(err){
-            res.status(500).json({message: "Image upload failed", error: err.message});
+        if (err) {
+            res.status(500).json({ message: "Image upload failed", error: err.message });
         } else {
             res.status(201).json({ url: "http://localhost:3001/images/" + imageName });
         }
@@ -199,5 +215,6 @@ export {
     usernameExists,
     emailExists,
     resetPassword,
-    uploadImage
+    uploadImage,
+    createUserProfile
 }
