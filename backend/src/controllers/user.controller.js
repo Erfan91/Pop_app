@@ -1,5 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import multer from "multer";
+import path from "path";
 
 const createAccount = async (req, res) => {
     try {
@@ -163,6 +165,32 @@ const deleteUser = async (req, res, next) => {
     }
 }
 
+
+let imageName = "";
+const storage = multer.diskStorage({
+    destination: path.join("./images"),
+    filename: function (req, file, cb) {
+        imageName = Date.now() + path.extname(file.originalname);
+        cb(null, imageName)
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 3000000 }, // 3MB limit
+}).single("myImage");
+
+
+const uploadImage = (req, res, next) => {
+    upload(req, res, function (err) {
+        if(err){
+            res.status(500).json({message: "Image upload failed", error: err.message});
+        } else {
+            res.status(201).json({ url: "http://localhost:3001/images/" + imageName });
+        }
+    })
+}
+
 export {
     createAccount,
     loginUser,
@@ -170,5 +198,6 @@ export {
     deleteUser,
     usernameExists,
     emailExists,
-    resetPassword
+    resetPassword,
+    uploadImage
 }
