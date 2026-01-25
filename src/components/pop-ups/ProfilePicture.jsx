@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import { HiOutlineUpload } from "react-icons/hi";
+import { MdOutlineAddAPhoto } from "react-icons/md";
 
 const ProfilePicture = (props) => {
   const uploadedImage = useRef(null);
@@ -36,8 +37,9 @@ const ProfilePicture = (props) => {
     })
     .then(res => {
       const {data} = res;
-      setFile(data.url)
-      console.log(data.url)
+      setFile(data.url);
+      props.image(data.url);
+      alert(data.url)
     })
     .catch(err => {
       console.log(err)
@@ -52,7 +54,8 @@ const ProfilePicture = (props) => {
       <div className="pfp-upload-div flex-column" onClick={() =>{
         imageUploader.current.click();
       }}>
-      <img ref={uploadedImage} className='pfp-image'/>  
+        {selectedImg ? <img src={selectedImg} ref={uploadedImage} className='pfp-image'/> : <MdOutlineAddAPhoto className='add-photo-icon'/>}
+      {/* <img ref={uploadedImage} className='pfp-image'/>   */}
       </div>
       <button className='pfp-upload-button' onClick={handleUploadImage}><HiOutlineUpload className='upload-icon'/></button>
     </div>

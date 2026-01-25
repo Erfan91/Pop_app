@@ -10,6 +10,7 @@ const Bio = (props) => {
     } else {
       props.buttonCCLass("btn-grad");
     }
+    props.bio(e.target.value);
   };
 
 
