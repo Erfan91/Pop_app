@@ -24,6 +24,7 @@ const Popup = (props) => {
     } else if (bioDisplay === "flex") {
       setBioDisplay('none');
       setPhnDisplay('flex');
+      setBtnClass('invalid-button');
     } else if (phnDisplay === "flex") {
       setPhnDisplay('none');
       setPfpDisplay('flex');

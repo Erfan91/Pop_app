@@ -5,13 +5,6 @@ import 'react-phone-input-2/lib/style.css'
 const PhoneNumber = (props) => {
   const [value, setValue] = useState();
 
-  // useEffect(() => {
-  //   if(!value){
-  //     props.buttonCCLass("invalid-button"); 
-  //   }
-
-  // }, [value]);
-
   return (
     <div className='phoneNum-main-div popup-main-child flex-column' style={{display: props.display}}>
         <h2>Phone Number</h2>
