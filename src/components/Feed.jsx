@@ -24,7 +24,7 @@ const Feed = () => {
   return (
     <div className={user.firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
       welcome to your feed
-      <Popup display={popupDisplay} id={user._id}/>
+      <Popup display={popupDisplay} id={user._id || location.state.user._id}/>
     </div>
   )
 }

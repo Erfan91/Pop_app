@@ -7,7 +7,7 @@ const ProfilePicture = (props) => {
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
   const [image, setImage] = useState(null);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
   const [selectedImg, setSelectedImg] = useState(null);
 
   const handleImageChange = e => {

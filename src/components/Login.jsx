@@ -84,6 +84,7 @@ const Login = () => {
           setPasswordValid(data.message)
         }
         if (data.state) {
+          localStorage.setItem('_id', data.user.id);
           navigate("/feed", { state: { user: data.user, login: data.login } })
         }
       })

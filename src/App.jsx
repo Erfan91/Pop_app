@@ -4,6 +4,7 @@ import Login from './components/Login.jsx';
 import Feed from './components/Feed.jsx';
 import Signup from './components/Signup.jsx';
 import Resetpassword from './components/Resetpassword.jsx';
+import Profile from './components/Profile.jsx';
 import Loader from './components/Loader.jsx';
 import Popup from './components/pop-ups/Popup.jsx';
 import './App.css';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/feed" element={<Feed />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<Resetpassword />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       </div>
     </>
