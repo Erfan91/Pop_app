@@ -99,6 +99,25 @@ const loginUser = async (req, res, next) => {
 
 }
 
+const getUserProfile = async (req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const user = await User.findById(_id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({ user: {
+            name: user.name,
+            bio: user.bio,
+            username: user.username,
+            number: user.number,
+            image: user.image
+        }  });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
 
 const resetPassword = async (req, res, next) => {
     const { email, password } = req.body;
@@ -146,11 +165,16 @@ const createUserProfile = async (req, res, next) => {
     try {
         const { _id, bio, number, image } = req.body;
 
-        const user = await User.findByIdAndUpdate(_id, { bio, number, $push: { image }, firstLogin: false }, { new: true })
-        if (!user) {
-            res.status(400).json({ message: "user not found" });
-        }
-        res.status(200).json({ message: "profile created successfully", user: user })
+         await User.findByIdAndUpdate(_id, { bio, number, $push: { image }, firstLogin: false }, { new: true })
+        .then(user => {
+            if (!user){
+                res.status(400).json({ message: "user not found" })
+                console.log("user not found");
+            }
+
+            res.status(200).json({ message: "profile created successfully", user: user })
+        });
+        
 
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
@@ -216,5 +240,6 @@ export {
     emailExists,
     resetPassword,
     uploadImage,
-    createUserProfile
+    createUserProfile,
+    getUserProfile
 }

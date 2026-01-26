@@ -8,10 +8,13 @@ import {
     emailExists,
     resetPassword,
     uploadImage,
-    createUserProfile
+    createUserProfile,
+    getUserProfile
 } from "../controllers/user.controller.js";
+
 const router = Router();
 
+router.route("/get-user/:id").get(getUserProfile);
 router.route("/create-user").post(createAccount);
 router.route("/login").post(loginUser);
 router.route("/emailEx").post(emailExists);
