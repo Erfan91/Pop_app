@@ -19,6 +19,7 @@ import "./styles/pop-ups/gettingStarted.css";
 import "./styles/pop-ups/phoneNum.css";
 import "./styles/pop-ups/popup.css";
 import "./styles/pop-ups/pp.css";
+import "./styles/profile.css";
 
 function App() {
 

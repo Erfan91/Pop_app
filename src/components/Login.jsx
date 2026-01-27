@@ -85,7 +85,11 @@ const Login = () => {
         }
         if (data.state) {
           localStorage.setItem('_id', data.user.id);
-          navigate("/feed", { state: { user: data.user, login: data.login } })
+          if(!data.user.firstLogin){
+              navigate("/profile")
+          }else{
+            navigate("/feed", { state: { user: data.user, login: data.login } })
+          }
         }
       })
   }

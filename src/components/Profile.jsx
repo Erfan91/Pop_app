@@ -19,20 +19,24 @@ const Profile = () => {
     }, []);
 
     return (
-        <div className='profile-main-div'>
-            {profileData.map(profile => {
-                console.log(profile.image[1]);
-                return (
-                    <>
-                        <h1>{profile.name}</h1>
-                        <span>{profile.bio}</span>
-                        <span>{profile.number}</span>
-                        <div>
-                            <img  src={profile.image[1]} alt="Profile Image" />
+        <div className='profile-main-div flex column '>
+            <section className='app-content-section'>
+            <section className='profile-data-section'>
+                {profileData.map(profile => {
+                    console.log(profile.image[1]);
+                    return (
+                        <div className='profile-data-div flex-column'>
+                            <div className='profile-image-div flex'>
+                                <img className='profile-image' src={profile.image[0]} alt="Profile Image" />
+                            </div>
+                            <h1 className='_text'> {profile.name}</h1>
+                            <span>{profile.bio}</span>
+
                         </div>
-                    </>
-                )
-            })}
+                    )
+                })}
+            </section>
+            </section>
         </div>
     )
 }
