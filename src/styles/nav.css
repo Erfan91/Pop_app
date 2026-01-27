@@ -1,0 +1,46 @@
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-div {
+    width: 60%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.7px);
+    -webkit-backdrop-filter: blur(7.7px);
+    padding: 0 20px;
+}
+
+.nav-div p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav-icon-div {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+
+.nav-icon {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+
+}
+
+.nav-icon:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+    color: #00d2ff;
+}

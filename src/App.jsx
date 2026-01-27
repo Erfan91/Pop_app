@@ -20,6 +20,7 @@ import "./styles/pop-ups/phoneNum.css";
 import "./styles/pop-ups/popup.css";
 import "./styles/pop-ups/pp.css";
 import "./styles/profile.css";
+import "./styles/nav.css";
 
 function App() {
 
