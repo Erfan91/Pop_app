@@ -12,7 +12,7 @@ import Loader from './Loader.jsx';
 
 
 
-const Login = () => {
+const Login = (props) => {
   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [inputType, setInputType] = useState('password');
@@ -147,6 +147,10 @@ const Login = () => {
       document.querySelector(".code-div").classList.add("error-border");
     }
   }
+
+  useEffect(() => {
+    props.navDisplay("none");
+  }, [])
 
   return (
     <div className='login-container'>

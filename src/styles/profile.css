@@ -29,12 +29,13 @@
 
 
 .profile-data-div{
-    height: 16rem;
+    height: 18rem;
     align-items: center;
     justify-content: space-around;
 }
 
 .profile-image-div {
+    position: relative;
     justify-content: center;
     align-items: center;
     width: 180px;
@@ -54,4 +55,23 @@
     width: 150px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.camera-icon-div{
+    position: absolute;
+    top: 76%;
+    left: 65%;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(191, 191, 191);
+    border: 1px solid cornflowerblue;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+
+.location-icon{
+    color: red;
+    font-size: larger;
 }

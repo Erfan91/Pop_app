@@ -4,7 +4,10 @@
 }
 
 .nav-div {
-    width: 60%;
+    position: fixed;
+    top: 90%;
+    align-self: center;
+    width: 40%;
     height: 60px;
     display: flex;
     flex-direction: row;

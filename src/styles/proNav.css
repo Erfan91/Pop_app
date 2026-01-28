@@ -1,0 +1,24 @@
+.profile-nav-div {
+    position: relative;
+    width: 50%;
+    height: 3.5rem;
+    border-radius: 10px;
+    background-image: url(../assets/gbrd.jpg);
+    background-size: 100%;
+    background-position: center;
+
+}
+
+.profile-nav-main-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.7px);
+    -webkit-backdrop-filter: blur(7.7px);
+}
+
+
+  

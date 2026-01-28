@@ -5,8 +5,8 @@ import Feed from './components/Feed.jsx';
 import Signup from './components/Signup.jsx';
 import Resetpassword from './components/Resetpassword.jsx';
 import Profile from './components/Profile.jsx';
-import Loader from './components/Loader.jsx';
-import Popup from './components/pop-ups/Popup.jsx';
+import Nav from "./components/Nav.jsx";
+
 import './App.css';
 import "./styles/login.css";
 import "./styles/feed.css";
@@ -21,19 +21,21 @@ import "./styles/pop-ups/popup.css";
 import "./styles/pop-ups/pp.css";
 import "./styles/profile.css";
 import "./styles/nav.css";
+import "./styles/proNav.css";
 
-function App() {
-
+function App(props) {
+const [navDisplay, setNavDisplay] = useState("flex");
   return (
     <>
       <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/feed" element={<Feed />} />
+        <Route path="/" element={<Login navDisplay={setNavDisplay} />} />
+        <Route path="/feed" element={<Feed navDisplay={setNavDisplay}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<Resetpassword />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile navDisplay={setNavDisplay}/>} />
       </Routes>
+    <Nav display={navDisplay} />
       </div>
     </>
   )

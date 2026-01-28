@@ -1,30 +1,38 @@
-import React, {useEffect, useState} from 'react';
-import { useLocation, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Popup from './pop-ups/Popup.jsx';
 
-const Feed = () => {
+const Feed = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const {user, login} = location.state || {};
+  const { user, login } = location.state || {};
   const [popupDisplay, setPopupDisplay] = useState(null);
 
 
 
   useEffect(() => {
-    if(!location.state.login){
+
+    if (!location.state.login) {
       navigate("/");
     }
-    if(user.firstLogin){
+    if (user?.firstLogin) {
       setPopupDisplay("flex");
-    } else{
+    } else {
       setPopupDisplay("none");
     }
+    if (location.state.firstLogin === undefined) {
+      return;
+    }
+    props.navDisplay("flex")
+
   }, [])
 
   return (
-    <div className={user.firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
+    <div className={location.state.firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
       welcome to your feed
-      <Popup display={popupDisplay} id={user._id || location.state.user._id}/>
+      {
+        location.state.firstLogin ? <Popup display={popupDisplay} id={user._id || location.state.user._id} />
+          : null}
     </div>
   )
 }
