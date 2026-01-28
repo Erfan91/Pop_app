@@ -27,6 +27,7 @@ app.use(express.static('public'))
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
+app.use("/images",express.static('images'));
 
 
 //app.use("./images", express.static('images'))

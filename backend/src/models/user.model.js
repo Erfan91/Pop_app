@@ -56,7 +56,16 @@ const userSchema = new mongoose.Schema(
         firstLogin: {
             type: Boolean,
             default: true
-        }
+        },
+
+        login: {
+            type: Boolean,
+            default: false
+        },
+
+        country: String,
+
+        livesIn: String
 
     },
 
