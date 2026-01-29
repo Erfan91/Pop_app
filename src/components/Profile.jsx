@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { BsCameraFill } from "react-icons/bs";
 import { MdLocationPin } from "react-icons/md";
+import { RiChatAiLine } from "react-icons/ri";
 import ProfileNav from './ProfileNav.jsx';
+import Post from './Post.jsx';
 import Nav from './Nav.jsx';
 
 const Profile = (props) => {
@@ -34,6 +36,10 @@ const Profile = (props) => {
                                     <div className="camera-icon-div flex center">
                                         <BsCameraFill className='camera-icon' />
                                     </div>
+                                    <div className="camera-icon-div cam-icon-div-2 flex center">
+                                        <RiChatAiLine className='chat-iccon' />
+
+                                    </div>
                                 </div>
                                 <h1 className='_text'> {profile.name}</h1>
                                 <span>{profile.bio}</span>
@@ -42,6 +48,7 @@ const Profile = (props) => {
                         )
                     })}
                     <ProfileNav />
+                    <Post />
                 </section>
                 <div className="setting-nav"></div>
             </section>
