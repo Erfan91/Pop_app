@@ -1,27 +1,36 @@
-.post-main-div{
+.post-main-div {
     position: absolute;
     height: 62%;
     width: 45%;
+    align-items: center;
 }
 
-.post-text-div{
+.post-text-div {
     position: relative;
     width: 100%;
     height: 16rem;
     min-width: 300px;
+    background: rgba(244, 244, 244, 0.73);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.3px);
+    -webkit-backdrop-filter: blur(4.3px);
+    border: 1px solid rgba(244, 244, 244, 0.24);
 }
 
-.post-textarea{
+.post-textarea {
     resize: none;
     width: 100%;
     height: 100%;
     outline: none;
     border-radius: 10px;
     padding: 10px 0 0 10px;
+    background-color: transparent;
+    border: none;
 }
 
 
-.post-options-div{
+.post-options-div {
     position: absolute;
     left: 26%;
     top: 80%;
@@ -30,7 +39,7 @@
     align-items: center;
 }
 
-.post-option{
+.post-option {
     height: 45px;
     width: 45px;
     border-radius: 50%;
@@ -38,36 +47,95 @@
     cursor: pointer;
 }
 
-.post-pic-optn{
+.post-pic-optn {
     font-size: x-large;
     color: rgba(220, 223, 224, 0.825);
-    background-image: linear-gradient(155deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%,rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%,rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%,rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%,rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%,rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%,rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%),linear-gradient(322deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%,rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%,rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%,rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%,rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%,rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%,rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%),linear-gradient(33deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%,rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%,rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%,rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%,rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%,rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%,rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%),linear-gradient(315deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%,rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%,rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%,rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%,rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%,rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%,rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%),linear-gradient(41deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%,rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%,rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%,rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%,rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%,rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%,rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%),linear-gradient(90deg, rgb(192, 100, 79),rgb(56, 158, 172)); background-blend-mode:overlay,overlay,overlay,overlay,overlay,normal;
+    background-image: linear-gradient(155deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(322deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(33deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(315deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(41deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(90deg, rgb(192, 100, 79), rgb(56, 158, 172));
+    background-blend-mode: overlay, overlay, overlay, overlay, overlay, normal;
 }
 
-.post-mood-optn{
+.post-mood-optn {
     color: rgba(235, 235, 235, 0.784);
     font-size: x-large;
     background-position: center;
     background-size: 300%;
-    background-image: repeating-radial-gradient(ellipse at center center, rgb(75, 154, 242),rgb(64, 135, 228),rgb(54, 117, 214),rgb(43, 98, 200),rgb(33, 79, 185),rgb(22, 60, 171),rgb(12, 42, 157),rgb(1, 23, 143) 1px);
+    background-image: repeating-radial-gradient(ellipse at center center, rgb(75, 154, 242), rgb(64, 135, 228), rgb(54, 117, 214), rgb(43, 98, 200), rgb(33, 79, 185), rgb(22, 60, 171), rgb(12, 42, 157), rgb(1, 23, 143) 1px);
     /* background-image: repeating-radial-gradient(circle at center center, rgb(51, 21, 217) 0px, rgb(51, 21, 217) 2px,rgb(254, 112, 5) 2px, rgb(254, 112, 5) 3px); background-size: 69px 69px; */
 }
 
-.post-sticker-optn{
+.post-sticker-optn {
     color: rgba(235, 235, 235, 0.784);
     font-size: x-large;
     background-size: 100%;
-    background-image: radial-gradient(circle at 24% 76%, rgb(132,58,234) 0%, rgb(132,58,234) 20%,transparent 20%, transparent 100%),radial-gradient(circle at 76% 76%, rgb(132,58,234) 0%, rgb(132,58,234) 20%,transparent 20%, transparent 100%),radial-gradient(circle at 76% 24%, rgb(132,58,234) 0%, rgb(132,58,234) 20%,transparent 20%, transparent 100%),radial-gradient(circle at 24% 24%, rgb(132,58,234) 0%, rgb(132,58,234) 20%,transparent 20%, transparent 100%),radial-gradient(circle at center center, rgb(99,20,187) 0%, rgb(99,20,187) 71%,transparent 71%, transparent 100%),linear-gradient(90deg, rgb(132,58,234),rgb(132,58,234)); background-size: 49px 49px;
+    background-image: radial-gradient(circle at 24% 76%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at 76% 76%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at 76% 24%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at 24% 24%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at center center, rgb(99, 20, 187) 0%, rgb(99, 20, 187) 71%, transparent 71%, transparent 100%), linear-gradient(90deg, rgb(132, 58, 234), rgb(132, 58, 234));
+    background-size: 49px 49px;
 }
 
 
-.close-icon{
-    position: absolute;
-    left: 93%;
-    top: 2%;
-    font-size: larger;
+.close-icon {
     color: rgb(255, 50, 50);
+}
+
+.done-icon{
+    color: rgb(148, 255, 219);
+
+}
+
+.post-btn-div {
+    width: 40%;
+    justify-self: center;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+&& button {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    background: rgba(255, 255, 255, 0.23);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.1px);
+    -webkit-backdrop-filter: blur(2.1px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: x-large;
     cursor: pointer;
 }
 
+.post-discard-btn:hover{
+    transform: translate3d(-1px, 3px, 1px);
+    background: rgba(255, 149, 149, 0.312);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.3px);
+    -webkit-backdrop-filter: blur(4.3px);
+    border: 1px solid rgb(255, 95, 95);
+    color: skyblue;
+    font-size: xx-large;
+    transition: all ease-in-out .7s;
+}
 
+.post-btn:hover{
+    transform: translate3d(3px, -3px, 1px);
+    background: rgba(188, 255, 228, 0.312);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.3px);
+    -webkit-backdrop-filter: blur(4.3px);
+    border: 1px solid aquamarine;
+    color: skyblue;
+    font-size: xx-large;
+    transition: all ease-in-out .5s;
+}
+
+
+.post-photo-div{
+    position: absolute;
+    top: 5%;
+    left: 77%;
+}
+
+.post-image{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    cursor: pointer;
+}
