@@ -3,6 +3,7 @@ import { TbPhoto } from "react-icons/tb";
 import { SiZcool } from "react-icons/si";
 import { PiStickerDuotone } from "react-icons/pi";
 import { IoClose, IoCheckmarkOutline } from "react-icons/io5";
+import { MdCloseFullscreen } from "react-icons/md";
 import axios from 'axios';
 
 const Post = (props) => {
@@ -13,6 +14,25 @@ const Post = (props) => {
     const [selectedImg, setSelectedImg] = useState(null);
     const [file, setFile] = useState("");
     const [image, setImage] = useState(null);
+
+    const [imgDisplay, setImgDisplay] = useState("post-image");
+    const [divDisplay, setDDisplay] = useState("post-photo-div");
+    const [iconDisplay, setIconDisplay] = useState("none")
+
+    const userId = localStorage.getItem('_id');
+    const ids = JSON.parse(JSON.stringify(userId));
+
+    const handleDisplay = () => {
+        if (imgDisplay === "post-image" && divDisplay === "post-photo-div") {
+            setImgDisplay("post-img-lg");
+            setDDisplay("focused-photo-div");
+            setIconDisplay("block")
+        } else {
+            setImgDisplay("post-image");
+            setDDisplay("post-photo-div");
+            setIconDisplay("none")
+        }
+    }
 
     const handleImgChange = e => {
         const [file] = e.target.files;
@@ -31,15 +51,14 @@ const Post = (props) => {
         }
     }
 
-    const uploadImage = e => {
-        e.preventDefault();
+    const uploadImage = () => {
 
         const formData = new FormData();
         formData.append("myImage", image);
 
         axios({
             method: "post",
-            url: "http://localhost:3001/user/upload-image",
+            url: "http://localhost:3001/post/upload-image",
             data: formData
         })
             .then(res => {
@@ -53,9 +72,34 @@ const Post = (props) => {
 
     }
 
+
+
     const handleTextChange = e => {
         setText(e.target.value);
     }
+
+    const sendPost = async e => {
+        e.preventDefault();
+        try {
+            await uploadImage();
+           await  fetch("http://localhost:3001/post/create-post", {
+                        method: "POST",
+                        headers: new Headers({ "content-type": "application/json" }),
+                        body: JSON.stringify({
+                            ownerId: ids,
+                            description: text,
+                            content: data.url,
+                        })
+                    }).then(result => result.json())
+                        .then(response => {
+                            console.log(response.message)
+                        })
+        }
+        catch (err) {
+            console.log(err.message, "error");
+        }
+    }
+
 
 
 
@@ -77,13 +121,14 @@ const Post = (props) => {
                         <PiStickerDuotone className='photo-icon' />
                     </div>
                 </div>
-                <div className="post-photo-div">
-                    {selectedImg ? <img src={selectedImg} ref={uploadedImage} className='post-image' /> : null}
+                <div className={divDisplay} onClick={handleDisplay}>
+                    {selectedImg ? <img src={selectedImg} ref={uploadedImage} className={imgDisplay} /> : null}
+                    <MdCloseFullscreen className="closeFS-icon" style={{ display: iconDisplay }} />
                 </div>
             </div>
             <div className="post-btn-div flex">
                 <button className='post-discard-btn'><IoClose className='close-icon' /></button>
-                <button className='post-btn' id='post-btn'><IoCheckmarkOutline className='done-icon' /></button>
+                <button className='post-btn' id='post-btn' onClick={sendPost}><IoCheckmarkOutline className='done-icon' /></button>
             </div>
         </div>
     )

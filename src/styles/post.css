@@ -138,4 +138,34 @@
     width: 70px;
     border-radius: 50%;
     cursor: pointer;
+
+}
+
+.focused-photo-div{
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    z-index: 1;
+}
+
+.post-img-lg{
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.closeFS-icon{
+    display: flex;
+    position: absolute;
+    top: 1%;
+    left: 94%;
+    font-size: larger;
+    cursor: pointer;
+    color: rgb(112, 112, 112);
+
+}
+.display-none{
+    opacity: 0;
 }
