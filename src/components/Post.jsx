@@ -51,8 +51,35 @@ const Post = (props) => {
         }
     }
 
-    const uploadImage = () => {
 
+
+    const handleTextChange = e => {
+        setText(e.target.value);
+    }
+
+    const sendPost = async (url) => {
+        await fetch("http://localhost:3001/post/create-post", {
+            method: "POST",
+            headers: new Headers({ "content-type": "application/json" }),
+            body: JSON.stringify({
+                ownerId: ids,
+                description: text,
+                content: url,
+            })
+        }).then(result => result.json())
+            .then(response => {
+                console.log(response.message)
+                if(response.state){
+                    alert(response.message);
+                    props.handleDisplay("none")
+                }
+            })
+
+    }
+
+
+    const uploadImage = (e) => {
+        e.preventDefault()
         const formData = new FormData();
         formData.append("myImage", image);
 
@@ -64,6 +91,9 @@ const Post = (props) => {
             .then(res => {
                 const { data } = res;
                 setFile(data.url);
+                if (data.state) {
+                    sendPost(data.url);
+                }
 
             })
             .catch(err => {
@@ -74,39 +104,10 @@ const Post = (props) => {
 
 
 
-    const handleTextChange = e => {
-        setText(e.target.value);
-    }
-
-    const sendPost = async e => {
-        e.preventDefault();
-        try {
-            await uploadImage();
-           await  fetch("http://localhost:3001/post/create-post", {
-                        method: "POST",
-                        headers: new Headers({ "content-type": "application/json" }),
-                        body: JSON.stringify({
-                            ownerId: ids,
-                            description: text,
-                            content: data.url,
-                        })
-                    }).then(result => result.json())
-                        .then(response => {
-                            console.log(response.message)
-                        })
-        }
-        catch (err) {
-            console.log(err.message, "error");
-        }
-    }
-
-
-
-
     return (
         <div className='post-main-div flex-column' style={{ display: props.display }}>
             <div className="post-text-div">
-                <textarea name="text" className='post-textarea' placeholder="what's on your mind" />
+                <textarea name="text" className='post-textarea' placeholder="what's on your mind" onChange={handleTextChange}/>
                 <div className="post-options-div flex">
                     <input type="file" accept='/image' onChange={handleImgChange} ref={imageUploader} style={{ display: "none" }} />
                     <div className="post-pic-optn post-option flex center" onClick={() => {
@@ -127,8 +128,8 @@ const Post = (props) => {
                 </div>
             </div>
             <div className="post-btn-div flex">
-                <button className='post-discard-btn'><IoClose className='close-icon' /></button>
-                <button className='post-btn' id='post-btn' onClick={sendPost}><IoCheckmarkOutline className='done-icon' /></button>
+                <button className='post-discard-btn' onClick={() => props.handleDisplay("none")}><IoClose className='close-icon' /></button>
+                <button className={text !== "" ? "post-btn" : "invalid-button"} id='post-btn' onClick={uploadImage}><IoCheckmarkOutline className='done-icon' /></button>
             </div>
         </div>
     )

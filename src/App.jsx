@@ -18,6 +18,7 @@ import "./styles/resetPass.css";
 import "./styles/loader.css";
 import "./styles/nav.css";
 import "./styles/proNav.css";
+import "./styles/userPosts.css"
 
 import "./styles/pop-ups/bio.css";
 import "./styles/pop-ups/gettingStarted.css";

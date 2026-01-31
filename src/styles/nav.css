@@ -19,6 +19,7 @@
     backdrop-filter: blur(7.7px);
     -webkit-backdrop-filter: blur(7.7px);
     padding: 0 20px;
+    flex-basis: content;
 }
 
 .nav-div p {

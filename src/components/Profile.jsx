@@ -1,54 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { BsCameraFill } from "react-icons/bs";
-import { MdLocationPin } from "react-icons/md";
-import { RiChatAiLine } from "react-icons/ri";
 import ProfileNav from './ProfileNav.jsx';
 import Post from './Post.jsx';
-import Nav from './Nav.jsx';
-
+import ProfileData from './ProfileData.jsx';
+import UserPosts from './UserPosts.jsx';
 const Profile = (props) => {
-    const userId = localStorage.getItem('_id');
-    const ids = JSON.parse(JSON.stringify(userId));
-    const [profileData, setProfileData] = useState([]);
 
-    useEffect(() => {
-        props.navDisplay("flex")
-        fetch(`http://localhost:3001/user/get-user/${ids}`, {
-            method: "GET",
-            headers: new Headers({ "content-type": "application/json" }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                setProfileData([data.user]);
-                console.log(data.user);
-            });
-    }, []);
+    const [postDisplay, setPostDisplay] = useState("none");
+    const [userPostsDisplay, setUserPostsDisplay] = useState("none");
+
+    const [userPostsReq, setUserPostReq] = useState(null);
+
 
     return (
         <div className='profile-main-div flex column '>
             <section className='app-content-section'>
                 <section className='profile-data-section'>
-                    {profileData.map(profile => {
-                        return (
-                            <div className='profile-data-div flex-column'>
-                                <div className='profile-image-div flex'>
-                                    <img className='profile-image' src={profile.image[0]} alt="Profile Image" />
-                                    <div className="camera-icon-div flex center">
-                                        <BsCameraFill className='camera-icon' />
-                                    </div>
-                                    <div className="camera-icon-div cam-icon-div-2 flex center">
-                                        <RiChatAiLine className='chat-iccon' />
-
-                                    </div>
-                                </div>
-                                <h1 className='_text'> {profile.name}</h1>
-                                <span>{profile.bio}</span>
-                                <span><MdLocationPin className='location-icon' /> Unknown</span>
-                            </div>
-                        )
-                    })}
-                    <ProfileNav />
-                    <Post />
+                    <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay} postRequest={userPostsReq}/>
+                    <ProfileNav postRequest={userPostsReq} handlePostReq={setUserPostReq} userPostsDis={setUserPostsDisplay}/>
+                    <Post display={postDisplay} handleDisplay={setPostDisplay} />
+                    <UserPosts postRequest={userPostsReq} handlePostReq={setUserPostReq} display={userPostsDisplay}/>
                 </section>
                 <div className="setting-nav"></div>
             </section>
