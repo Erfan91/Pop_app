@@ -13,7 +13,7 @@ const createPost = async (req, res, next) => {
 
         await Post.create(req.body)
             .then(result => {
-                res.json({ message: "post created", postDetail: result })
+                res.json({ message: "post created", postDetail: result, state: true })
             });
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
@@ -32,6 +32,27 @@ const getPost = async (req, res, next) => {
         res.status(500).json({ message: "Internal server error", error: error.message })
     }
 }
+
+const getUserPosts = async (req, res, next) =>{
+    try {
+        const {_id} = req.params._id;
+        Post.find({ownerId: _id})
+        .populate("ownerId")
+        .sort({createAt: -1})
+        .exec()
+        .then(result => {
+            if(result){
+                res.status(200).json({message: "user posts found", state: true, posts: result})
+            }
+            if(!result){
+                res.status(400).json({message: "Wrong user id or doesn't have any post yet "})
+            }
+        })
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message })
+    }
+}
+
 
 const updatePost = async (req, res, next) => {
     try {
@@ -72,9 +93,9 @@ const upload = multer({
 const uploadImage = (req, res, next) => {
     upload(req, res, function (err) {
         if (err) {
-            res.status(500).json({ message: "Image upload failed", error: err.message });
+            res.status(500).json({ message: "Image upload failed", error: err.message, state: false });
         } else {
-            res.status(201).json({ url: "http://localhost:3001/images/" + imageName });
+            res.status(201).json({ url: "http://localhost:3001/images/" + imageName, state: true });
         }
     })
 }
@@ -84,5 +105,6 @@ export {
     getPost,
     updatePost,
     deletePost,
-    uploadImage
+    uploadImage,
+    getUserPosts
 }
