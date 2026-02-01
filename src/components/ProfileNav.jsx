@@ -6,7 +6,7 @@ const ProfileNav = (props) => {
             <div className="profile-nav-main-child flex">
                 <div className="pro-nav-option-div flex" onClick={() => {
                     props.userPostsDis("flex");
-                    props.handlePostReq(true);
+                    props.getUPosts()
                 }}>
                     <span>Posts</span>
                 </div>

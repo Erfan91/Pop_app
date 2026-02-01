@@ -1,4 +1,117 @@
-.userPosts-main-div{
+.userPosts-main-div {
     position: absolute;
+    top: 10%;
+    height: 31rem;
+    width: 50%;
+    min-width: 350px;
+    border-radius: 7px;
+    align-items: center;
+    overflow-y: scroll;
+    gap: 1rem;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.column-reverse{
+    flex-direction: column-reverse;
+}
+
+.around {
     justify-content: space-around;
+}
+
+.evenly {
+    justify-content: space-evenly;
+}
+
+.border-circle {
+    border-radius: 50%;
+}
+
+.userPosts-icon-div {
+    position: fixed;
+    z-index: 1;
+    top: 70%;
+    color: rgba(220, 20, 60, 0.675);
+    border-radius: 50%;
+    background: rgba(129, 129, 129, 0.19);
+    box-shadow: 0 4px 30px rgba(122, 122, 122, 0.1);
+    backdrop-filter: blur(3.7px);
+    -webkit-backdrop-filter: blur(3.7px);
+    border: 1px solid rgba(96, 96, 96, 0.19);
+    height: 40px;
+    width: 40px;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.userPosts-icon-div:hover{
+    transform: scale(1.1);
+    color: rgb(255, 41, 84);
+    transition: ease-in-out 1s;
+    background: rgba(178, 178, 178, 0.19);
+}
+
+.post-card {
+    width: 90%;
+    height: 24rem;
+    background: rgba(255, 255, 255, 0.27);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.7px);
+    -webkit-backdrop-filter: blur(3.7px);
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 10px;
+    padding: 5px;
+    align-items: center;
+}
+
+.post-card-header {
+    width: 100%;
+    padding: 5px 0;
+    margin-bottom: 3px;
+
+}
+
+.post-card-pfp-div {
+    align-items: center;
+    width: 22%;
+}
+
+.post-card-time-p{
+    font-size: x-small;
+    font-weight: 600;
+    width: 130%;
+}
+
+.userPosts-options-icon{
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.post-card-image-div {
+    height: 80%;
+    width: 95%;
+}
+
+.post-card-image {
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+}
+
+
+
+
+
+
+
+
+.post-card-pfp {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    margin-right: 5px;
 }

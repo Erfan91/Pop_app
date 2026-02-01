@@ -8,8 +8,7 @@ const ProfileData = (props) => {
        const userId = localStorage.getItem('_id');
         const ids = JSON.parse(JSON.stringify(userId));
         const [profileData, setProfileData] = useState([]);
-        
-        const [postDisplay, setPostDisplay] = useState("none");
+    
     
         useEffect(() => {
             props.navDisplay("flex")
@@ -20,7 +19,6 @@ const ProfileData = (props) => {
                 .then(response => response.json())
                 .then(data => {
                     setProfileData([data.user]);
-                    console.log(data.user);
                 });
         }, []);
     
