@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema(
             ref: "User"
         },
 
-        decription: String,
+        description: String,
 
         content : [String],
 

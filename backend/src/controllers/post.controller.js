@@ -35,8 +35,8 @@ const getPost = async (req, res, next) => {
 
 const getUserPosts = async (req, res, next) =>{
     try {
-        const {_id} = req.params._id;
-        Post.find({ownerId: _id})
+        const id = req.params.id;
+       await Post.find({ownerId: id})
         .populate("ownerId")
         .sort({createAt: -1})
         .exec()
