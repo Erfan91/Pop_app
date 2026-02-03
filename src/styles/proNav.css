@@ -1,9 +1,16 @@
 .profile-nav-div {
-    position: relative;
+    position: absolute;
+    top: 3.5%;
     width: 50%;
-    height: 3.5rem;
+    height: 3rem;
     border-radius: 10px;
     margin-bottom: 15px;
+    background: rgba(139, 232, 255, 0.29);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.2px);
+    -webkit-backdrop-filter: blur(4.2px);
+    border: 1px solid rgba(139, 232, 255, 0.3);
 }
 
 .profile-nav-main-child {
@@ -13,8 +20,7 @@
     align-items: center;
     place-items: center;
     justify-content: space-between;
-    flex-wrap: wrap-reverse;
-    place-content: center;
+
     gap: 4px;
 }
 
@@ -22,19 +28,16 @@
     align-items: center;
     justify-content: space-around;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.37);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(3.6px);
-    -webkit-backdrop-filter: blur(3.6px);
-    border: 1px solid rgba(255, 255, 255, 0.17);
+    /* border: 1px solid rgba(255, 255, 255, 0.17); */
     height: 50px;
     width: 90px;
     border-radius: 7px;
     font-weight: 400;
     cursor: pointer;
-    
+
 }
+
+
 
 .pro-nav-option-div:hover {
     transform: scale(1.1);

@@ -7,10 +7,12 @@ const Profile = (props) => {
     const id = localStorage.getItem('_id');
     const ids = JSON.parse(JSON.stringify(id));
     const [posts, setPosts] = useState([]);
+
     const [postDisplay, setPostDisplay] = useState("none");
     const [userPostsDisplay, setUserPostsDisplay] = useState("none");
+    const [proDataDisplay, setProDataDisplay] = useState("flex")
 
-    
+
 
     const getUserPosts = () => {
         fetch(`http://localhost:3001/post/user-posts/${ids}`)
@@ -18,6 +20,8 @@ const Profile = (props) => {
             .then(data => {
                 setPosts(data.posts);
             })
+
+            setProDataDisplay("none")
     }
 
 
@@ -25,10 +29,10 @@ const Profile = (props) => {
         <div className='profile-main-div flex column '>
             <section className='app-content-section'>
                 <section className='profile-data-section'>
-                    <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay}  />
-                    <ProfileNav  userPostsDis={setUserPostsDisplay} getUPosts={getUserPosts}/>
+                    <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay} display={proDataDisplay} />
+                    <UserPosts display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay}/>
+                    <ProfileNav userPostsDis={setUserPostsDisplay} getUPosts={getUserPosts} />
                     <Post display={postDisplay} handleDisplay={setPostDisplay} />
-                    <UserPosts  display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay}/>
                 </section>
                 <div className="setting-nav"></div>
             </section>

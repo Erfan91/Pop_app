@@ -26,7 +26,7 @@ const ProfileData = (props) => {
         <>
             {profileData.map(profile => {
                 return (
-                    <div className='profile-data-div flex-column'>
+                    <div className='profile-data-div flex-column' style={{display: props.display}}>
                         <div className='profile-image-div flex'>
                             <img className='profile-image' src={profile.image[0]} alt="Profile Image" />
                             <div className="camera-icon-div cam-icon-div-2 flex center" onClick={() => props.handleDisplay("flex")}>
