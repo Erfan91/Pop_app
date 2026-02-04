@@ -30,7 +30,7 @@ const Profile = (props) => {
             <section className='app-content-section'>
                 <section className='profile-data-section'>
                     <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay} display={proDataDisplay} />
-                    <UserPosts display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay}/>
+                    <UserPosts display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay} getPostsFunc={getUserPosts}/>
                     <ProfileNav userPostsDis={setUserPostsDisplay} getUPosts={getUserPosts} />
                     <Post display={postDisplay} handleDisplay={setPostDisplay} />
                 </section>
