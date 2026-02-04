@@ -56,10 +56,11 @@ const getUserPosts = async (req, res, next) =>{
 
 const updatePost = async (req, res, next) => {
     try {
-        const _id = req.params._id;
-        await Post.updateOne(_id, req.body, { new: true })
+        const _id = req.params.id;
+        await Post.findByIdAndUpdate(_id, req.body, { new: true })
             .then(result => {
-                !result ? res.status(400).json({ message: "Post not found" }) : res.status(200).json({ message: "Post updated successfuly" })
+                console.log(result)
+                !result ? res.status(400).json({ message: "Post not found", state: false }) : res.status(200).json({ message: "Post updated successfuly", state: true })
             })
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
