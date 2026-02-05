@@ -140,7 +140,7 @@
     position: relative;
 }
 
-.post-option-btn{
+.post-option-btn {
     width: 100%;
     height: 100%;
     background-color: transparent;
@@ -156,7 +156,7 @@
     left: -55%;
     height: 4rem;
     width: 2.5rem;
-    background: rgba(255, 255, 255, 0.27);  
+    background: rgba(255, 255, 255, 0.27);
     backdrop-filter: blur(3.7px);
     -webkit-backdrop-filter: blur(3.7px);
     z-index: 1;
@@ -191,7 +191,7 @@
 }
 
 
-.post-edit-textarea{
+.post-edit-textarea {
     background-color: transparent;
     outline: none;
     width: 93%;
@@ -210,7 +210,7 @@
     background-color: transparent;
 }
 
-.disabled{
+.disabled {
     pointer-events: none;
     touch-action: double-tap-zoom;
 }
@@ -221,4 +221,60 @@
     width: 30px;
     object-fit: cover;
     margin-right: 5px;
+}
+
+
+.confirm-delete-div {
+    position: absolute;
+    left: -4.2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    height: 5rem;
+    width: 7rem;
+    border: 1px solid black;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.confirm-delete-div>p {
+    width: 100%;
+    font-size: small;
+    font-weight: 400;
+}
+
+.confirm-btn-div {
+    gap: 1rem;
+}
+
+.confirm-btn-div>button {
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    border: .5px solid grey;
+    background: rgba(255, 255, 255, 0.27);
+    border-radius: 7Px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.7px);
+    -webkit-backdrop-filter: blur(3.7px);
+    font-size: larger;
+    cursor: pointer;
+}
+
+.confirm-btn-div>button :hover{
+    transform: scale(1.1);
+    transition: ease-in-out 1s;
+}
+
+.post-cancel-btn{
+    color: red;
+}
+
+.confirm-btn{
+    color: aquamarine;
 }

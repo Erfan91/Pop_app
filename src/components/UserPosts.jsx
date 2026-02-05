@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { IoClose, IoChatbubbleOutline } from "react-icons/io5";
+import { IoClose, IoChatbubbleOutline, IoCheckmarkOutline } from "react-icons/io5";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import { BsHeart } from "react-icons/bs";
 import { PiShareFatLight } from "react-icons/pi";
@@ -49,22 +49,21 @@ const UserPosts = (props) => {
 
 
     const deletePost = async id => {
-        if(isDelete){
-            await  fetch(`http://localhost:3001/post/delete-post/${id}`, {
-            method: "DELETE",
-            headers: new Headers({"content-type":"application/json"}),
-        }).then(result=>result.json())
-        .then(data=>{
-            console.log(data.message);
-            props.getPostsFunc();
-        })
+        if (isDelete) {
+            await fetch(`http://localhost:3001/post/delete-post/${id}`, {
+                method: "DELETE",
+                headers: new Headers({ "content-type": "application/json" }),
+            }).then(result => result.json())
+                .then(data => {
+                    props.getPostsFunc();
+                })
         } else {
             null
         }
     }
 
     return (
-        <div className='userPosts-main-div column-reverse between' style={{ display: props.display }}>
+        <div className={props.length == 1 ? "userPosts-main-div flex-column between" : "userPosts-main-div column-reverse between"} style={{ display: props.display }}>
             <div className='userPosts-icon-div flex center' onClick={() => {
                 props.setDisplay("none");
                 props.proDataDisplay("flex");
@@ -100,15 +99,36 @@ const UserPosts = (props) => {
                                         </button>
                                         {
                                             inputIndexB == index ?
+
                                                 <button className='update-post-button post-option-btn flex center' onClick={async (e) => {
                                                     e.preventDefault();
                                                     setEdit(true);
                                                     await updatePost();
-                                                }}><IoMdCheckmarkCircleOutline className='edit-icon checkmark-icon' /> </button> :
-                                                <button className='delete-button post-option-btn flex center' onClick={inputIndexB === index?  null: async()=> {
-                                                    setDelete(true); 
-                                                    await deletePost(posts._id) } }><MdDelete className='delete-icon' /></button>
+                                                }}><IoMdCheckmarkCircleOutline className='edit-icon checkmark-icon' /></button> :
+                                                <>
+                                                    <button className='delete-button post-option-btn flex center' onClick={inputIndexB === index ? null : async () => {
+                                                        await setDelete(true);
+
+                                                    }}><MdDelete className='delete-icon' /></button>
+                                                    {
+                                                        isDelete ?
+                                                            <div className="confirm-delete-div flex-column around">
+                                                                <p>Confirm delete</p>
+                                                                <div className="confirm-btn-div flex between">
+                                                                    <button className='post-cancel-btn'onClick={e => {
+                                                                        e.preventDefault();
+                                                                        setDelete(false);
+                                                                    }}><IoClose className='cancel-icon' /></button>
+                                                                    <button className='confirm-btn' onClick={async e => {
+                                                                        e.preventDefault();
+                                                                        await deletePost(posts._id)}}><IoCheckmarkOutline className='confirm-icon' /></button>
+                                                                </div>
+                                                            </div>
+                                                            : null
+                                                    }
+                                                </>
                                         }
+
                                     </div>}
                                 </div>
                             </div>

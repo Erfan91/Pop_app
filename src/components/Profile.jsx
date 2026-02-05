@@ -11,6 +11,8 @@ const Profile = (props) => {
     const [postDisplay, setPostDisplay] = useState("none");
     const [userPostsDisplay, setUserPostsDisplay] = useState("none");
     const [proDataDisplay, setProDataDisplay] = useState("flex")
+    
+    const [arrayLength, setArrayLength] = useState(null)
 
 
 
@@ -19,6 +21,8 @@ const Profile = (props) => {
             .then(result => result.json())
             .then(data => {
                 setPosts(data.posts);
+                setArrayLength(data.posts.length)
+                console.log(data.posts.length)
             })
 
             setProDataDisplay("none")
@@ -30,7 +34,7 @@ const Profile = (props) => {
             <section className='app-content-section'>
                 <section className='profile-data-section'>
                     <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay} display={proDataDisplay} />
-                    <UserPosts display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay} getPostsFunc={getUserPosts}/>
+                    <UserPosts display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay} getPostsFunc={getUserPosts} length={arrayLength}/>
                     <ProfileNav userPostsDis={setUserPostsDisplay} getUPosts={getUserPosts} />
                     <Post display={postDisplay} handleDisplay={setPostDisplay} />
                 </section>
