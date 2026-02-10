@@ -99,6 +99,24 @@ const loginUser = async (req, res, next) => {
 
 }
 
+const getUser = async  (req, res, next) => {
+    try {
+        const _id = req.params.id;
+        await User.findById(_id)
+        .exec()
+        .then(result=>{
+            if(!result){
+                return res.status(404).json({ message: "User not found", state: false });
+            } else{
+                res.status(200).json({message: "user info request successful", user: result, state: true})
+            }
+        })
+        
+    } catch (error) {
+         res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
 const getUserProfile = async (req, res, next) => {
     try {
         const _id = req.params.id;
@@ -241,5 +259,6 @@ export {
     resetPassword,
     uploadImage,
     createUserProfile,
-    getUserProfile
+    getUserProfile,
+    getUser
 }

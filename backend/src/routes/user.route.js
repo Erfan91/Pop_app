@@ -9,12 +9,14 @@ import {
     resetPassword,
     uploadImage,
     createUserProfile,
-    getUserProfile
+    getUserProfile,
+    getUser
 } from "../controllers/user.controller.js";
 
 const router = Router();
 
 router.route("/get-user/:id").get(getUserProfile);
+router.route("/user-info/:id").get(getUser)
 router.route("/create-user").post(createAccount);
 router.route("/login").post(loginUser);
 router.route("/emailEx").post(emailExists);
