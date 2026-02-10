@@ -1,38 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { data, useLocation, useNavigate } from 'react-router-dom';
 import Popup from './pop-ups/Popup.jsx';
 
 const Feed = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, login } = location.state || {};
-  const [popupDisplay, setPopupDisplay] = useState(null);
+  const id = localStorage.getItem('_id');
+  const ids = JSON.parse(JSON.stringify(id));
 
+  const [popupDisplay, setPopupDisplay] = useState(null);
+  const [firstLogin, setFirstLogin] = useState(null);
 
 
   useEffect(() => {
-
-    if (!location.state.login) {
-      navigate("/");
-    }
-    if (user?.firstLogin) {
-      setPopupDisplay("flex");
-    } else {
-      setPopupDisplay("none");
-    }
-    if (location.state.firstLogin === undefined) {
-      return;
-    }
-    props.navDisplay("flex")
+     fetch(`http://localhost:3001/user/user-info/${ids}`)
+      .then(result => result.json())
+      .then(data => {
+        if (data.user.firstLogin) {
+          setPopupDisplay("flex");
+          setFirstLogin(data.user.firstLogin);
+        } else {
+          setPopupDisplay("none");
+        }
+      })
 
   }, [])
 
   return (
-    <div className={location.state.firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
+    <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
       welcome to your feed
-      {
-        location.state.firstLogin ? <Popup display={popupDisplay} id={user._id || location.state.user._id} />
-          : null}
+      <Popup display={popupDisplay} id={ids} />
     </div>
   )
 }

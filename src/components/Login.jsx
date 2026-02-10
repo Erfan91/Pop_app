@@ -88,7 +88,7 @@ const Login = (props) => {
           if(!data.user.firstLogin){
               navigate("/profile")
           }else{
-            navigate("/feed", { state: { user: data.user, login: data.login } })
+            navigate("/feed");
           }
         }
       })

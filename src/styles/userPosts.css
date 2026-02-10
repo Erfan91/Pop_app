@@ -10,6 +10,10 @@
     gap: 1rem;
 }
 
+.userPosts-main-div::-webkit-scrollbar {
+    background-color: transparent;
+}
+
 .between {
     justify-content: space-between;
 }

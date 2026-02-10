@@ -39,7 +39,7 @@ const ProfilePicture = (props) => {
       const {data} = res;
       setFile(data.url);
       props.image(data.url);
-      alert(data.url)
+      alert("image uploaded successfuly");
     })
     .catch(err => {
       console.log(err)
