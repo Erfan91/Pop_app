@@ -1,0 +1,33 @@
+.infoMsg-main-div {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.27);
+    backdrop-filter: blur(3.7px);
+    -webkit-backdrop-filter: blur(3.7px);
+    align-items: center;
+    height: 6rem;
+    width: 25%;
+    min-width: 180px;
+    border-radius: 7px;
+    padding: 10px 0;
+    border: 1px solid rgb(53, 146, 222);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.infoMsg-action-btn {
+    padding: 9px 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 51%, #1FA2FF 100%);    
+    text-align: center;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    display: block;
+}
+
+.infoMsg-action-btn:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
