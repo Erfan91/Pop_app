@@ -11,6 +11,7 @@ const Feed = (props) => {
   const [popupDisplay, setPopupDisplay] = useState(null);
   const [firstLogin, setFirstLogin] = useState(null);
 
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
      fetch(`http://localhost:3001/user/user-info/${ids}`)
@@ -22,6 +23,11 @@ const Feed = (props) => {
         } else {
           setPopupDisplay("none");
         }
+        fetch("http://localhost:3001/post/get-post")
+        .then(result => result.json())
+        .then(json=>{
+          setPosts(json.posts);
+        })
       })
 
   }, [])
@@ -30,6 +36,17 @@ const Feed = (props) => {
     <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
       welcome to your feed
       <Popup display={popupDisplay} id={ids} />
+      <div>
+        {
+          posts.map((posts,index) =>{
+            return(
+            <>
+            <img src={posts.content} alt="" />
+            </>   
+            )
+          })
+        }
+      </div>
     </div>
   )
 }

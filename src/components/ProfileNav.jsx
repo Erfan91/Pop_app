@@ -4,9 +4,9 @@ const ProfileNav = (props) => {
 
     const handlePostsDisplay = async () => {
         await props.getUPosts();
-       setTimeout(()=>{
-        props.setInfoDisplay("none")
-       }, 3000)
+    //    setTimeout(()=>{
+    //     props.setInfoDisplay("none")
+    //    }, 3000)
     }
 
     return (

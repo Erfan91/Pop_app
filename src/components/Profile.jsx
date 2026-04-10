@@ -5,6 +5,7 @@ import ProfileData from './ProfileData.jsx';
 import UserPosts from './UserPosts.jsx';
 import InfoMessage from './InfoMessage.jsx';
 
+
 const Profile = (props) => {
     const id = localStorage.getItem('_id');
     const ids = JSON.parse(JSON.stringify(id));
