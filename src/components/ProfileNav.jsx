@@ -15,7 +15,7 @@ const ProfileNav = (props) => {
                 <div className="pro-nav-option-div flex" onClick={handlePostsDisplay}>
                     <span>Posts</span>
                 </div>
-                <div className="pro-nav-option-div flex">
+                <div className="pro-nav-option-div flex" onClick={props.getUPics}>
                     <span>Pictures</span>
                 </div>
                 <div className="pro-nav-option-div flex">

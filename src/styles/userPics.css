@@ -1,0 +1,24 @@
+.userPics-main-div{
+    height: 78%;
+    width: 50%;
+    justify-content: flex-start;
+    
+}
+
+.userPics-main-child{
+    width: 100%;
+    justify-content: flex-start;
+    gap: .1rem;
+    flex-wrap: wrap;
+}
+
+.userPics-card{
+    height: 120px;
+    width: 33%;
+}
+
+.user-pics{
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+}
