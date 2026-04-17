@@ -53,6 +53,24 @@ const getUserPosts = async (req, res, next) =>{
     }
 }
 
+const getUserPics = async (req, res, next) =>{
+    const id = req.params.id;
+    try {
+        Post.find({ownerId: id})
+        .exec()
+        .then(result =>{
+            if(result){
+                res.status(200).json({message: "user pics found", state: true, pics: result})
+            }
+            if(!result){
+                res.status(400).json({message: "Wrong user id or doesn't have any pic post yet "})
+            }
+        })
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message })
+    }
+}
+
 
 const updatePost = async (req, res, next) => {
     try {
@@ -107,5 +125,6 @@ export {
     updatePost,
     deletePost,
     uploadImage,
-    getUserPosts
+    getUserPosts,
+    getUserPics
 }
