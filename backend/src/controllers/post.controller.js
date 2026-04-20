@@ -24,6 +24,7 @@ const createPost = async (req, res, next) => {
 const getPost = async (req, res, next) => {
     try {
         await Post.find()
+            .populate("ownerId", '_id name username image ')
             .exec()
             .then(result => {
                 res.status(200).json({ message: "operation successful", posts: result })

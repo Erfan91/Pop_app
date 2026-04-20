@@ -33,14 +33,9 @@ const createAccount = async (req, res) => {
 const emailExists = async (req, res, next) => {
     const { email } = req.body;
     try {
-        await User.findOne({ email: email.toLowerCase() })
-            .exec()
-            .then(result => {
-                if (!result) {
-                    res.status(400).json({ state: false, message: "Email not found" });
-                }
-                res.status(200).json({ state: true, message: "Email match " });
-            })
+     const emailExist = await User.findOne({ email: email.toLowerCase() })
+            emailExist ?  res.status(200).json({ state: true, message: "Email Already exists" }) :
+            res.status(400).json({ state: false, message: "Email not found" });                
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
