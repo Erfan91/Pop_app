@@ -71,7 +71,7 @@ const UserPosts = (props) => {
                 <IoClose className='userPosts-close-icon' />
             </div>
             {
-                props.userPosts.map((posts, index) => {
+                props.posts.map((posts, index) => {
 
                     return (
                         <div className="post-card flex-column between">

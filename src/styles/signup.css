@@ -39,6 +39,12 @@
     font-size: small;
 }
 
+.email-available{
+    position: absolute;
+    top: 38%;
+    font-size: small;
+}
+
 .signup-confirm-password-div{
     margin: .3rem 0;
 }

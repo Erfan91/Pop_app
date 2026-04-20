@@ -26,10 +26,13 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
     const [checked, setChecked] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [inputType, setInputType] = useState('password');
     const [buttonClass, setButtonClass] = useState('invalid-button');
+
+    const [emailMessage, setEmailMessage] = useState(null);
     const [usernameAvailable, setUsernameAvailable] = useState(null);
     const [passwordValid, setPasswordValid] = useState(false);
     const navigate = useNavigate();
@@ -61,9 +64,31 @@ const Signup = () => {
                     } else {
                         document.querySelector('.username-available').classList.remove('display-none');
                         setUsernameAvailable("username already exists");
+                        setButtonClass("invalid-button");
+
                     }
                 })
     }, [username]);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/user/emailEx", {
+            method: "POST",
+            headers: new Headers({"content-type":"application/json"}),
+            body: JSON.stringify({
+                email
+            })
+        }).then(result => result.json())
+        .then(data => {
+            if(data.state){
+                setEmailMessage(data.message);
+                setButtonClass("invalid-button");
+            } else {
+                setEmailMessage(null);
+
+            }
+        })
+
+    },[email])
 
     const handleUserNameChange = e => {
         e.preventDefault();
@@ -233,10 +258,10 @@ const Signup = () => {
                         <input type="text" placeholder='Username' onChange={handleUserNameChange} />
                         <span className="username-available">{usernameAvailable}</span>
                     </div>
-                    <div className="input-div signup-input-div signup-email-div display-none">
+                    <div className="input-div signup-input-div signup-email-div  display-none">
                         <HiOutlineMail className='email-icon signup-icon' />
                         <input type="text" placeholder='Email' onChange={handleEmailChange} />
-
+                        <span className="email-available">{emailMessage}</span>
                     </div>
                     <div className="input-div signup-input-div signup-password-div display-none">
                         <FaLock className='lock-icon signup-icon' />

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { data, useLocation, useNavigate } from 'react-router-dom';
 import Popup from './pop-ups/Popup.jsx';
+import UserPosts from './profile-nav-comps/UserPosts.jsx';
+
 
 const Feed = (props) => {
   const location = useLocation();
@@ -36,17 +38,7 @@ const Feed = (props) => {
     <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
       welcome to your feed
       <Popup display={popupDisplay} id={ids} />
-      <div>
-        {
-          posts.map((posts,index) =>{
-            return(
-            <>
-            <img src={posts.content} alt="" />
-            </>   
-            )
-          })
-        }
-      </div>
+            <UserPosts posts={posts} />
     </div>
   )
 }

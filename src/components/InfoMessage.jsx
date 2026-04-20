@@ -5,7 +5,7 @@ const InfoMessage = (props) => {
         <div className='infoMsg-main-div flex-column around ' style={{ display: props.display }}>
             <span className='info-span'>{props.info}</span>
             <div className="call-to-action">
-                <button className='infoMsg-action-btn'>share a note...</button>
+                <button className='infoMsg-action-btn'>{props.context}</button>
             </div>
         </div>
     )

@@ -20,6 +20,7 @@ const Profile = (props) => {
     const [infoDisplay, setInfoDisplay] = useState("none");
 
     const [infoMessage, setInfoMessage] = useState(null);
+    const [infoContext, setInfoContext]  = useState(null);
 
     const [arrayLength, setArrayLength] = useState(null)
 
@@ -34,6 +35,7 @@ const Profile = (props) => {
                 if (data.posts.length === 0) {
                     setInfoDisplay("flex");
                     setInfoMessage("user have no posts yet");
+                    setInfoContext("Share a note...");
                     setTimeout(() => {
                         setInfoDisplay("none")
                     }, 3000)
@@ -56,8 +58,8 @@ const Profile = (props) => {
                 setPics(data.pics);
                 if (data.pics.length === 0) {
                     setInfoDisplay("flex");
-                    setInfoMessage("user have no picture posts yet");
-                    console.log(data.pics, "DATA")
+                    setInfoMessage("You have no picture posts yet");
+                    setInfoContext("Share a picture");
                     setTimeout(() => {
                         setInfoDisplay("none")
                     }, 3000)
@@ -78,11 +80,11 @@ const Profile = (props) => {
             <section className='app-content-section'>
                 <section className='profile-data-section'>
                     <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay} display={proDataDisplay} />
-                    <UserPosts display={userPostsDisplay} userPosts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay} getPostsFunc={getUserPosts} length={arrayLength} />
-                    <UserPics display={userPicsDisplay} handleDisplay={setUserPicsDisplay}  data={pics}/>
+                    <UserPosts display={userPostsDisplay} posts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay} getPostsFunc={getUserPosts} length={arrayLength} />
+                    <UserPics display={userPicsDisplay} handleDisplay={setUserPicsDisplay} handleProDataDis={setProDataDisplay}  data={pics}/>
                     <ProfileNav userPostsDis={setUserPostsDisplay} getUPosts={getUserPosts} getUPics={getUserPics} arrayLength={arrayLength} setMessage={setInfoMessage} setInfoDisplay={setInfoDisplay} />
                     <Post display={postDisplay} handleDisplay={setPostDisplay} />
-                    <InfoMessage display={infoDisplay} info={infoMessage} />
+                    <InfoMessage display={infoDisplay} info={infoMessage} context={infoContext}/>
                 </section>
                 <div className="setting-nav"></div>
             </section>

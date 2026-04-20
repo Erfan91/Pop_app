@@ -54,6 +54,7 @@ const Post = (props) => {
 
 
     const handleTextChange = e => {
+
         setText(e.target.value);
     }
 
@@ -103,11 +104,18 @@ const Post = (props) => {
     }
 
 
+    const handleDiscard = async (e) => {
+        e.preventDefault();
+        props.handleDisplay("none");
+        setSelectedImg(null);
+        setText("")
+        console.log(text, "test")
+    } 
 
     return (
         <div className='post-main-div flex-column' style={{ display: props.display }}>
             <div className="post-text-div">
-                <textarea name="text" className='post-textarea' placeholder="what's on your mind" onChange={handleTextChange}/>
+                <textarea  className='post-textarea' placeholder="what's on your mind" onChange={handleTextChange} value={text}/>
                 <div className="post-options-div flex">
                     <input type="file" accept='/image' onChange={handleImgChange} ref={imageUploader} style={{ display: "none" }} />
                     <div className="post-pic-optn post-option flex center" onClick={() => {
@@ -128,8 +136,8 @@ const Post = (props) => {
                 </div>
             </div>
             <div className="post-btn-div flex">
-                <button className='post-discard-btn' onClick={() => props.handleDisplay("none")}><IoClose className='close-icon' /></button>
-                <button className={text !== "" ? "post-btn" : "invalid-button"} id='post-btn' onClick={uploadImage}><IoCheckmarkOutline className='done-icon' /></button>
+                <button className='post-discard-btn' onClick={handleDiscard}><IoClose className='close-icon' /></button>
+                <button className={text !== "" && (image !== "") ? "post-btn" : "invalid-button"} id='post-btn' onClick={uploadImage}><IoCheckmarkOutline className='done-icon' /></button>
             </div>
         </div>
     )
