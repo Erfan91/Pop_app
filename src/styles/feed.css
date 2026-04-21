@@ -1,11 +1,42 @@
-.feed-main-div{
+.feed-main-div {
     height: 100vh;
     width: 100vw;
-    background-image: url(../assets/gradient.png);
-    background-position: center;
-    background-size: cover;
+    justofy-content: center;
+    /* background: linear-gradient(to right, #1d8f93, #7d93b1); */
+    background: linear-gradient(to right, #1a1a1a, #2d2d2d);
+
 }
 
-.feed-blur{
+.feed-blur {
     backdrop-filter: blur(3px);
+}
+
+.feed-main-child {
+    height: 100%;
+    width: 60rem;
+    background: rgba(167, 167, 167, 0.18);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border: 1px solid rgba(167, 167, 167, 0.38);
+}
+
+.feed-userPosts-main-div {
+    position: absolute;
+    height: 90%;
+    width: 32rem;
+    min-width: 350px;
+    border-radius: 7px;
+    align-items: center;
+    overflow-y: scroll;
+    gap: 1rem;
+}
+
+.feed-userPosts-main-div::-webkit-scrollbar {
+    background-color: transparent;
+}
+
+.feed-post-card {
+    /* height: 20rem !important; */
+    margin: 1rem 0;
 }

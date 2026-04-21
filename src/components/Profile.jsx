@@ -73,6 +73,16 @@ const Profile = (props) => {
 
     }
 
+    const userPostsProps = {
+        display: userPostsDisplay,
+        setDisplay: setUserPostsDisplay,
+        proDataDisplay: setProDataDisplay,
+        getPostsFunc: getUserPosts,
+        posts,
+        length: arrayLength,
+        className: "userPosts-main-div",
+        cardClass: "post-card"
+    }
 
 
     return (
@@ -80,7 +90,7 @@ const Profile = (props) => {
             <section className='app-content-section'>
                 <section className='profile-data-section'>
                     <ProfileData handleDisplay={setPostDisplay} navDisplay={props.navDisplay} display={proDataDisplay} />
-                    <UserPosts display={userPostsDisplay} posts={posts} setDisplay={setUserPostsDisplay} proDataDisplay={setProDataDisplay} getPostsFunc={getUserPosts} length={arrayLength} />
+                    <UserPosts data={userPostsProps} />
                     <UserPics display={userPicsDisplay} handleDisplay={setUserPicsDisplay} handleProDataDis={setProDataDisplay}  data={pics}/>
                     <ProfileNav userPostsDis={setUserPostsDisplay} getUPosts={getUserPosts} getUPics={getUserPics} arrayLength={arrayLength} setMessage={setInfoMessage} setInfoDisplay={setInfoDisplay} />
                     <Post display={postDisplay} handleDisplay={setPostDisplay} />

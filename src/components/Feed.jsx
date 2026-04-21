@@ -14,9 +14,10 @@ const Feed = (props) => {
   const [firstLogin, setFirstLogin] = useState(null);
 
   const [posts, setPosts] = useState([]);
+  const [className, setClassName] = useState("feed-userPosts-main-div");
 
   useEffect(() => {
-     fetch(`http://localhost:3001/user/user-info/${ids}`)
+    fetch(`http://localhost:3001/user/user-info/${ids}`)
       .then(result => result.json())
       .then(data => {
         if (data.user.firstLogin) {
@@ -26,19 +27,29 @@ const Feed = (props) => {
           setPopupDisplay("none");
         }
         fetch("http://localhost:3001/post/get-post")
-        .then(result => result.json())
-        .then(json=>{
-          setPosts(json.posts);
-        })
+          .then(result => result.json())
+          .then(json => {
+            setPosts(json.posts);
+          })
       })
+      // setClassName("feed-userPosts-main-div")
 
   }, [])
 
+  const userPostsProps = {  
+    posts,
+    className: className,
+    cardClass: "post-card feed-post-card"
+  }
+
+
+
   return (
-    <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div'}>
-      welcome to your feed
+    <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div flex center'}>
       <Popup display={popupDisplay} id={ids} />
-            <UserPosts posts={posts} />
+      <div className="feed-main-child flex center">
+        <UserPosts data={userPostsProps} />
+      </div>
     </div>
   )
 }

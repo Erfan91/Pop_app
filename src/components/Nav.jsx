@@ -9,10 +9,13 @@ const Nav = (props) => {
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
 
+    const handleNavigation = () => {
+        navigate("/feed", {state: {firstLogin: false, login:true,}})
+    }
 
   return (
     <div className='nav-div flex' style={{display: props.display}}>
-        <div className='nav-icon-div flex-column center' onClick={()=>navigate("/feed", {state: {firstLogin: false, login:true}})}>  
+        <div className='nav-icon-div flex-column center' onClick={handleNavigation}>  
             <GrHomeOption className='nav-icon' />
             <p><small>Home</small></p>
         </div>

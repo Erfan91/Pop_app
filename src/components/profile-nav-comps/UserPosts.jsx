@@ -35,7 +35,7 @@ const UserPosts = (props) => {
             }).then(result => result.json())
                 .then(data => {
                     if (data.state) {
-                        props.getPostsFunc();
+                        props.data.getPostsFunc();
                         setText(data.message);
                     } else {
                         alert(data.message)
@@ -55,7 +55,7 @@ const UserPosts = (props) => {
                 headers: new Headers({ "content-type": "application/json" }),
             }).then(result => result.json())
                 .then(data => {
-                    props.getPostsFunc();
+                    props.data.getPostsFunc();
                 })
         } else {
             null
@@ -63,18 +63,23 @@ const UserPosts = (props) => {
     }
 
     return (
-        <div className={props.length == 1 ? "userPosts-main-div flex-column between" : "userPosts-main-div column-reverse between"} style={{ display: props.display }}>
+        <div className={props.data.length == 1 ?  props.data.className + " flex-column between" : props.data.className + " column-reverse between"}
+            style={
+                { 
+                    display: props.data.display,
+                 }
+            }>
             <div className='userPosts-icon-div flex center' onClick={() => {
-                props.setDisplay("none");
-                props.proDataDisplay("flex");
+                props.data.setDisplay("none");
+                props.data.proDataDisplay("flex");
             }}>
                 <IoClose className='userPosts-close-icon' />
             </div>
             {
-                props.posts.map((posts, index) => {
+                props.data.posts.map((posts, index) => {
 
                     return (
-                        <div className="post-card flex-column between">
+                        <div className={props.data.cardClass +  " flex-column between"}>
                             <div className="post-card-header flex between">
                                 <div className="post-card-pfp-div flex between">
                                     <img src={posts.ownerId.image[0]} alt="user profile picture" className='post-card-pfp border-circle' />
@@ -115,13 +120,14 @@ const UserPosts = (props) => {
                                                             <div className="confirm-delete-div flex-column around">
                                                                 <p>Confirm delete</p>
                                                                 <div className="confirm-btn-div flex between">
-                                                                    <button className='post-cancel-btn'onClick={e => {
+                                                                    <button className='post-cancel-btn' onClick={e => {
                                                                         e.preventDefault();
                                                                         setDelete(false);
                                                                     }}><IoClose className='cancel-icon' /></button>
                                                                     <button className='confirm-btn' onClick={async e => {
                                                                         e.preventDefault();
-                                                                        await deletePost(posts._id)}}><IoCheckmarkOutline className='confirm-icon' /></button>
+                                                                        await deletePost(posts._id)
+                                                                    }}><IoCheckmarkOutline className='confirm-icon' /></button>
                                                                 </div>
                                                             </div>
                                                             : null
