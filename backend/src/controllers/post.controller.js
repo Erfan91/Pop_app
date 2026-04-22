@@ -34,39 +34,39 @@ const getPost = async (req, res, next) => {
     }
 }
 
-const getUserPosts = async (req, res, next) =>{
+const getUserPosts = async (req, res, next) => {
     try {
         const id = req.params.id;
-       await Post.find({ownerId: id})
-        .populate("ownerId")
-        .sort({createAt: -1})
-        .exec()
-        .then(result => {
-            if(result){
-                res.status(200).json({message: "user posts found", state: true, posts: result})
-            }
-            if(!result){
-                res.status(400).json({message: "Wrong user id or doesn't have any post yet "})
-            }
-        })
+        await Post.find({ ownerId: id })
+            .populate("ownerId")
+            .sort({ createAt: -1 })
+            .exec()
+            .then(result => {
+                if (result) {
+                    res.status(200).json({ message: "user posts found", state: true, posts: result })
+                }
+                if (!result) {
+                    res.status(400).json({ message: "Wrong user id or doesn't have any post yet " })
+                }
+            })
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message })
     }
 }
 
-const getUserPics = async (req, res, next) =>{
+const getUserPics = async (req, res, next) => {
     const id = req.params.id;
     try {
-        Post.find({ownerId: id})
-        .exec()
-        .then(result =>{
-            if(result){
-                res.status(200).json({message: "user pics found", state: true, pics: result})
-            }
-            if(!result){
-                res.status(400).json({message: "Wrong user id or doesn't have any pic post yet "})
-            }
-        })
+        Post.find({ ownerId: id })
+            .exec()
+            .then(result => {
+                if (result) {
+                    res.status(200).json({ message: "user pics found", state: true, pics: result })
+                }
+                if (!result) {
+                    res.status(400).json({ message: "Wrong user id or doesn't have any pic post yet " })
+                }
+            })
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message })
     }
@@ -87,12 +87,37 @@ const updatePost = async (req, res, next) => {
 
 }
 
-const deletePost = async (req, res ,next) => {
+const addLike = async (req, res, next) => {
+    const _id = req.body.postId;
+    try {
+        await Post.findById({ likes: { $in: req.body.userId }, _id: _id })
+            .then(result => {
+                if(result.likes.length){
+                    Post.updateOne({_id: _id},{$pull : {likes: req.body.userId}}, {new: true})
+                    .then(resp =>{
+                        res.status(200).json({message: "like removed", state: false})
+                    })
+                } else {
+                    Post.updateOne({_id: _id},{$push : {likes: req.body.userId}}, {new: true})
+                    .then(resp =>{
+                        res.status(200).json({message: "like added", state: true})
+                    })
+                }
+
+            })
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
+const deletePost = async (req, res, next) => {
     const _id = req.params.id;
     await Post.findByIdAndDelete(_id)
-    .then(result=>{
-        !result ? res.status(400).json({ message: "Post not found" }) : res.status(200).json({ message: "Post deleted successfuly" })
-    });
+        .then(result => {
+            !result ? res.status(400).json({ message: "Post not found" }) : res.status(200).json({ message: "Post deleted successfuly" })
+        });
 }
 
 let imageName = "";
@@ -127,5 +152,6 @@ export {
     deletePost,
     uploadImage,
     getUserPosts,
-    getUserPics
+    getUserPics,
+    addLike
 }
