@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { IoClose, IoChatbubbleOutline, IoCheckmarkOutline } from "react-icons/io5";
 import { MdModeEdit, MdDelete } from "react-icons/md";
-import { BsHeart } from "react-icons/bs";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { PiShareFatLight } from "react-icons/pi";
 import { SlOptions } from "react-icons/sl";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -19,6 +19,11 @@ const UserPosts = (props) => {
     const [postId, setPostId] = useState(null);
     const [edit, setEdit] = useState(null);
     const [isDelete, setDelete] = useState(null);
+    const [posts, setPosts] = useState([]);
+    const [likes, setLikes] = useState(null);
+    const [isLiked,setIsliked] = useState(null);
+
+
     const handleText = e => {
         e.preventDefault();
         setText(e.target.value)
@@ -35,7 +40,7 @@ const UserPosts = (props) => {
             }).then(result => result.json())
                 .then(data => {
                     if (data.state) {
-                        props.data.getPostsFunc();
+
                         setText(data.message);
                     } else {
                         alert(data.message)
@@ -47,6 +52,26 @@ const UserPosts = (props) => {
 
     }
 
+
+    const handleLikeAction = async (postId) => {
+        await fetch("http://localhost:3001/post/like-post", {
+            method: "PUT",
+            headers: new Headers({ "content-type": "application/json" }),
+            body: JSON.stringify({
+                postId,
+                userId: ids
+            })
+        }).then(result => result.json())
+            .then(data => {
+                if (data.state) {
+                    props.data.getPosts();
+                    setIsliked(true);
+                } else {
+                    setIsliked(false);
+                }
+            })
+        props.data.getPosts();
+    }
 
     const deletePost = async id => {
         if (isDelete) {
@@ -63,11 +88,11 @@ const UserPosts = (props) => {
     }
 
     return (
-        <div className={props.data.length == 1 ?  props.data.className + " flex-column between" : props.data.className + " column-reverse between"}
+        <div className={props.data.length == 1 ? props.data.className + " flex-column between" : props.data.className + " column-reverse between"}
             style={
-                { 
+                {
                     display: props.data.display,
-                 }
+                }
             }>
             <div className='userPosts-icon-div flex center' onClick={() => {
                 props.data.setDisplay("none");
@@ -79,7 +104,7 @@ const UserPosts = (props) => {
                 props.data.posts.map((posts, index) => {
 
                     return (
-                        <div className={props.data.cardClass +  " flex-column between"}>
+                        <div className={props.data.cardClass + " flex-column between"}>
                             <div className="post-card-header flex between">
                                 <div className="post-card-pfp-div flex between">
                                     <img src={posts.ownerId.image[0]} alt="user profile picture" className='post-card-pfp border-circle' />
@@ -138,14 +163,18 @@ const UserPosts = (props) => {
                                     </div>}
                                 </div>
                             </div>
-                            <div className="post-card-image-div flex center" key={index} style={{ display: inputIndexB === index ? "none" : "flex" }}>
+                            <div className="post-card-image-div flex-column center" key={index} style={{ display: inputIndexB === index ? "none" : "flex" }}>
                                 <img src={posts.content} className='post-card-image' alt="post content photo" />
-                                <div className="post-reactions-div flex-column between">
-                                    <div className="like-icon-div">
-                                        <BsHeart className='heart-icon' />
+                                <div className="post-reactions-div flex between">
+                                    <div className="like-icon-div post-action-div flex between align-center" onClick={props.data.getPostsFunc}>
+                                       {inputIndexB === index && isLiked ? <BsHeartFill className='heart-icon heart-icon-filled' onClick={() => handleLikeAction(posts._id)} /> : <BsHeart className='heart-icon' onClick={() => handleLikeAction(posts._id)} />}
+                                        {/* <BsHeart className='heart-icon ' onClick={() => handleLikeAction(posts._id)} /> */}
+                                        {/* {posts.likes.includes(ids) ? <BsHeartFill className='heart-icon heart-icon-filled' onClick={() => handleLikeAction(posts._id)} /> : <BsHeart className='heart-icon' onClick={() => handleLikeAction(posts._id)} />} */}
+                                        <span className='count-span'>{posts.likes.length}</span>
                                     </div>
-                                    <div className="comment-icon-div">
+                                    <div className="comment-icon-div flex align-center between">
                                         <IoChatbubbleOutline className='comment-icon' />
+                                        <span className='count-span'>{posts.comments.length}</span>
                                     </div>
                                     <div className="share-icon-div">
                                         <PiShareFatLight className='share-icon' />

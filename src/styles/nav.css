@@ -48,3 +48,9 @@
     transition: all 0.3s ease-in-out;
     color: #00d2ff;
 }
+
+.nav-icon-active{
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+    color: #00d2ff;
+}

@@ -127,21 +127,36 @@
 
 
 .post-reactions-div {
-    position: absolute;
-    top: 0%;
-    left: 2%;
+    /* position: absolute; */
+    /* top: 0%;
+    left: 2%; */
     height: 100%;
-    justify-content: flex-end;
-    gap: 1rem;
-    width: fit-content;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    width: 100%;
     font-size: larger;
-    padding-top: 3px;
+    padding: 7px 0 0 10px;
     color: aliceblue;
     cursor: pointer;
 }
 
 .options-icon-div {
     position: relative;
+}
+
+.count-span{
+    font-size: small;
+    font-weight: 400;
+    margin-left: 3px;
+    color: #b2b2b2c7;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.heart-icon-filled{
+    color: rgb(255, 41, 84);
 }
 
 .post-option-btn {

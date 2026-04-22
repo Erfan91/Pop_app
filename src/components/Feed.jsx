@@ -32,11 +32,21 @@ const Feed = (props) => {
             setPosts(json.posts);
           })
       })
-      // setClassName("feed-userPosts-main-div")
+    // setClassName("feed-userPosts-main-div")
 
   }, [])
 
-  const userPostsProps = {  
+  const getPosts = () => {
+    fetch("http://localhost:3001/post/get-post")
+      .then(result => result.json())
+      .then(json => {
+        setPosts(json.posts);
+      })
+  }
+
+
+  const userPostsProps = {
+    getPosts,
     posts,
     className: className,
     cardClass: "post-card feed-post-card"
