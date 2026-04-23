@@ -92,7 +92,7 @@ const addLike = async (req, res, next) => {
     try {
         await Post.findById({ likes: { $in: req.body.userId }, _id: _id })
             .then(result => {
-                if(result.likes.length){
+                if(result.likes.includes(req.body.userId)){
                     Post.updateOne({_id: _id},{$pull : {likes: req.body.userId}}, {new: true})
                     .then(resp =>{
                         res.status(200).json({message: "like removed", state: false})
