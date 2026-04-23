@@ -72,6 +72,8 @@ const Post = (props) => {
                 console.log(response.message)
                 if(response.state){
                     alert(response.message);
+                    setText("");
+                    setSelectedImg(null);
                     props.handleDisplay("none")
                 }
             })
@@ -108,8 +110,7 @@ const Post = (props) => {
         e.preventDefault();
         props.handleDisplay("none");
         setSelectedImg(null);
-        setText("")
-        console.log(text, "test")
+        setText("");
     } 
 
     return (
@@ -137,7 +138,7 @@ const Post = (props) => {
             </div>
             <div className="post-btn-div flex">
                 <button className='post-discard-btn' onClick={handleDiscard}><IoClose className='close-icon' /></button>
-                <button className={text !== "" && (image !== "") ? "post-btn" : "invalid-button"} id='post-btn' onClick={uploadImage}><IoCheckmarkOutline className='done-icon' /></button>
+                <button className={text !== "" && image ? "post-btn" : "invalid-button"} id='post-btn' onClick={uploadImage}><IoCheckmarkOutline className='done-icon' /></button>
             </div>
         </div>
     )

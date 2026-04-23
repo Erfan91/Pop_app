@@ -57,9 +57,11 @@ const Feed = (props) => {
   return (
     <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div flex center'}>
       <Popup display={popupDisplay} id={ids} />
-      <div className="feed-main-child flex center">
-        <UserPosts data={userPostsProps} />
-      </div>
+      {firstLogin ? null :
+        <div className="feed-main-child flex center">
+          <UserPosts data={userPostsProps} />
+        </div>
+      }
     </div>
   )
 }

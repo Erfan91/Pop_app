@@ -42,6 +42,7 @@ const Profile = (props) => {
                 } else {
                     setProDataDisplay("none");
                     setUserPicsDisplay("none");
+                    setPostDisplay("none")
                     setUserPostsDisplay("flex");
                 }
             })
@@ -66,6 +67,7 @@ const Profile = (props) => {
                 } else {
                     setProDataDisplay("none");
                     setUserPostsDisplay("none");
+                    setPostDisplay("none")
                     setUserPicsDisplay("flex");
                 }
 

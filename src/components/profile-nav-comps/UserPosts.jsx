@@ -21,7 +21,8 @@ const UserPosts = (props) => {
     const [isDelete, setDelete] = useState(null);
     const [posts, setPosts] = useState([]);
     const [likes, setLikes] = useState(null);
-    const [isLiked,setIsliked] = useState(null);
+    const [isliked, setIsLiked] = useState(null);
+    const [iconClass, setIconClass] = useState(null);
 
 
     const handleText = e => {
@@ -65,9 +66,12 @@ const UserPosts = (props) => {
             .then(data => {
                 if (data.state) {
                     props.data.getPosts();
-                    setIsliked(true);
+                    setIconClass('heart-icon heart-icon-filled');
+                    setIsLiked(true);
                 } else {
-                    setIsliked(false);
+                    setIconClass('heart-icon');
+                    setIsLiked(false);
+                    console.log(data.message, "error like action");
                 }
             })
         props.data.getPosts();
@@ -165,21 +169,23 @@ const UserPosts = (props) => {
                             </div>
                             <div className="post-card-image-div flex-column center" key={index} style={{ display: inputIndexB === index ? "none" : "flex" }}>
                                 <img src={posts.content} className='post-card-image' alt="post content photo" />
-                                <div className="post-reactions-div flex between">
-                                    <div className="like-icon-div post-action-div flex between align-center" onClick={props.data.getPostsFunc}>
-                                       {inputIndexB === index && isLiked ? <BsHeartFill className='heart-icon heart-icon-filled' onClick={() => handleLikeAction(posts._id)} /> : <BsHeart className='heart-icon' onClick={() => handleLikeAction(posts._id)} />}
-                                        {/* <BsHeart className='heart-icon ' onClick={() => handleLikeAction(posts._id)} /> */}
-                                        {/* {posts.likes.includes(ids) ? <BsHeartFill className='heart-icon heart-icon-filled' onClick={() => handleLikeAction(posts._id)} /> : <BsHeart className='heart-icon' onClick={() => handleLikeAction(posts._id)} />} */}
-                                        <span className='count-span'>{posts.likes.length}</span>
-                                    </div>
-                                    <div className="comment-icon-div flex align-center between">
-                                        <IoChatbubbleOutline className='comment-icon' />
-                                        <span className='count-span'>{posts.comments.length}</span>
-                                    </div>
-                                    <div className="share-icon-div">
-                                        <PiShareFatLight className='share-icon' />
-                                    </div>
-                                </div>
+                                {
+                                    inputIndexB === index ? null :
+                                        <div className="post-reactions-div flex between">
+                                            <div className="like-icon-div post-action-div flex between align-center" onClick={props.data.getPostsFunc}>
+                                                <BsHeart className={posts.likes.includes(ids) ? 'heart-icon heart-icon-filled' : 'heart-icon'} onClick={() => handleLikeAction(posts._id)} />                                            
+                                                <span className='count-span'>{posts.likes.length}</span>
+                                            </div>
+                                            <div className="comment-icon-div flex align-center between">
+                                                <IoChatbubbleOutline className='comment-icon' />
+                                                <span className='count-span'>{posts.comments.length}</span>
+                                            </div>
+                                            <div className="share-icon-div flex align-center center">
+                                                <PiShareFatLight className='share-icon' />
+                                            </div>
+                                        </div>
+                                }
+
                             </div>
                             <div className="post-card-caption-div flex">
                                 {inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <span>{posts.description}</span>
