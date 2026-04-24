@@ -8,10 +8,6 @@ import { FaUserFriends } from "react-icons/fa";
 const Nav = (props) => {
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
-    // const [homeIconClass, setHomeIconClass] = useState(null);
-    // const [frndIconClass, setFriendIconClass] = useState(null);
-    // const [ntfnIconClass, setNotificationIconClass] = useState(null);
-    // const [stgIconClass, setSetingIconClass] = useState(null);
     const [cssIconCLasses, setCssIconClasses] = useState({
         homeIconClass: "",
         friendIconClass: "",

@@ -65,7 +65,7 @@ const UserPosts = (props) => {
         }).then(result => result.json())
             .then(data => {
                 if (data.state) {
-                    props.data.getPosts();
+                    props.data.getPostsFunc();
                     setIconClass('heart-icon heart-icon-filled');
                     setIsLiked(true);
                 } else {
@@ -74,7 +74,7 @@ const UserPosts = (props) => {
                     console.log(data.message, "error like action");
                 }
             })
-        props.data.getPosts();
+        props.data.getPostsFunc();
     }
 
     const deletePost = async id => {
@@ -98,11 +98,16 @@ const UserPosts = (props) => {
                     display: props.data.display,
                 }
             }>
-            <div className='userPosts-icon-div flex center' onClick={() => {
-                props.data.setDisplay("none");
-                props.data.proDataDisplay("flex");
-            }}>
-                <IoClose className='userPosts-close-icon' />
+            <div className='userPosts-icon-div flex center'
+                style={
+                    { display: props.data.closeIconDisplay }
+                }
+                onClick={() => {
+                    props.data.setDisplay("none");
+                    props.data.proDataDisplay("flex");
+                }}>
+                <IoClose className='userPosts-close-icon'
+                />
             </div>
             {
                 props.data.posts.map((posts, index) => {
@@ -173,11 +178,11 @@ const UserPosts = (props) => {
                                     inputIndexB === index ? null :
                                         <div className="post-reactions-div flex between">
                                             <div className="like-icon-div post-action-div flex between align-center" onClick={props.data.getPostsFunc}>
-                                                <BsHeart className={posts.likes.includes(ids) ? 'heart-icon heart-icon-filled' : 'heart-icon'} onClick={() => handleLikeAction(posts._id)} />                                            
+                                                <BsHeart className={posts.likes.includes(ids) ? 'heart-icon heart-icon-filled' : 'heart-icon'} onClick={() => handleLikeAction(posts._id)} />
                                                 <span className='count-span'>{posts.likes.length}</span>
                                             </div>
-                                            <div className="comment-icon-div flex align-center between">
-                                                <IoChatbubbleOutline className='comment-icon' />
+                                            <div className="comment-icon-div flex align-center between" >
+                                                <IoChatbubbleOutline className='comment-icon' onClick={props.data.setPostId(posts._id)}/>
                                                 <span className='count-span'>{posts.comments.length}</span>
                                             </div>
                                             <div className="share-icon-div flex align-center center">
@@ -188,7 +193,8 @@ const UserPosts = (props) => {
 
                             </div>
                             <div className="post-card-caption-div flex">
-                                {inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <span>{posts.description}</span>
+                                {
+                                inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <span>{posts.description}</span>
                                 }
                             </div>
                         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { data, useLocation, useNavigate } from 'react-router-dom';
 import Popup from './pop-ups/Popup.jsx';
 import UserPosts from './profile-nav-comps/UserPosts.jsx';
+import CommentSection from './CommentSection.jsx';
 
 
 const Feed = (props) => {
@@ -14,6 +15,8 @@ const Feed = (props) => {
   const [firstLogin, setFirstLogin] = useState(null);
 
   const [posts, setPosts] = useState([]);
+  const [commentInfo, setCommentInfo] = useState([]);
+  const [postId, setPostId] = useState(null);
   const [className, setClassName] = useState("feed-userPosts-main-div");
 
   useEffect(() => {
@@ -32,11 +35,11 @@ const Feed = (props) => {
             setPosts(json.posts);
           })
       })
-    // setClassName("feed-userPosts-main-div")
+    
 
   }, [])
 
-  const getPosts = () => {
+  const getPostsFunc = () => {
     fetch("http://localhost:3001/post/get-post")
       .then(result => result.json())
       .then(json => {
@@ -46,10 +49,12 @@ const Feed = (props) => {
 
 
   const userPostsProps = {
-    getPosts,
+    getPostsFunc,
     posts,
+    setPostId,
     className: className,
-    cardClass: "post-card feed-post-card"
+    cardClass: "post-card feed-post-card",
+    closeIconDisplay: "none"
   }
 
 
@@ -60,6 +65,7 @@ const Feed = (props) => {
       {firstLogin ? null :
         <div className="feed-main-child flex center">
           <UserPosts data={userPostsProps} />
+          <CommentSection  postId={postId}/>
         </div>
       }
     </div>

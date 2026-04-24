@@ -83,7 +83,8 @@ const Profile = (props) => {
         posts,
         length: arrayLength,
         className: "userPosts-main-div",
-        cardClass: "post-card"
+        cardClass: "post-card",
+        closeIconDisplay: "flex"
     }
 
 

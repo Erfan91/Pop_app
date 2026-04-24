@@ -21,6 +21,7 @@ import "./styles/proNav.css";
 import "./styles/userPosts.css";
 import "./styles/userPics.css";
 import "./styles/infoMsg.css";
+import "./styles/comSec.css";
 
 import "./styles/pop-ups/bio.css";
 import "./styles/pop-ups/gettingStarted.css";
