@@ -34,6 +34,24 @@ const getPost = async (req, res, next) => {
     }
 }
 
+const getPostById = async (req, res, next) => {
+    const _id = req.params.id;
+    try {
+        await Post.findById(_id)
+            .populate("ownerId", '_id name username image ')
+            .exec()
+            .then(result => {   
+                if (result) {
+                    res.status(200).json({ message: "operation successful", post: result })
+                }                               
+                if (!result) {
+                    res.status(400).json({ message: "post not found" })
+                }       
+           })
+        } catch (error){
+            res.status(500).json({ message: "Internal server error", error: error.message })
+        } 
+    }
 const getUserPosts = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -148,6 +166,7 @@ const uploadImage = (req, res, next) => {
 export {
     createPost,
     getPost,
+    getPostById,
     updatePost,
     deletePost,
     uploadImage,

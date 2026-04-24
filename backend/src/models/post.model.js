@@ -25,7 +25,7 @@ const postSchema = new mongoose.Schema(
         // users could comment back with mood anims already created, these comments hold a block section to appear on top of eachother like showroom
         comments: {
             type: [mongoose.Types.ObjectId],
-            ref: "User"
+            ref: "Comment"
         }
 
     },
