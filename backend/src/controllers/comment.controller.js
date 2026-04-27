@@ -1,4 +1,5 @@
 import { Comment } from "../models/comment.model.js";
+import {Post} from "../models/post.model.js";
 
 const createComment = async (req, res, next) => {
     try {
@@ -7,19 +8,29 @@ const createComment = async (req, res, next) => {
             res.status(400).json({message: "owner _id and post _id is required"})
         }
 
-        if(!text || !content){
-            res.status(400).json({message: "comment must at least contain text or media image/video"});
+        if(!text){
+            res.status(400).json({message: "comment must at least contain text"});
         }
 
         await Comment.create(req.body)
         .then(result=>{
-            res.status(200).json({message: "comment created succefuly", detail: result})
+            Post.findByIdAndUpdate(result.postId, {$push: {comments: result._id}}, {new: true})
+            .exec()
+            .then(post=>{
+                if(!post){
+                    res.status(400).json({message: "post id incorrect or not registred"});
+                }
+                res.status(200).json({message: "comment created succefuly", comment: result})
+            })
+            // res.status(200).json({message: "comment created succefuly", detail: result})
         })
 
     } catch (error) {
         res.status(500).json({message: "Internal server error", error: error.message});
     }
 };
+
+
 
 const getComment = async (req, res, next) => {
     try {
