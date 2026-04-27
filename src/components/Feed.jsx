@@ -15,7 +15,9 @@ const Feed = (props) => {
   const [firstLogin, setFirstLogin] = useState(null);
 
   const [posts, setPosts] = useState([]);
+  const [userData, setUserData] = useState(null);
   const [commentInfo, setCommentInfo] = useState([]);
+  const [commentDisplay, setCommentDisplay] = useState("none");
   const [postId, setPostId] = useState(null);
   const [className, setClassName] = useState("feed-userPosts-main-div");
 
@@ -23,6 +25,7 @@ const Feed = (props) => {
     fetch(`http://localhost:3001/user/user-info/${ids}`)
       .then(result => result.json())
       .then(data => {
+        setUserData(data.user);
         if (data.user.firstLogin) {
           setPopupDisplay("flex");
           setFirstLogin(data.user.firstLogin);
@@ -54,9 +57,17 @@ const Feed = (props) => {
     setPostId,
     className: className,
     cardClass: "post-card feed-post-card",
-    closeIconDisplay: "none"
+    closeIconDisplay: "none",
+    commentDisplay,
+    setCommentDisplay
   }
 
+  const commentSectionProps = {
+    postId,
+    userData,
+    commentDisplay,
+    setCommentDisplay
+  } 
 
 
   return (
@@ -65,7 +76,7 @@ const Feed = (props) => {
       {firstLogin ? null :
         <div className="feed-main-child flex center">
           <UserPosts data={userPostsProps} />
-          <CommentSection  postId={postId}/>
+          <CommentSection  data={commentSectionProps} />
         </div>
       }
     </div>

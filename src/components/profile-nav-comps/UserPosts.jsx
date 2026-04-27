@@ -182,7 +182,10 @@ const UserPosts = (props) => {
                                                 <span className='count-span'>{posts.likes.length}</span>
                                             </div>
                                             <div className="comment-icon-div flex align-center between" >
-                                                <IoChatbubbleOutline className='comment-icon' onClick={props.data.setPostId(posts._id)}/>
+                                                <IoChatbubbleOutline className='comment-icon' onClick={() =>{
+                                                    props.data.setPostId(posts._id);
+                                                    props.data.setCommentDisplay("flex");
+                                                } } />
                                                 <span className='count-span'>{posts.comments.length}</span>
                                             </div>
                                             <div className="share-icon-div flex align-center center">
