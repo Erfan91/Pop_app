@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { IoArrowUpCircleOutline, IoClose } from "react-icons/io5";
+import { IoArrowUpCircleOutline, IoArrowUpCircleSharp,IoClose } from "react-icons/io5";
+import moment from 'moment';
+
 
 const CommentSection = (props) => {
     const [posts, setPosts] = useState([]);
@@ -8,7 +10,8 @@ const CommentSection = (props) => {
         fetch(`http://localhost:3001/post/post/${props.data.postId}`)
             .then(result => result.json())
             .then(data => {
-                setPosts(data);
+                setPosts(data.post);
+                // console.log(data, "data")
                 // alert(data.message)
             })
 
@@ -36,7 +39,7 @@ const CommentSection = (props) => {
                 fetch(`http://localhost:3001/post/post/${props.data.postId}`)
                     .then(result => result.json())
                     .then(data => {
-                        setPosts(data);
+                        setPosts(data.post);
                     })
             })
 
@@ -44,37 +47,43 @@ const CommentSection = (props) => {
 
 
     return (
-        <div className='comment-section-main-div flex-column' style={{ display: props.data.commentDisplay }}>
+        <div className='comment-section-main-div flex-column center' style={{ display: props.data.commentDisplay }}>
             <IoClose className='comment-close-icon' onClick={() => props.data.setCommentDisplay("none")} />
+                <span className='comment-header-span'>Comments {posts.comments.length}</span>
             {
-                !posts?.comments?.length === 0? <div className="no-comments-div comments-container flex center">
-                    <p>No comments yet, be the first to comment</p>
-                </div> : <> {
-                    posts?.comments?.map((comment, index) => {
-                        return (
-                            <div className="comments-container flex-column">
-                                <div className="comment-user-data flex">
-                                    <img src={comment.ownerId.image} alt="author profile picture" />
-                                    <span>{comment.ownerId.name}</span>
-                                    {/*  timestamps goes here */}
+                !posts?.comments?.length ? <div className="no-comments-div comment-section-child flex center">
+                    <span>No comments yet, be the first to comment</span>
+                </div> : <div className="comment-section-child">
+                    {
+                        posts?.comments?.map((comment, index) => {
+                            return (
+                                <div className="comments-container flex-column around">
+
+                                    <div className="comment-user-data flex between">
+                                        <div className='flex between'>
+                                            <img src={comment.ownerId.image} className='comment-author-pro-pic' alt="author profile picture" />
+                                            <span>{comment.ownerId.name}</span>
+                                        </div>
+                                        <p className='post-card-time-p comment-time-tag'><small>{moment(posts.comments.createdAt).startOf("hour").startOf("minute").fromNow()}</small></p>
+
+                                    </div>
+                                    <div className="comment-text-div">
+                                        <p>{comment.text}</p>
+                                    </div>
                                 </div>
-                                <div className="comment-text">
-                                    <p>{comment.text}</p>
-                                </div>
-                            </div>
-                        )
-                    })
-                }</>
+                            )
+                        })
+                    }</div>
             }
 
             <div className="comment-input-div flex around center">
                 <img src={props?.data?.userData?.image} className='comment-user-picture' alt="user profile picture" />
                 <div className="comment-input-container flex between center">
                     <input type="text" placeholder='leave a comment' className='comment-input' value={comment} onChange={handleCommentChange} />
-                </div>
                 <button className={comment == "" ? "event-none-btn flex center " : "send-comment-btn flex center"} onClick={sendComment} >
-                    <IoArrowUpCircleOutline className='comment-submit-icon' />
+                    <IoArrowUpCircleSharp className='comment-submit-icon' />
                 </button>
+                </div>
             </div>
         </div>
     )
