@@ -66,7 +66,9 @@ const Feed = (props) => {
     postId,
     userData,
     commentDisplay,
-    setCommentDisplay
+    setCommentDisplay,
+    userId : ids
+  
   } 
 
 

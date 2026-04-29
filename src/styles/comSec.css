@@ -39,6 +39,7 @@
 
 .comment-section-child {
     height: 90%;
+    width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 10px 15px;
@@ -51,12 +52,10 @@
 }
 
 .comments-container {
-    height: fit-content;
+    width: 100% ;
+    height: max-content;
+    margin: .1rem 0;
     min-height: 25%;
-    /* background: rgba(255, 255, 255, 0.312);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4.7px);
-    -webkit-backdrop-filter: blur(4.7px); */
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     /* margin: .2rem 0; */
     padding: 7px;
@@ -75,21 +74,31 @@
     font-size: medium;
 }
 
+.comment-time-div{
+    width: 100%;
+}
 
 .comment-time-tag {
-    width: 20%;
+    color: rgb(111, 111, 111);
+    font-size: smaller;
+    font-weight: 400;
+}
 
+.comment-text{
+    padding-left: 5px;
+}
+
+.comment-options-icon{
+    font-size: large;
+    cursor: pointer;
 }
 
 
-.comment-text-div {
-    /* padding: 0 5px; */
+.comment-name-holder{
+    width: max-content !important;
+    gap: .2rem;
 
 }
-
-
-
-
 
 .comment-input-div {
     width: 100%;

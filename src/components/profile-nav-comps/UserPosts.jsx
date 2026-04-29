@@ -110,7 +110,7 @@ const UserPosts = (props) => {
                 />
             </div>
             {
-                props.data.posts.map((posts, index) => {
+                props.data.posts.toReversed().map((posts, index) => {
 
                     return (
                         <div className={props.data.cardClass + " flex-column between"}>
