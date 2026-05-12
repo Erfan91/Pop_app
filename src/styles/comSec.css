@@ -85,12 +85,20 @@
 }
 
 .comment-text{
-    padding-left: 5px;
+    padding: 5px;
+    padding-right: none;
+}
+
+.comment-options-div{
+   display: flex;
+   justify-content: center;
+   position: relative;
 }
 
 .comment-options-icon{
-    font-size: large;
-    cursor: pointer;
+    font-size: larger;
+    cursor: pointer;   
+
 }
 
 
@@ -168,4 +176,21 @@
     width: 1.5rem;
     border-radius: 50%;
 
+}
+
+
+.comment-edit-input{
+    width: 80%;
+    padding: 2px;
+    margin: 5px 0;
+    background: rgba(255, 255, 255, 0.24);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 3px;
+}
+
+.comment-edit-input:focus{
+    outline: none;
 }

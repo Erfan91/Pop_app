@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { IoArrowUpCircleOutline, IoArrowUpCircleSharp, IoClose } from "react-icons/io5";
-import { IoIosMore } from "react-icons/io";
+import { IoIosMore, IoIosClose } from "react-icons/io";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import moment from 'moment';
 import EditDelete from './EditDelete';
@@ -8,7 +8,10 @@ import EditDelete from './EditDelete';
 const CommentSection = (props) => {
     const [posts, setPosts] = useState([]);
     const [comment, setComment] = useState('');
-    const [inputIndex, setInputIndex] = useState(null)
+    const [commentEdit, setCommentEdit] = useState('');
+    const [inputIndex, setInputIndex] = useState(null);
+    const [inputIndexB, setInputIndexB] = useState(null);
+
 
     useEffect(() => {
         fetch(`http://localhost:3001/post/post/${props.data.postId}`)
@@ -23,6 +26,11 @@ const CommentSection = (props) => {
 
     const handleCommentChange = (e) => {
         setComment(e.target.value)
+    }
+
+    const handleCommentEditChange = (e) => {
+        e.preventDefault();
+        setCommentEdit(e.target.value);
     }
 
     const sendComment = async () => {
@@ -70,17 +78,25 @@ const CommentSection = (props) => {
                                         </div>
                                         {
                                             props.data.userId === comment.ownerId._id ?
-                                                <div className="comment-options-div">
-                                                    <IoIosMore className='comment-options-icon' onClick={() => setInputIndex(inputIndex => inputIndex === index? null : index)} />
+                                                <div className="comment-options-div" >
+                                                    <IoIosMore className='comment-options-icon'  onClick={() => {
+                                                        setCommentEdit(comment.text)
+                                                         setInputIndex(inputIndex => inputIndex === index? null : index)}}
+                                                         
+                                                         />
                                                 {
-                                                    inputIndex === index ? <EditDelete/> : null
+                                                    inputIndex === index ? 
+                                                    <EditDelete index={index} setIndex={setInputIndexB} inputIndex={inputIndexB} ownerId={props.data.userData._id} text={commentEdit}/> : null
                                                 }
 
                                                 </div> : null
                                         }
                                     </div>
                                     <div className="comment-text-div">
-                                        <p className='comment-text'>{comment.text}</p>
+                                        {
+                                            inputIndexB === index? <input className='comment-edit-input' onChange={handleCommentEditChange} value={commentEdit}/> : <p className='comment-text'>{comment.text}</p>
+                                        }
+                                        
                                         <p className='post-card-time-p comment-time-tag'><small>{moment(posts?.comments[index - 1]?.createdAt).startOf("hour").startOf("minute").fromNow().replace("minute", "m")}</small></p>
                                     </div>
                                 </div>
