@@ -39,6 +39,14 @@ const getPostById = async (req, res, next) => {
     try {
         await Post.findById(_id)
             .populate("ownerId", '_id name username image ')
+            .populate({
+                path: "comments",
+                populate: {
+                    path: "ownerId",
+                    model: "User"
+                }
+            })
+            .sort({ createAt: -1 })
             .exec()
             .then(result => {   
                 if (result) {
