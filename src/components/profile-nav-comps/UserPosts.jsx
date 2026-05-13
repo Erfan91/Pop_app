@@ -24,6 +24,8 @@ const UserPosts = (props) => {
     const [isliked, setIsLiked] = useState(null);
     const [iconClass, setIconClass] = useState(null);
 
+    
+
 
     const handleText = e => {
         e.preventDefault();
@@ -71,7 +73,7 @@ const UserPosts = (props) => {
                 } else {
                     setIconClass('heart-icon');
                     setIsLiked(false);
-                    console.log(data.message, "error like action");
+                    
                 }
             })
         props.data.getPostsFunc();

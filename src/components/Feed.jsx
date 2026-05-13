@@ -18,6 +18,7 @@ const Feed = (props) => {
   const [userData, setUserData] = useState(null);
   const [commentInfo, setCommentInfo] = useState([]);
   const [commentDisplay, setCommentDisplay] = useState("none");
+  const [commentsLength, setCommentsLength] = useState(null);
   const [postId, setPostId] = useState(null);
   const [className, setClassName] = useState("feed-userPosts-main-div");
 
@@ -59,7 +60,8 @@ const Feed = (props) => {
     cardClass: "post-card feed-post-card",
     closeIconDisplay: "none",
     commentDisplay,
-    setCommentDisplay
+    setCommentDisplay,
+  
   }
 
   const commentSectionProps = {
@@ -67,7 +69,8 @@ const Feed = (props) => {
     userData,
     commentDisplay,
     setCommentDisplay,
-    userId : ids
+    userId : ids,
+    getPostsFunc
   
   } 
 

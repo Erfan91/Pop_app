@@ -23,3 +23,29 @@
 .confirm-update-div>button{
     font-size: larger;
 }
+
+.editDlt-btn{
+    background: rgba(89, 89, 89, 0.606) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.editDlt-cancel-icon{
+    color: rgba(255, 0, 0, 0.723);
+}
+
+.editDlt-cancel-icon:hover{
+    transform: scale(1.1);
+    color: rgb(255, 37, 37);
+}
+
+.editDlt-confirm-icon{
+    color: rgba(127, 255, 212, 0.579);
+    
+}
+
+.editDlt-confirm-icon:hover{
+    color: aquamarine;
+}

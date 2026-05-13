@@ -11,6 +11,9 @@ const CommentSection = (props) => {
     const [commentEdit, setCommentEdit] = useState('');
     const [inputIndex, setInputIndex] = useState(null);
     const [inputIndexB, setInputIndexB] = useState(null);
+    const [editDltDisplay, setEditDltDisplay] = useState("none");
+
+
 
 
     useEffect(() => {
@@ -18,8 +21,6 @@ const CommentSection = (props) => {
             .then(result => result.json())
             .then(data => {
                 setPosts(data.post);
-                // console.log(data, "data")
-                // alert(data.message)
             })
 
     }, [props.data.postId]);
@@ -31,6 +32,14 @@ const CommentSection = (props) => {
     const handleCommentEditChange = (e) => {
         e.preventDefault();
         setCommentEdit(e.target.value);
+    }
+
+    const refreshPosts = () => {
+        fetch(`http://localhost:3001/post/post/${props.data.postId}`)
+            .then(result => result.json())
+            .then(json => {
+                setPosts(json.post);
+            });
     }
 
     const sendComment = async () => {
@@ -46,17 +55,20 @@ const CommentSection = (props) => {
             })
         }).then(result => result.json())
             .then(data => {
-                alert(data.message);
                 setComment('');
-                fetch(`http://localhost:3001/post/post/${props.data.postId}`)
-                    .then(result => result.json())
-                    .then(data => {
-                        setPosts(data.post);
-                    })
+                refreshPosts();
             })
 
     }
 
+    const editDeleteProps = {
+        text: commentEdit,
+        refresh: refreshPosts,
+        display: editDltDisplay,
+        handleDisplay: setEditDltDisplay,
+        refMain: props.data.getPostsFunc,
+        postId: props.data.postId
+    }
 
     return (
         <div className='comment-section-main-div flex-column center' style={{ display: props.data.commentDisplay }}>
@@ -79,24 +91,31 @@ const CommentSection = (props) => {
                                         {
                                             props.data.userId === comment.ownerId._id ?
                                                 <div className="comment-options-div" >
-                                                    <IoIosMore className='comment-options-icon'  onClick={() => {
-                                                        setCommentEdit(comment.text)
-                                                         setInputIndex(inputIndex => inputIndex === index? null : index)}}
-                                                         
-                                                         />
-                                                {
-                                                    inputIndex === index ? 
-                                                    <EditDelete index={index} setIndex={setInputIndexB} inputIndex={inputIndexB} ownerId={props.data.userData._id} text={commentEdit}/> : null
-                                                }
+                                                    <IoIosMore className='comment-options-icon' onClick={() => {
+                                                        setCommentEdit(comment.text);
+                                                        setEditDltDisplay("flex");
+                                                        setInputIndex(inputIndex => inputIndex === index ? null : index)
+                                                    }}
+
+                                                    />
+                                                    {
+                                                        inputIndex === index ?
+                                                            <EditDelete index={index}
+                                                                // setIndex={setInputIndexB}
+                                                                // inputIndex={inputIndexB}
+                                                                // commentId={comment._id}
+                                                                data={{ ...editDeleteProps, inputIndex: inputIndexB, setIndex: setInputIndexB, index: index, commentId: comment._id }}
+                                                            /> : null
+                                                    }
 
                                                 </div> : null
                                         }
                                     </div>
                                     <div className="comment-text-div">
                                         {
-                                            inputIndexB === index? <input className='comment-edit-input' onChange={handleCommentEditChange} value={commentEdit}/> : <p className='comment-text'>{comment.text}</p>
+                                            inputIndexB === index ? <input className='comment-edit-input' onChange={handleCommentEditChange} value={commentEdit} /> : <p className='comment-text'>{comment.text}</p>
                                         }
-                                        
+
                                         <p className='post-card-time-p comment-time-tag'><small>{moment(posts?.comments[index - 1]?.createdAt).startOf("hour").startOf("minute").fromNow().replace("minute", "m")}</small></p>
                                     </div>
                                 </div>
