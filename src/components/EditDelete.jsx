@@ -26,7 +26,8 @@ const EditDelete = (props) => {
         props.data.setIndex(inputIndex => props.data.inputIndex === props.data.index ? null : props.data.index)
     }
 
-    const updateComment = e => {
+
+    const updateComment = () => {
         fetch(`http://localhost:3001/comment/edit-comment/${props.data.commentId}`, {
             method: "PATCH",
             headers: new Headers({ "Content-Type": "application/json", }),
@@ -37,7 +38,14 @@ const EditDelete = (props) => {
             .then(data => {
                 if (data.message) {
                     props.data.refresh();
+                    props.data.handleDisplay("none");
                     handleIndex()
+
+                    setEditDeleteDisplay(prevState => ({
+                        ...prevState,
+                        updateDiv: "none",
+                    }))
+
                 } else {
                     alert(data.message);
                 }
@@ -45,23 +53,75 @@ const EditDelete = (props) => {
             })
     }
 
-    const deleteComment = e => {
-        e.preventDefault();
-        fetch(`http://localhost:3001/comment/delete-comment/${props.data.commentId}`, {
+    const deleteComment = () => {
+        fetch(`http://localhost:3001/comment/delete-comment/${props.data?.commentId}`, {
             method: "DELETE",
             headers: new Headers({ "Content-type": "application/json" }),
             body: JSON.stringify({
-              postId: props.data.postId
-            }) 
+                postId: props?.data?.postId
+            })
         }).then(result => result.json())
             .then(data => {
                 if (data.message) {
-                    props.data.refresh();
-                    props.data.refMain();
+                    props.data?.refresh();
+                    props.data?.refMain();
                 } else {
                     alert(data.message);
                 }
             })
+    }
+
+
+    const updatePost = async () => {
+        if (props.data?.edit) {
+            await fetch(`http://localhost:3001/post/update-post/${props.data?.postId}`, {
+                method: "PATCH",
+                headers: new Headers({ "content-type": "application/json" }),
+                body: JSON.stringify({
+                    description: props.data?.text,
+                })
+            }).then(result => result.json())
+                .then(data => {
+                    if (data.state) {
+
+                        props.data?.setText(data.message);
+                    } else {
+                        alert(data.message)
+                    }
+                })
+        } else {
+            null
+        }
+    }
+
+    const deletePost = async () => {
+        if (props.data?.isDelete) {
+            await fetch(`http://localhost:3001/post/delete-post/${props.data?.postId}`, {
+                method: "DELETE",
+                headers: new Headers({ "content-type": "application/json" }),
+            }).then(result => result.json())
+                .then(data => {
+                    props.data?.refMain();
+                })
+        } else {
+            null
+        }
+    }
+
+    const updateContent = e => {
+        e.preventDefault();
+        if (props.data.content === "comment") {
+            updateComment();
+        }
+
+        if (props.data.content === "post") {
+            updatePost();
+        }
+    }
+
+    const deleteContent = e => {
+        e.preventDefault();
+        props.data?.content === "comment"? deleteComment() : deletePost()
     }
 
     const handleDelete = () => {
@@ -69,7 +129,7 @@ const EditDelete = (props) => {
             ...prevState,
             editDelete: "none",
             updateDiv: "none",
-            confirmDelete : "flex"
+            confirmDelete: "flex"
         }))
     }
 
@@ -95,7 +155,7 @@ const EditDelete = (props) => {
                 }}>
                     <FcCancel className='delete-icon cancel-icon' />
                 </button>
-                <button className='update-post-button post-option-btn flex center' onClick={updateComment}>
+                <button className='update-post-button post-option-btn flex center' onClick={updateContent}>
                     <IoMdCheckmarkCircleOutline className='edit-icon checkmark-icon' />
                 </button>
             </div>
@@ -103,7 +163,7 @@ const EditDelete = (props) => {
                 <p>Delete comment</p>
                 <div className="confirm-btn-div flex between">
                     <button className='editDlt-cancel-btn editDlt-btn' ><IoClose className='editDlt-cancel-icon' /></button>
-                    <button className='editDLt-confirm-btn editDlt-btn' onClick={deleteComment}><IoCheckmarkOutline className='editDlt-confirm-icon' /></button>
+                    <button className='editDLt-confirm-btn editDlt-btn' onClick={deleteContent}><IoCheckmarkOutline className='editDlt-confirm-icon' /></button>
                 </div>
             </div>
         </div>

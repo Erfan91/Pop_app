@@ -9,6 +9,8 @@ import { SlOptions } from "react-icons/sl";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { FcCancel } from "react-icons/fc";
 
+import EditDelete from '../EditDelete';
+
 const UserPosts = (props) => {
     const id = localStorage.getItem('_id');
     const ids = JSON.parse(JSON.stringify(id));
@@ -24,7 +26,7 @@ const UserPosts = (props) => {
     const [isliked, setIsLiked] = useState(null);
     const [iconClass, setIconClass] = useState(null);
 
-    
+
 
 
     const handleText = e => {
@@ -73,7 +75,7 @@ const UserPosts = (props) => {
                 } else {
                     setIconClass('heart-icon');
                     setIsLiked(false);
-                    
+
                 }
             })
         props.data.getPostsFunc();
@@ -91,6 +93,12 @@ const UserPosts = (props) => {
         } else {
             null
         }
+    }
+
+    const editDltProps = {
+        content = "post",
+        text,
+        refMain: props.data.getPostsFunc(),
     }
 
     return (
@@ -125,53 +133,59 @@ const UserPosts = (props) => {
                                     </div>
                                 </div>
                                 <div className="options-icon-div">
-                                    <SlOptions className='userPosts-options-icon' onClick={() => setInputIndex(inputIndex => inputIndex === index ? null : index)} />
-                                    {inputIndex === index && <div className="post-card-dropdown flex-column around">
-                                        <button
-                                            className='post-option-btn'
-                                            onClick={() => {
-                                                setInputIndexB(inputIndexB => inputIndexB === index ? null : index);
-                                                setText(posts.description);
-                                                setPostId(posts._id)
-                                            }}>
-                                            {
-                                                inputIndexB == index ? <FcCancel className='delete-icon cancel-icon' /> : <MdModeEdit className='edit-icon' />
-                                            }
-                                        </button>
-                                        {
-                                            inputIndexB == index ?
+                                    {
+                                        posts.ownerId._id === ids && <SlOptions className='userPosts-options-icon' onClick={() => setInputIndex(inputIndex => inputIndex === index ? null : index)} />
+                                    }
 
-                                                <button className='update-post-button post-option-btn flex center' onClick={async (e) => {
-                                                    e.preventDefault();
-                                                    setEdit(true);
-                                                    await updatePost();
-                                                }}><IoMdCheckmarkCircleOutline className='edit-icon checkmark-icon' /></button> :
-                                                <>
-                                                    <button className='delete-button post-option-btn flex center' onClick={inputIndexB === index ? null : async () => {
-                                                        await setDelete(true);
+                                    {inputIndex === index && 
+                                        <EditDelete/> 
+                                    // <div className="post-card-dropdown flex-column around">
+                                    //     <button
+                                    //         className='post-option-btn'
+                                    //         onClick={() => {
+                                    //             setInputIndexB(inputIndexB => inputIndexB === index ? null : index);
+                                    //             setText(posts.description);
+                                    //             setPostId(posts._id)
+                                    //         }}>
+                                    //         {
+                                    //             inputIndexB == index ? <FcCancel className='delete-icon cancel-icon' /> : <MdModeEdit className='edit-icon' />
+                                    //         }
+                                    //     </button>
+                                    //     {
+                                    //         inputIndexB == index ?
 
-                                                    }}><MdDelete className='delete-icon' /></button>
-                                                    {
-                                                        isDelete ?
-                                                            <div className="confirm-delete-div flex-column around">
-                                                                <p>Confirm delete</p>
-                                                                <div className="confirm-btn-div flex between">
-                                                                    <button className='post-cancel-btn' onClick={e => {
-                                                                        e.preventDefault();
-                                                                        setDelete(false);
-                                                                    }}><IoClose className='cancel-icon' /></button>
-                                                                    <button className='confirm-btn' onClick={async e => {
-                                                                        e.preventDefault();
-                                                                        await deletePost(posts._id)
-                                                                    }}><IoCheckmarkOutline className='confirm-icon' /></button>
-                                                                </div>
-                                                            </div>
-                                                            : null
-                                                    }
-                                                </>
-                                        }
+                                    //             <button className='update-post-button post-option-btn flex center' onClick={async (e) => {
+                                    //                 e.preventDefault();
+                                    //                 setEdit(true);
+                                    //                 await updatePost();
+                                    //             }}><IoMdCheckmarkCircleOutline className='edit-icon checkmark-icon' /></button> :
+                                    //             <>
+                                    //                 <button className='delete-button post-option-btn flex center' onClick={inputIndexB === index ? null : async () => {
+                                    //                     await setDelete(true);
 
-                                    </div>}
+                                    //                 }}><MdDelete className='delete-icon' /></button>
+                                    //                 {
+                                    //                     isDelete ?
+                                    //                         <div className="confirm-delete-div flex-column around">
+                                    //                             <p>Confirm delete</p>
+                                    //                             <div className="confirm-btn-div flex between">
+                                    //                                 <button className='post-cancel-btn' onClick={e => {
+                                    //                                     e.preventDefault();
+                                    //                                     setDelete(false);
+                                    //                                 }}><IoClose className='cancel-icon' /></button>
+                                    //                                 <button className='confirm-btn' onClick={async e => {
+                                    //                                     e.preventDefault();
+                                    //                                     await deletePost(posts._id)
+                                    //                                 }}><IoCheckmarkOutline className='confirm-icon' /></button>
+                                    //                             </div>
+                                    //                         </div>
+                                    //                         : null
+                                    //                 }
+                                    //             </>
+                                    //     }
+
+                                    // </div>
+                                    }
                                 </div>
                             </div>
                             <div className="post-card-image-div flex-column center" key={index} style={{ display: inputIndexB === index ? "none" : "flex" }}>
@@ -184,10 +198,10 @@ const UserPosts = (props) => {
                                                 <span className='count-span'>{posts.likes.length}</span>
                                             </div>
                                             <div className="comment-icon-div flex align-center between" >
-                                                <IoChatbubbleOutline className='comment-icon' onClick={() =>{
+                                                <IoChatbubbleOutline className='comment-icon' onClick={() => {
                                                     props.data.setPostId(posts._id);
                                                     props.data.setCommentDisplay("flex");
-                                                } } />
+                                                }} />
                                                 <span className='count-span'>{posts.comments.length}</span>
                                             </div>
                                             <div className="share-icon-div flex align-center center">
@@ -199,7 +213,7 @@ const UserPosts = (props) => {
                             </div>
                             <div className="post-card-caption-div flex">
                                 {
-                                inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <span>{posts.description}</span>
+                                    inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <span>{posts.description}</span>
                                 }
                             </div>
                         </div>

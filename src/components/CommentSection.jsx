@@ -100,11 +100,17 @@ const CommentSection = (props) => {
                                                     />
                                                     {
                                                         inputIndex === index ?
-                                                            <EditDelete index={index}
-                                                                // setIndex={setInputIndexB}
-                                                                // inputIndex={inputIndexB}
-                                                                // commentId={comment._id}
-                                                                data={{ ...editDeleteProps, inputIndex: inputIndexB, setIndex: setInputIndexB, index: index, commentId: comment._id }}
+                                                            <EditDelete
+                                                            index = {index}
+                                                                data={
+                                                                    {
+                                                                        ...editDeleteProps,
+                                                                        inputIndex: inputIndexB,
+                                                                        setIndex: setInputIndexB,
+                                                                        index: index,
+                                                                        commentId: comment._id
+                                                                    }
+                                                                }
                                                             /> : null
                                                     }
 
