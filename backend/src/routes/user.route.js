@@ -10,13 +10,15 @@ import {
     uploadImage,
     createUserProfile,
     getUserProfile,
-    getUser
+    getUser,
+    addFollow,
+    removeFollower
 } from "../controllers/user.controller.js";
 
 const router = Router();
 
 router.route("/get-user/:id").get(getUserProfile);
-router.route("/user-info/:id").get(getUser)
+router.route("/user-info/:id").get(getUser);
 router.route("/create-user").post(createAccount);
 router.route("/login").post(loginUser);
 router.route("/emailEx").post(emailExists);
@@ -26,6 +28,7 @@ router.route("/create-profile").post(createUserProfile);
 router.route("/reset-password").post(resetPassword);
 router.route("/update-user/:id").patch(updateUser);
 router.route("/delete-user/:id").delete(deleteUser);
-
+router.route("/add-follow").post(addFollow);
+router.route("/remove-follower").post(removeFollower);
 
 export default router

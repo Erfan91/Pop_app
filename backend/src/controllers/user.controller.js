@@ -33,9 +33,9 @@ const createAccount = async (req, res) => {
 const emailExists = async (req, res, next) => {
     const { email } = req.body;
     try {
-     const emailExist = await User.findOne({ email: email.toLowerCase() })
-            emailExist ?  res.status(200).json({ state: true, message: "Email Already exists" }) :
-            res.status(400).json({ state: false, message: "Email not found" });                
+        const emailExist = await User.findOne({ email: email.toLowerCase() })
+        emailExist ? res.status(200).json({ state: true, message: "Email Already exists" }) :
+            res.status(400).json({ state: false, message: "Email not found" });
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
@@ -94,21 +94,21 @@ const loginUser = async (req, res, next) => {
 
 }
 
-const getUser = async  (req, res, next) => {
+const getUser = async (req, res, next) => {
     try {
         const _id = req.params.id;
         await User.findById(_id)
-        .exec()
-        .then(result=>{
-            if(!result){
-                return res.status(404).json({ message: "User not found", state: false });
-            } else{
-                res.status(200).json({message: "user info request successful", user: result, state: true})
-            }
-        })
-        
+            .exec()
+            .then(result => {
+                if (!result) {
+                    return res.status(404).json({ message: "User not found", state: false });
+                } else {
+                    res.status(200).json({ message: "user info request successful", user: result, state: true })
+                }
+            })
+
     } catch (error) {
-         res.status(500).json({ message: "Internal server error", error: error.message });
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
 
@@ -119,13 +119,15 @@ const getUserProfile = async (req, res, next) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        res.status(200).json({ user: {
-            name: user.name,
-            bio: user.bio,
-            username: user.username,
-            number: user.number,
-            image: user.image
-        }  });
+        res.status(200).json({
+            user: {
+                name: user.name,
+                bio: user.bio,
+                username: user.username,
+                number: user.number,
+                image: user.image
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
@@ -178,16 +180,16 @@ const createUserProfile = async (req, res, next) => {
     try {
         const { _id, bio, number, image } = req.body;
 
-         await User.findByIdAndUpdate(_id, { bio, number, $push: { image }, firstLogin: false }, { new: true })
-        .then(user => {
-            if (!user){
-                res.status(400).json({ message: "user not found" })
-                console.log("user not found");
-            }
+        await User.findByIdAndUpdate(_id, { bio, number, $push: { image }, firstLogin: false }, { new: true })
+            .then(user => {
+                if (!user) {
+                    res.status(400).json({ message: "user not found" })
+                    console.log("user not found");
+                }
 
-            res.status(200).json({ message: "profile created successfully", user: user })
-        });
-        
+                res.status(200).json({ message: "profile created successfully", user: user })
+            });
+
 
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
@@ -215,6 +217,56 @@ const deleteUser = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ message: "Internal server error", error: error.message });
 
+    }
+}
+
+
+const addFollow = async (req, res, next) => {
+    try {
+        const { followerId, followedId } = req.body;
+        await User.findByIdAndUpdate({ _id: followerId }, { $push: { following: followedId } }, { new: true })
+            .exec()
+            .then(result => {
+                if (!result) {
+                    res.status(400).json({ message: "incorrect follower user ID" })
+                }
+
+                User.findByIdAndUpdate(followedId, { $push: { followers: followerId } }, { new: true })
+                    .exec()
+                    .then(resp => {
+                        if (!resp) {
+                            res.status(400).json({ message: "incorrect following user ID" })
+                        }
+                        res.status(200).json({ message: "follower op done ", state: true })
+                    })
+            })
+
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error ", error: error.message })
+    }
+}
+
+const removeFollower = async (req, res, next) => {
+    try {
+        const {followerId, followingId} = req.body;
+        await User.findByIdAndUpdate(followerId, {$pull: {following : followingId}}, {new : true})
+            .exec()
+            .then(result => {
+                if(!result){
+                    res.status(400).json({message: "incorrect follower user ID"})
+                }
+                User.findByIdAndUpdate(followingId, {$pull: {followers : followerId}}, {new : true})
+                .exec()
+                .then(resp => {     
+                    if(!resp){
+                        res.status(400).json({message: "incorrect following user ID"})
+                    }
+                    res.status(200).json({message: "unfollowed successfuly", state: true})
+                })
+            }) 
+    } catch (error) {
+        res.status(500).json({message: "Internal server error", error: error.message});
     }
 }
 
@@ -255,5 +307,7 @@ export {
     uploadImage,
     createUserProfile,
     getUserProfile,
-    getUser
+    getUser,
+    addFollow,
+    removeFollower
 }
