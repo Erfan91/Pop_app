@@ -62,6 +62,7 @@ const CommentSection = (props) => {
     }
 
     const editDeleteProps = {
+        content: "comment",
         text: commentEdit,
         refresh: refreshPosts,
         display: editDltDisplay,

@@ -12,14 +12,18 @@ const EditDelete = (props) => {
         confirmDelete: "none"
     });
 
+    const [display, setDisplay] = useState("flex");
+
 
     const handleEdit = () => {
-        props.data.setIndex(inputIndex => props.data.inputIndex === props.data.index ? null : props.data.index)
+        props.data.setIndex(inputIndex => props.data.inputIndex === props.data.index ? null : props.data.index);
         setEditDeleteDisplay(prevState => ({
             ...prevState,
             editDelete: "none",
             updateDiv: "flex"
         }))
+
+       props.data?.content === "post" ? props.data?.setText(props.data?.description) : props.data?.setText(props.data?.text)
     }
 
     const handleIndex = () => {
@@ -73,7 +77,6 @@ const EditDelete = (props) => {
 
 
     const updatePost = async () => {
-        if (props.data?.edit) {
             await fetch(`http://localhost:3001/post/update-post/${props.data?.postId}`, {
                 method: "PATCH",
                 headers: new Headers({ "content-type": "application/json" }),
@@ -83,19 +86,15 @@ const EditDelete = (props) => {
             }).then(result => result.json())
                 .then(data => {
                     if (data.state) {
-
-                        props.data?.setText(data.message);
+                        console.log(data.message)
+                        handleIndex();
                     } else {
                         alert(data.message)
                     }
                 })
-        } else {
-            null
-        }
     }
 
     const deletePost = async () => {
-        if (props.data?.isDelete) {
             await fetch(`http://localhost:3001/post/delete-post/${props.data?.postId}`, {
                 method: "DELETE",
                 headers: new Headers({ "content-type": "application/json" }),
@@ -103,9 +102,7 @@ const EditDelete = (props) => {
                 .then(data => {
                     props.data?.refMain();
                 })
-        } else {
-            null
-        }
+       
     }
 
     const updateContent = e => {
@@ -116,6 +113,8 @@ const EditDelete = (props) => {
 
         if (props.data.content === "post") {
             updatePost();
+            setDisplay("none");
+            props.data.refMain();
         }
     }
 
@@ -134,7 +133,7 @@ const EditDelete = (props) => {
     }
 
     return (
-        <div className='editDlt-main-div' style={{ display: props.data.display }}>
+        <div className='editDlt-main-div' style={{ display: props.data.display || display }}>
             <div className="editDlt-div flex-column center" style={{ display: editDeleteDisplay.editDelete }}>
                 <button className='post-option-btn' onClick={handleEdit}>
                     <MdModeEdit className='edit-icon' />

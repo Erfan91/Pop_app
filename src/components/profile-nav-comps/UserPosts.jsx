@@ -28,7 +28,6 @@ const UserPosts = (props) => {
 
 
 
-
     const handleText = e => {
         e.preventDefault();
         setText(e.target.value)
@@ -96,9 +95,10 @@ const UserPosts = (props) => {
     }
 
     const editDltProps = {
-        content = "post",
+        content: "post",
+        setText,
         text,
-        refMain: props.data.getPostsFunc(),
+        refMain: props.data.getPostsFunc,
     }
 
     return (
@@ -137,54 +137,16 @@ const UserPosts = (props) => {
                                         posts.ownerId._id === ids && <SlOptions className='userPosts-options-icon' onClick={() => setInputIndex(inputIndex => inputIndex === index ? null : index)} />
                                     }
 
-                                    {inputIndex === index && 
-                                        <EditDelete/> 
-                                    // <div className="post-card-dropdown flex-column around">
-                                    //     <button
-                                    //         className='post-option-btn'
-                                    //         onClick={() => {
-                                    //             setInputIndexB(inputIndexB => inputIndexB === index ? null : index);
-                                    //             setText(posts.description);
-                                    //             setPostId(posts._id)
-                                    //         }}>
-                                    //         {
-                                    //             inputIndexB == index ? <FcCancel className='delete-icon cancel-icon' /> : <MdModeEdit className='edit-icon' />
-                                    //         }
-                                    //     </button>
-                                    //     {
-                                    //         inputIndexB == index ?
+                                    {inputIndex === index &&
+                                        <EditDelete data={{
+                                            ...editDltProps,
+                                            index: index,
+                                            setIndex: setInputIndexB,
+                                            inputIndex: inputIndexB,
+                                            postId: posts._id,
+                                            description: posts.description
+                                        }} />
 
-                                    //             <button className='update-post-button post-option-btn flex center' onClick={async (e) => {
-                                    //                 e.preventDefault();
-                                    //                 setEdit(true);
-                                    //                 await updatePost();
-                                    //             }}><IoMdCheckmarkCircleOutline className='edit-icon checkmark-icon' /></button> :
-                                    //             <>
-                                    //                 <button className='delete-button post-option-btn flex center' onClick={inputIndexB === index ? null : async () => {
-                                    //                     await setDelete(true);
-
-                                    //                 }}><MdDelete className='delete-icon' /></button>
-                                    //                 {
-                                    //                     isDelete ?
-                                    //                         <div className="confirm-delete-div flex-column around">
-                                    //                             <p>Confirm delete</p>
-                                    //                             <div className="confirm-btn-div flex between">
-                                    //                                 <button className='post-cancel-btn' onClick={e => {
-                                    //                                     e.preventDefault();
-                                    //                                     setDelete(false);
-                                    //                                 }}><IoClose className='cancel-icon' /></button>
-                                    //                                 <button className='confirm-btn' onClick={async e => {
-                                    //                                     e.preventDefault();
-                                    //                                     await deletePost(posts._id)
-                                    //                                 }}><IoCheckmarkOutline className='confirm-icon' /></button>
-                                    //                             </div>
-                                    //                         </div>
-                                    //                         : null
-                                    //                 }
-                                    //             </>
-                                    //     }
-
-                                    // </div>
                                     }
                                 </div>
                             </div>

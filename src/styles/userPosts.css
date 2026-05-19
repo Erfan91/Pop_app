@@ -59,6 +59,7 @@
 }
 
 .post-card {
+    position: relative;
     width: 90%;
     height: 24rem;
     background: rgba(255, 255, 255, 0.27);
