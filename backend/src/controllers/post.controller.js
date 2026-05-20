@@ -24,7 +24,7 @@ const createPost = async (req, res, next) => {
 const getPost = async (req, res, next) => {
     try {
         await Post.find()
-            .populate("ownerId", '_id name username image ')
+            .populate("ownerId", '_id name username image followers')
             .exec()
             .then(result => {
                 res.status(200).json({ message: "operation successful", posts: result })
@@ -64,7 +64,7 @@ const getUserPosts = async (req, res, next) => {
     try {
         const id = req.params.id;
         await Post.find({ ownerId: id })
-            .populate("ownerId")
+            .populate({ path: "ownerId", select: "_id name username image followers" })
             .sort({ createAt: -1 })
             .exec()
             .then(result => {

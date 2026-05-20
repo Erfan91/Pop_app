@@ -228,14 +228,14 @@ const addFollow = async (req, res, next) => {
             .exec()
             .then(result => {
                 if (!result) {
-                    res.status(400).json({ message: "incorrect follower user ID" })
+                    res.status(400).json({ message: "incorrect follower user ID", state: false })
                 }
 
                 User.findByIdAndUpdate(followedId, { $push: { followers: followerId } }, { new: true })
                     .exec()
                     .then(resp => {
                         if (!resp) {
-                            res.status(400).json({ message: "incorrect following user ID" })
+                            res.status(400).json({ message: "incorrect following user ID", state: false })
                         }
                         res.status(200).json({ message: "follower op done ", state: true })
                     })
