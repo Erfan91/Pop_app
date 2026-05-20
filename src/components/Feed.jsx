@@ -80,8 +80,8 @@ const Feed = (props) => {
       <Popup display={popupDisplay} id={ids} />
       {firstLogin ? null :
         <div className="feed-main-child flex center">
-          <UserPosts data={userPostsProps} />
-          <CommentSection  data={commentSectionProps} />
+          <UserPosts {...userPostsProps} />
+          <CommentSection  {...commentSectionProps} />
         </div>
       }
     </div>

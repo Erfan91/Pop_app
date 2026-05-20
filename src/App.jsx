@@ -34,6 +34,7 @@ import "./styles/pop-ups/pp.css";
 
 function App(props) {
 const [navDisplay, setNavDisplay] = useState("flex");
+const [pfp, setPfp] = useState(null)
   return (
     <>
       <div className="App">
@@ -42,9 +43,9 @@ const [navDisplay, setNavDisplay] = useState("flex");
         <Route path="/feed" element={<Feed navDisplay={setNavDisplay}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<Resetpassword />} />
-        <Route path="/profile" element={<Profile navDisplay={setNavDisplay}/>} />
+        <Route path="/profile" element={<Profile navDisplay={setNavDisplay} setPfp={setPfp}/>} />
       </Routes>
-    <Nav display={navDisplay} />
+    <Nav display={navDisplay} pfp={pfp} />
       </div>
     </>
   )

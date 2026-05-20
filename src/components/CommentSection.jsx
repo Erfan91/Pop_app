@@ -17,13 +17,13 @@ const CommentSection = (props) => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3001/post/post/${props.data.postId}`)
+        fetch(`http://localhost:3001/post/post/${props.postId}`)
             .then(result => result.json())
             .then(data => {
                 setPosts(data.post);
             })
 
-    }, [props.data.postId]);
+    }, [props.postId]);
 
     const handleCommentChange = (e) => {
         setComment(e.target.value)
@@ -35,7 +35,7 @@ const CommentSection = (props) => {
     }
 
     const refreshPosts = () => {
-        fetch(`http://localhost:3001/post/post/${props.data.postId}`)
+        fetch(`http://localhost:3001/post/post/${props.postId}`)
             .then(result => result.json())
             .then(json => {
                 setPosts(json.post);
@@ -49,9 +49,9 @@ const CommentSection = (props) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                ownerId: props.data.userData._id,
+                ownerId: props.userData._id,
                 text: comment,
-                postId: props.data.postId
+                postId: props.postId
             })
         }).then(result => result.json())
             .then(data => {
@@ -67,13 +67,13 @@ const CommentSection = (props) => {
         refresh: refreshPosts,
         display: editDltDisplay,
         handleDisplay: setEditDltDisplay,
-        refMain: props.data.getPostsFunc,
-        postId: props.data.postId
+        refMain: props.getPostsFunc,
+        postId: props.postId
     }
 
     return (
-        <div className='comment-section-main-div flex-column center' style={{ display: props.data.commentDisplay }}>
-            <IoClose className='comment-close-icon' onClick={() => props.data.setCommentDisplay("none")} />
+        <div className='comment-section-main-div flex-column center' style={{ display: props.commentDisplay }}>
+            <IoClose className='comment-close-icon' onClick={() => props.setCommentDisplay("none")} />
             <span className='comment-header-span'>Comments {posts?.comments?.length}</span>
             {
                 !posts?.comments?.length ? <div className="no-comments-div comment-section-child flex center">
@@ -90,7 +90,7 @@ const CommentSection = (props) => {
                                             <span>{comment.ownerId.name}</span>
                                         </div>
                                         {
-                                            props.data.userId === comment.ownerId._id ?
+                                            props.userId === comment.ownerId._id ?
                                                 <div className="comment-options-div" >
                                                     <IoIosMore className='comment-options-icon' onClick={() => {
                                                         setCommentEdit(comment.text);
@@ -132,7 +132,7 @@ const CommentSection = (props) => {
             }
 
             <div className="comment-input-div flex around center">
-                <img src={props?.data?.userData?.image} className='comment-user-picture' alt="user profile picture" />
+                <img src={props?.userData?.image} className='comment-user-picture' alt="user profile picture" />
                 <div className="comment-input-container flex between center">
                     <input type="text" placeholder='leave a comment' className='comment-input' value={comment} onChange={handleCommentChange} />
                     <button className={comment == "" ? "event-none-btn flex center " : "send-comment-btn flex center"} onClick={sendComment} >

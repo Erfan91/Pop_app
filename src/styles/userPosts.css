@@ -104,7 +104,7 @@
 }
 
 .post-card-image {
-    height: 100%;
+    height: 90%;
     width: 100%;
     border-radius: 7px;
 }
@@ -298,4 +298,13 @@
 
 .confirm-btn{
     color: aquamarine;
+}
+
+.follow-btn{
+    background-color: transparent;
+    border: 1px solid #cae2e8;
+    color: #cae2e8;
+    padding: 3px 7px;
+    border-radius: 7px;
+    cursor: pointer;
 }

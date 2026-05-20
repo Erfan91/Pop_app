@@ -10,6 +10,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { FcCancel } from "react-icons/fc";
 
 import EditDelete from '../EditDelete';
+import Follow from '../Follow';
 
 const UserPosts = (props) => {
     const id = localStorage.getItem('_id');
@@ -68,7 +69,7 @@ const UserPosts = (props) => {
         }).then(result => result.json())
             .then(data => {
                 if (data.state) {
-                    props.data.getPostsFunc();
+                    props.getPostsFunc();
                     setIconClass('heart-icon heart-icon-filled');
                     setIsLiked(true);
                 } else {
@@ -77,7 +78,7 @@ const UserPosts = (props) => {
 
                 }
             })
-        props.data.getPostsFunc();
+        props.getPostsFunc();
     }
 
     const deletePost = async id => {
@@ -87,7 +88,7 @@ const UserPosts = (props) => {
                 headers: new Headers({ "content-type": "application/json" }),
             }).then(result => result.json())
                 .then(data => {
-                    props.data.getPostsFunc();
+                    props.getPostsFunc();
                 })
         } else {
             null
@@ -98,34 +99,34 @@ const UserPosts = (props) => {
         content: "post",
         setText,
         text,
-        refMain: props.data.getPostsFunc,
+        refMain: props.getPostsFunc,
     }
 
     return (
-        <div className={props.data.length == 1 ? props.data.className + " flex-column between" : props.data.className + " column-reverse between"}
+        <div className={props.length == 1 ? props.className + " flex-column between" : props.className + " column-reverse between"}
             style={
                 {
-                    display: props.data.display,
+                    display: props.display,
                 }
             }>
             <div className='userPosts-icon-div flex center'
                 style={
-                    { display: props.data.closeIconDisplay }
+                    { display: props.closeIconDisplay }
                 }
                 onClick={() => {
-                    props.data.setDisplay("none");
-                    props.data.proDataDisplay("flex");
+                    props.setDisplay("none");
+                    props.proDataDisplay("flex");
                 }}>
                 <IoClose className='userPosts-close-icon'
                 />
             </div>
             {
-                props.data.posts.toReversed().map((posts, index) => {
+                props.posts.toReversed().map((posts, index) => {
 
                     return (
-                        <div className={props.data.cardClass + " flex-column between"}>
+                        <div className={props.cardClass + " flex-column between"}>
                             <div className="post-card-header flex between">
-                                <div className="post-card-pfp-div flex between">
+                                <div className="post-card-pfp-div flex">
                                     <img src={posts.ownerId.image[0]} alt="user profile picture" className='post-card-pfp border-circle' />
                                     <div className="flex-column ">
                                         <span>{posts.ownerId.name}</span>
@@ -148,6 +149,11 @@ const UserPosts = (props) => {
                                         }} />
 
                                     }
+
+                                    {
+                                        
+                                        posts.ownerId.followers?.includes(ids) ? null : <Follow data={{ posts, ids, followedId: posts.ownerId._id }} />
+                                    }
                                 </div>
                             </div>
                             <div className="post-card-image-div flex-column center" key={index} style={{ display: inputIndexB === index ? "none" : "flex" }}>
@@ -155,14 +161,14 @@ const UserPosts = (props) => {
                                 {
                                     inputIndexB === index ? null :
                                         <div className="post-reactions-div flex between">
-                                            <div className="like-icon-div post-action-div flex between align-center" onClick={props.data.getPostsFunc}>
+                                            <div className="like-icon-div post-action-div flex between align-center" onClick={props.getPostsFunc}>
                                                 <BsHeart className={posts.likes.includes(ids) ? 'heart-icon heart-icon-filled' : 'heart-icon'} onClick={() => handleLikeAction(posts._id)} />
                                                 <span className='count-span'>{posts.likes.length}</span>
                                             </div>
                                             <div className="comment-icon-div flex align-center between" >
                                                 <IoChatbubbleOutline className='comment-icon' onClick={() => {
-                                                    props.data.setPostId(posts._id);
-                                                    props.data.setCommentDisplay("flex");
+                                                    props.setPostId(posts._id);
+                                                    props.setCommentDisplay("flex");
                                                 }} />
                                                 <span className='count-span'>{posts.comments.length}</span>
                                             </div>

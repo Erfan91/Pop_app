@@ -19,12 +19,15 @@ const ProfileData = (props) => {
                 .then(response => response.json())
                 .then(data => {
                     setProfileData([data.user]);
+                    props.setPfp(data.user.image[0])
+                  
                 });
         }, []);
     
     return (
         <>
             {profileData.map(profile => {
+                
                 return (
                     <div className='profile-data-div flex-column' style={{display: props.display}}>
                         <div className='profile-image-div flex'>
