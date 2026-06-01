@@ -6,6 +6,7 @@ import Signup from './components/Signup.jsx';
 import Resetpassword from './components/Resetpassword.jsx';
 import Profile from './components/Profile.jsx';
 import Nav from "./components/Nav.jsx";
+import Notification from './components/Notification.jsx';
 
 import './App.css';
 import "./styles/login.css";
@@ -43,6 +44,7 @@ const [pfp, setPfp] = useState(null)
         <Route path="/feed" element={<Feed navDisplay={setNavDisplay}/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<Resetpassword />} />
+        <Route path="/notifications" element={<Notification />} />
         <Route path="/profile" element={<Profile navDisplay={setNavDisplay} setPfp={setPfp}/>} />
       </Routes>
     <Nav display={navDisplay} pfp={pfp} />
