@@ -20,6 +20,25 @@ const createComment = async (req, res, next) => {
                         if (!post) {
                             res.status(400).json({ message: "post id incorrect or not registred" });
                         }
+                        Notification.create({
+                            recipient: post.ownerId,
+                            sender: result.ownerId,
+                            type: "comment",
+                            message: `commented on your post: ${result.text}`
+                        })
+                            .then(notification => {
+                                if (!notification) {
+                                    res.status(400).json({ message: "notification could not be created" })
+                                }
+
+                                User.findByIdAndUpdate(post.ownerId, { $push: { notifications: notification._id } }, { new: true })
+                                    .then(user => {
+                                        if (!user) {
+                                            res.status(400).json({ message: "user not found, notification not linked to user" })
+                                        }
+                                    })
+                            });
+
                         res.status(200).json({ message: "comment created succefuly", comment: result })
                     })
                 // res.status(200).json({message: "comment created succefuly", detail: result})

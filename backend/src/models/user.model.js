@@ -70,7 +70,12 @@ const userSchema = new mongoose.Schema(
 
         country: String,
 
-        livesIn: String
+        livesIn: String,
+
+        notifications: {
+            type: [mongoose.Types.ObjectId],
+            ref: "Notification"
+        },
 
     },
 

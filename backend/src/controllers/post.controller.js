@@ -1,4 +1,6 @@
 import { Post } from "../models/post.model.js";
+import { User } from "../models/user.model.js";
+import  Notification  from "../models/notification.model.js";
 import multer from "multer";
 import path from "path";
 
@@ -126,6 +128,24 @@ const addLike = async (req, res, next) => {
                 } else {
                     Post.updateOne({_id: _id},{$push : {likes: req.body.userId}}, {new: true})
                     .then(resp =>{
+                         Notification.create({
+                            recipient: result.ownerId,
+                            sender: req.body.userId,
+                            type: 'like',
+                            message: ' liked your post'
+                        })
+                        .then(notification => {
+                            if (!notification) {
+                                res.status(400).json({ message: "notification could not be created" })
+                            }
+                            User.findByIdAndUpdate(result.ownerId, { $push: { notifications: notification._id } }, { new: true })
+                                .then(user => {
+                                    if (!user) {
+                                        res.status(400).json({ message: "user not found, notification not linked to user" })
+                                    }
+                                })   
+                        })
+                        
                         res.status(200).json({message: "like added", state: true})
                     })
                 }

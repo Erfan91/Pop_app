@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import multer from "multer";
 import path from "path";
+import jwt from "jsonwebtoken";
 
 const createAccount = async (req, res) => {
     try {
@@ -58,6 +59,7 @@ const usernameExists = async (req, res, next) => {
 }
 
 const loginUser = async (req, res, next) => {
+    console.log("JWT_SECRET:", process.env.JWT_SECRET)
     try {
         const body = req.body;
 
@@ -74,18 +76,44 @@ const loginUser = async (req, res, next) => {
             res.status(400).json({ message: "incorrect password", state: false })
         }
 
-        res.status(200).json({
-            message: "login successful",
-            user: {
-                id: user._id,
-                email: user.email,
-                username: user.username,
-                name: user.name,
-                firstLogin: user.firstLogin,
-            },
-            state: true,
-            login: true
-        })
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        )
+
+        res.status(200)
+            .cookie("token", token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            })
+            .json({
+                message: "login successful",
+                user: {
+                    id: user._id,
+                    email: user.email,
+                    username: user.username,
+                    name: user.name,
+                    firstLogin: user.firstLogin,
+                },
+                state: true,
+                login: true
+            })
+
+        // res.status(200).json({
+        //     message: "login successful",
+        //     user: {
+        //         id: user._id,
+        //         email: user.email,
+        //         username: user.username,
+        //         name: user.name,
+        //         firstLogin: user.firstLogin,
+        //     },
+        //     state: true,
+        //     login: true
+        // })
 
 
     } catch (error) {
@@ -249,24 +277,24 @@ const addFollow = async (req, res, next) => {
 
 const removeFollower = async (req, res, next) => {
     try {
-        const {followerId, followingId} = req.body;
-        await User.findByIdAndUpdate(followerId, {$pull: {following : followingId}}, {new : true})
+        const { followerId, followingId } = req.body;
+        await User.findByIdAndUpdate(followerId, { $pull: { following: followingId } }, { new: true })
             .exec()
             .then(result => {
-                if(!result){
-                    res.status(400).json({message: "incorrect follower user ID"})
+                if (!result) {
+                    res.status(400).json({ message: "incorrect follower user ID" })
                 }
-                User.findByIdAndUpdate(followingId, {$pull: {followers : followerId}}, {new : true})
-                .exec()
-                .then(resp => {     
-                    if(!resp){
-                        res.status(400).json({message: "incorrect following user ID"})
-                    }
-                    res.status(200).json({message: "unfollowed successfuly", state: true})
-                })
-            }) 
+                User.findByIdAndUpdate(followingId, { $pull: { followers: followerId } }, { new: true })
+                    .exec()
+                    .then(resp => {
+                        if (!resp) {
+                            res.status(400).json({ message: "incorrect following user ID" })
+                        }
+                        res.status(200).json({ message: "unfollowed successfuly", state: true })
+                    })
+            })
     } catch (error) {
-        res.status(500).json({message: "Internal server error", error: error.message});
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
 
