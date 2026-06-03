@@ -10,16 +10,17 @@ const Notification = () => {
         fetch(`http://localhost:3001/notification/user-notifications/${ids}`)
             .then(response => response.json())
             .then(data => {
-                setNotifications(data);
+                setNotifications(data.notifications);
             });
     }, [ids]);
 
     return (
         <div>
             <h1>Notification</h1>
-            {notifications.map(notification => (
+            {notifications?.map(notification => (
                 <div key={notification._id}>
-                    <p>{notification.sender.name} + {notification.message}</p>
+                    <img src={notification.sender.image} alt="sender profile" width="50" height="50" />
+                    <p>{notification.sender.name}  {notification.message}</p>
                 </div>
             ))}
         </div>

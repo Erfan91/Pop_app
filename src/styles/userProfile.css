@@ -1,0 +1,163 @@
+.user-profile {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid rgba(167, 167, 167, 0.38);
+}
+
+.profile-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 0;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-username {
+    color: #888;
+    font-size: 14px;
+}
+
+.profile-bio {
+    text-align: center;
+    font-size: 14px;
+    max-width: 300px;
+}
+
+.profile-location {
+    font-size: 13px;
+    color: #888;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 32px;
+    margin: 12px 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-count {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #888;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.btn-follow {
+    padding: 8px 24px;
+    background: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-follow.following {
+    background: #f0f0f0;
+    color: black;
+}
+
+.btn-message {
+    padding: 8px 24px;
+    background: #f0f0f0;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile-tabs {
+    display: flex;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 16px 0;
+}
+
+.profile-content {
+    padding: 16px 0;
+    width: 35rem;
+    min-width: 300px;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #888;
+}
+
+.tab.active {
+    color: black;
+    font-weight: 600;
+    border-bottom: 2px solid black;
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.post-item {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.post-img {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.pics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.grid-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.about-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+}
+
+.profile-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

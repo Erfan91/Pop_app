@@ -74,6 +74,7 @@ const Login = (props) => {
     fetch("http://localhost:3001/user/login", {
       method: "POST",
       headers: { "content-type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         email,
         password

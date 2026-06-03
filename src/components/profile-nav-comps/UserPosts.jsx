@@ -27,7 +27,7 @@ const UserPosts = (props) => {
     const [isliked, setIsLiked] = useState(null);
     const [iconClass, setIconClass] = useState(null);
 
-
+    const navigate = useNavigate()
 
     const handleText = e => {
         e.preventDefault();
@@ -126,7 +126,7 @@ const UserPosts = (props) => {
                     return (
                         <div className={props.cardClass + " flex-column between"}>
                             <div className="post-card-header flex between">
-                                <div className="post-card-pfp-div flex">
+                                <div className="post-card-pfp-div flex" onClick={() => navigate(`/profile/${posts.ownerId._id}`)}>
                                     <img src={posts.ownerId.image[0]} alt="user profile picture" className='post-card-pfp border-circle' />
                                     <div className="flex-column ">
                                         <span>{posts.ownerId.name}</span>

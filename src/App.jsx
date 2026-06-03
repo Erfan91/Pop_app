@@ -7,6 +7,9 @@ import Resetpassword from './components/Resetpassword.jsx';
 import Profile from './components/Profile.jsx';
 import Nav from "./components/Nav.jsx";
 import Notification from './components/Notification.jsx';
+import Chat from './components/Chat.jsx';
+import UserProfile from './components/UserProfile.jsx';
+
 
 import './App.css';
 import "./styles/login.css";
@@ -24,6 +27,8 @@ import "./styles/userPics.css";
 import "./styles/infoMsg.css";
 import "./styles/comSec.css";
 import "./styles/editDelete.css";
+import "./styles/chat.css";
+import "./styles/userProfile.css"
 
 import "./styles/pop-ups/bio.css";
 import "./styles/pop-ups/gettingStarted.css";
@@ -34,20 +39,22 @@ import "./styles/pop-ups/pp.css";
 
 
 function App(props) {
-const [navDisplay, setNavDisplay] = useState("flex");
-const [pfp, setPfp] = useState(null)
+  const [navDisplay, setNavDisplay] = useState("flex");
+  const [pfp, setPfp] = useState(null)
   return (
     <>
       <div className="App">
-      <Routes>
-        <Route path="/" element={<Login navDisplay={setNavDisplay} />} />
-        <Route path="/feed" element={<Feed navDisplay={setNavDisplay}/>} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reset-password" element={<Resetpassword />} />
-        <Route path="/notifications" element={<Notification />} />
-        <Route path="/profile" element={<Profile navDisplay={setNavDisplay} setPfp={setPfp}/>} />
-      </Routes>
-    <Nav display={navDisplay} pfp={pfp} />
+        <Routes>
+          <Route path="/" element={<Login navDisplay={setNavDisplay} />} />
+          <Route path="/feed" element={<Feed navDisplay={setNavDisplay} />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/reset-password" element={<Resetpassword />} />
+          <Route path="/notifications" element={<Notification />} />
+          <Route path="/profile" element={<Profile navDisplay={setNavDisplay} setPfp={setPfp} />} />
+          <Route path="/profile/:id" element={<UserProfile />} />
+          <Route path="/chat" element={<Chat />} />
+        </Routes>
+        <Nav display={navDisplay} pfp={pfp} />
       </div>
     </>
   )

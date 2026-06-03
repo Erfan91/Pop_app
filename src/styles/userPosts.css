@@ -84,6 +84,7 @@
 .post-card-pfp-div {
     align-items: center;
     width: 22%;
+    cursor: pointer;
 }
 
 .post-card-time-p {
