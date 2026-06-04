@@ -126,6 +126,7 @@ const getUser = async (req, res, next) => {
     try {
         const _id = req.params.id;
         await User.findById(_id)
+            .select("-password")
             .exec()
             .then(result => {
                 if (!result) {

@@ -18,25 +18,13 @@ import cookieParser from "cookie-parser";
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({
-//     credentials: true,
-//     origin: process.env.CLIENT_URL,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     optionsSuccessStatus: 200
-// }));
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5173")
-    res.header("Access-Control-Allow-Credentials", "true")
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-    
-    if (req.method === "OPTIONS") {
-        return res.status(200).end()
-    }
-    
-    next()
-})
+app.use(cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200
+}));
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use("/user", userRouter);

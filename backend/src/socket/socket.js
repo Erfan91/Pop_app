@@ -5,13 +5,14 @@ import { Message } from "../models/message.model.js"
 const onlineUsers = new Map()
 
 export const initSocket = (httpServer) => {
+    // started a socket.io server, allowing CORS from our React app
     const io = new Server(httpServer, {
         cors: {
             origin: process.env.CLIENT_URL,
             credentials: true
         }
     })
-
+    // Handle user connections
     io.on("connection", (socket) => {
         console.log("user connected:", socket.id)
 
