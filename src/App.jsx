@@ -28,7 +28,8 @@ import "./styles/infoMsg.css";
 import "./styles/comSec.css";
 import "./styles/editDelete.css";
 import "./styles/chat.css";
-import "./styles/userProfile.css"
+import "./styles/userProfile.css";
+import "./styles/notification.css";
 
 import "./styles/pop-ups/bio.css";
 import "./styles/pop-ups/gettingStarted.css";

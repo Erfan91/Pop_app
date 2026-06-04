@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {useNavigate} from "react-router-dom";
 import { IoArrowUpCircleOutline, IoArrowUpCircleSharp, IoClose } from "react-icons/io5";
 import { IoIosMore, IoIosClose } from "react-icons/io";
 import { MdModeEdit, MdDelete } from "react-icons/md";
@@ -12,7 +13,7 @@ const CommentSection = (props) => {
     const [inputIndex, setInputIndex] = useState(null);
     const [inputIndexB, setInputIndexB] = useState(null);
     const [editDltDisplay, setEditDltDisplay] = useState("none");
-
+    const navigate = useNavigate();
 
 
 
@@ -85,7 +86,7 @@ const CommentSection = (props) => {
                                 <div className="comments-container flex-column around">
 
                                     <div className="comment-user-data flex between">
-                                        <div className='flex between comment-name-holder'>
+                                        <div className='flex between comment-name-holder' onClick={() => navigate(`/profile/${comment.ownerId._id}`)}>
                                             <img src={comment.ownerId.image} className='comment-author-pro-pic' alt="author profile picture" />
                                             <span>{comment.ownerId.name}</span>
                                         </div>

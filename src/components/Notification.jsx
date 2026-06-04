@@ -15,11 +15,11 @@ const Notification = () => {
     }, [ids]);
 
     return (
-        <div>
+        <div className='notification-container flex-column between'>
             <h1>Notification</h1>
             {notifications?.map(notification => (
-                <div key={notification._id}>
-                    <img src={notification.sender.image} alt="sender profile" width="50" height="50" />
+                <div key={notification._id} className='notification flex'>
+                    <img src={notification.sender.image} className='notification-sender-image' alt="sender profile" />
                     <p>{notification.sender.name}  {notification.message}</p>
                 </div>
             ))}

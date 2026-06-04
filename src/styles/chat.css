@@ -11,6 +11,10 @@
     padding: 16px;
 }
 
+.chat-child{
+    height: 80%;
+}
+
 .conv-item {
     display: flex;
     align-items: center;
@@ -133,4 +137,22 @@
     border-radius: 20px;
     cursor: pointer;
     font-weight: 600;
+}
+
+.message-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+    justify-content: flex-end;
+}
+
+.message-time {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.message-seen {
+    font-size: 10px;
+    opacity: 0.7;
 }
