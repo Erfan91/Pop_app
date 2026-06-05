@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom";
+import UserPosts from "./profile-nav-comps/UserPosts";
+import UserPics from "./profile-nav-comps/UserPics";
+import CommentSection from "./CommentSection";
 
 const UserProfile = () => {
     const { id } = useParams()
@@ -11,7 +14,11 @@ const UserProfile = () => {
     const [pics, setPics] = useState([])
     const [activeTab, setActiveTab] = useState("posts")
     const [isFollowing, setIsFollowing] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+
+    const [postId, setPostId] = useState(null);
+    const [commentDisplay, setCommentDisplay] = useState("none");
+    const [userPicsDisplay, setUserPicsDisplay] = useState("none");
 
     // Fetch user info
     useEffect(() => {
@@ -97,6 +104,43 @@ const UserProfile = () => {
         navigate("/chat", { state: { selectedUser: user } })
     }
 
+    const userPostsProps = {
+        posts,
+        setPostId,
+        className: "userProfile-posts-main-div",
+        cardClass: "post-card feed-post-card",
+        closeIconDisplay: "none",
+        commentDisplay,
+        setCommentDisplay,
+
+    }
+
+    const commentSectionProps = {
+        postId,
+        userData: user,
+        commentDisplay,
+        commentSectionCLass: "user-profile-comment-section",
+        setCommentDisplay,
+        userId: currentUser,
+        getPostsFunc: () => {
+            fetch(`http://localhost:3001/post/user-posts/${id}`, {
+                credentials: "include"
+            })
+                .then(res => res.json())
+                .then(data => setPosts(data.posts))
+                .catch(err => console.log(err))
+        }
+
+    }
+
+    const userPicsProps = {
+        className: "userProfile-pics-section",
+        display: userPicsDisplay,
+        handleDisplay: setUserPicsDisplay,
+        pics,
+        closeIconDisplay: "none"
+    }
+
     if (loading) return <div className="profile-loading">Loading...</div>
     if (!user) return <div className="profile-loading">User not found</div>
 
@@ -148,7 +192,7 @@ const UserProfile = () => {
                 )}
             </div>
 
-        
+
             <div className="profile-tabs">
                 <button
                     className={activeTab === "posts" ? "tab active" : "tab"}
@@ -158,7 +202,10 @@ const UserProfile = () => {
                 </button>
                 <button
                     className={activeTab === "pictures" ? "tab active" : "tab"}
-                    onClick={() => setActiveTab("pictures")}
+                    onClick={() => {
+                        setActiveTab("pictures")
+                        setUserPicsDisplay("flex")
+                    }}
                 >
                     Pictures
                 </button>
@@ -170,31 +217,19 @@ const UserProfile = () => {
                 </button>
             </div>
 
-            
+
             <div className="profile-content">
+
+
                 {activeTab === "posts" && (
-                    <div className="posts-list">
-                        {posts?.length === 0 && <p>No posts yet</p>}
-                        {posts?.map(post => (
-                            <div key={post._id} className="post-item">
-                                <p>{post.description}</p>
-                                {post.content?.map((img, i) => (
-                                    <img key={i} src={img} alt="post" className="post-img" />
-                                ))}
-                            </div>
-                        ))}
+                    <div className=" user-profile-posts-section ">
+                        <UserPosts {...userPostsProps} />
+                        <CommentSection  {...commentSectionProps} />
                     </div>
                 )}
 
                 {activeTab === "pictures" && (
-                    <div className="pics-grid">
-                        {pics?.length === 0 && <p>No pictures yet</p>}
-                        {pics?.map(post => (
-                            post.content?.map((img, i) => (
-                                <img key={i} src={img} alt="pic" className="grid-img" />
-                            ))
-                        ))}
-                    </div>
+                    <UserPics {...userPicsProps} />
                 )}
 
                 {activeTab === "about" && (

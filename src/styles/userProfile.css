@@ -1,7 +1,10 @@
 .user-profile {
+    height: 100%;
+    max-height: 100%;
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
+    padding-bottom: 120px;
     border: 1px solid rgba(167, 167, 167, 0.38);
 }
 
@@ -100,6 +103,7 @@
     padding: 16px 0;
     width: 35rem;
     min-width: 300px;
+    height: 100%;
 }
 
 .tab {
@@ -153,6 +157,7 @@
     flex-direction: column;
     gap: 12px;
     padding: 16px 0;
+    height: 100%;
 }
 
 .profile-loading {
@@ -160,4 +165,10 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+
+.userProfile-posts-main-div {
+    height: 100%;
+    overflow-y: hidden;
 }

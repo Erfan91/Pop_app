@@ -104,13 +104,20 @@ const Profile = (props) => {
         setInfoDisplay: setInfoDisplay
     }
 
+    const usePicsProps = {
+        display: userPicsDisplay,
+        handleDisplay: setUserPicsDisplay,
+        handleProDataDis: setProDataDisplay,
+        pics
+    }
+
     return (
         <div className='profile-main-div flex column '>
             <section className='app-content-section'>
                 <section className='profile-data-section'>
                     <ProfileData {...profileDataProps} />
                     <UserPosts {...userPostsProps} />
-                    <UserPics display={userPicsDisplay} handleDisplay={setUserPicsDisplay} handleProDataDis={setProDataDisplay}  data={pics}/>
+                    <UserPics {...usePicsProps} />
                     <ProfileNav {...profileNavProps} />
                     <Post display={postDisplay} handleDisplay={setPostDisplay} />
                     <InfoMessage display={infoDisplay} info={infoMessage} context={infoContext}/>

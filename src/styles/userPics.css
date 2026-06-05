@@ -1,5 +1,5 @@
 .userPics-main-div{
-    height: 78%;
+    height: 100%;
     width: 50%;
     justify-content: flex-start;
     
@@ -21,4 +21,9 @@
     height: 100%;
     width: 100%;
     border-radius: 7px;
+}
+
+
+.userProfile-pics-section{
+    height: 100%;
 }

@@ -4,15 +4,15 @@ import { IoClose} from 'react-icons/io5'
 const UserPics = (props) => {
 
     useEffect(() => {
-        if(props.data.length === 0) {
+        if(props.pics.length === 0) {
             props.handleDisplay("none");
             props.handleProDataDis("flex")
         } 
-    },[props.data])
+    },[props.pics])
 
   return (
-    <div className="userPics-main-div flex-column center" style={{display: props.display}}>
-         <div className='userPosts-icon-div flex center' onClick={() => {
+    <div className={`userPics-main-div flex-column center ${props.className}`} style={{display: props.display}}>
+         <div className='userPosts-icon-div flex center' style={{display: props.closeIconDisplay}} onClick={() => {
                 props.handleDisplay("none");
                 props.handleProDataDis("flex");
             }}>
@@ -20,7 +20,7 @@ const UserPics = (props) => {
             </div>
         <div className="userPics-main-child flex center">
              {
-            props.data.map((pics,index) =>{
+            props.pics.map((pics,index) =>{
                 return(
                     <div className="userPics-card flex center" key={index}>
                         <img src={pics.content} className='user-pics' alt="" />

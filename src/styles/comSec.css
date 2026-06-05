@@ -194,3 +194,15 @@
 .comment-edit-input:focus{
     outline: none;
 }
+
+.user-profile-posts-section {
+    position: relative;
+}
+
+.user-profile-comment-section{
+    width: 31.5rem;
+    position: fixed;
+    top: 40%;
+    left: 32.5%;
+
+}

@@ -38,7 +38,7 @@ const Chat = () => {
             .then(res => res.json())
             .then(data => {
                 setMessages(data)
-                // Mark all unseen messages as seen
+            
                 data.forEach(msg => {
                     if (!msg.seen && msg.receiver === currentUser) {
                         socket.emit("markSeen", {

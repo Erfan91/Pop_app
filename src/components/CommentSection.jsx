@@ -73,7 +73,7 @@ const CommentSection = (props) => {
     }
 
     return (
-        <div className='comment-section-main-div flex-column center' style={{ display: props.commentDisplay }}>
+        <div className={`comment-section-main-div flex-column center ${ props?.commentSectionCLass}`} style={{ display: props.commentDisplay }}>
             <IoClose className='comment-close-icon' onClick={() => props.setCommentDisplay("none")} />
             <span className='comment-header-span'>Comments {posts?.comments?.length}</span>
             {
