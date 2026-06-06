@@ -16,6 +16,7 @@ import "./styles/login.css";
 import "./styles/feed.css";
 import "./styles/signup.css";
 import "./styles/profile.css";
+import "./styles/moods.css";
 
 import "./styles/post.css";
 import "./styles/resetPass.css";
@@ -36,6 +37,7 @@ import "./styles/pop-ups/gettingStarted.css";
 import "./styles/pop-ups/phoneNum.css";
 import "./styles/pop-ups/popup.css";
 import "./styles/pop-ups/pp.css";
+
 
 
 

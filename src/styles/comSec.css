@@ -1,17 +1,18 @@
 .comment-section-main-div {
-    position: absolute;
-    top: 40%;
-    left: 23.2%;
-    height: 50%;
-    width: 28rem;
-    border: .5px solid white;
+    position: fixed;
+    bottom: 0;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60%;
+    top: auto !important;
     border-top-right-radius: 16px;
     border-top-left-radius: 16px;
     border-bottom: none;
-     background: rgba(255, 255, 255, 0.623);
+    background: rgba(255, 255, 255, 0.623);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(4.7px);
     -webkit-backdrop-filter: blur(4.7px);
+    z-index: 100;
 }
 
 .comment-close-icon {

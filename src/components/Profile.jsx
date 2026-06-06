@@ -24,7 +24,7 @@ const Profile = (props) => {
 
     const [arrayLength, setArrayLength] = useState(null)
 
-
+    const [postId, setPostId] = useState(null);
 
     const getUserPosts = () => {
         fetch(`http://localhost:3001/post/user-posts/${ids}`)
@@ -81,6 +81,7 @@ const Profile = (props) => {
         proDataDisplay: setProDataDisplay,
         getPostsFunc: getUserPosts,
         posts,
+        setPostId,
         length: arrayLength,
         className: "userPosts-main-div",
         cardClass: "post-card",

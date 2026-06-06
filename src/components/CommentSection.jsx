@@ -73,8 +73,8 @@ const CommentSection = (props) => {
     }
 
     return (
-        <div className={`comment-section-main-div flex-column center ${ props?.commentSectionCLass}`} style={{ display: props.commentDisplay }}>
-            <IoClose className='comment-close-icon' onClick={() => props.setCommentDisplay("none")} />
+        <div className={`comment-section-main-div flex-column center ${ props?.commentSectionCLass}`} style={{ display: props?.commentDisplay }}>
+            <IoClose className='comment-close-icon' onClick={() => props?.setCommentDisplay("none")} />
             <span className='comment-header-span'>Comments {posts?.comments?.length}</span>
             {
                 !posts?.comments?.length ? <div className="no-comments-div comment-section-child flex center">
@@ -91,7 +91,7 @@ const CommentSection = (props) => {
                                             <span>{comment.ownerId.name}</span>
                                         </div>
                                         {
-                                            props.userId === comment.ownerId._id ?
+                                            props?.userId === comment.ownerId._id ?
                                                 <div className="comment-options-div" >
                                                     <IoIosMore className='comment-options-icon' onClick={() => {
                                                         setCommentEdit(comment.text);

@@ -11,6 +11,7 @@ import { FcCancel } from "react-icons/fc";
 
 import EditDelete from '../EditDelete';
 import Follow from '../Follow';
+import CommentSection from '../CommentSection';
 
 const UserPosts = (props) => {
     const id = localStorage.getItem('_id');
@@ -18,14 +19,20 @@ const UserPosts = (props) => {
 
     const [inputIndex, setInputIndex] = useState(null);
     const [inputIndexB, setInputIndexB] = useState(null);
+
     const [text, setText] = useState("");
     const [postId, setPostId] = useState(null);
+
     const [edit, setEdit] = useState(null);
     const [isDelete, setDelete] = useState(null);
     const [posts, setPosts] = useState([]);
+
     const [likes, setLikes] = useState(null);
     const [isliked, setIsLiked] = useState(null);
+
     const [iconClass, setIconClass] = useState(null);
+    const [user, setUser] = useState(null)
+
 
     const navigate = useNavigate()
 
@@ -102,8 +109,26 @@ const UserPosts = (props) => {
         refMain: props.getPostsFunc,
     }
 
+    const [commentDisplay, setCommentDisplay] = useState("none");
+
+    const commentSectionProps = {
+        postId,
+        userData: user,
+        commentDisplay,
+        setCommentDisplay,
+        userId: ids,
+        getPostsFunc: () => {
+            fetch(`http://localhost:3001/post/user-posts/${postId}`, {
+                credentials: "include"
+            })
+                .then(res => res.json())
+                .then(data => setPosts(data.posts))
+                .catch(err => console.log(err))
+        }
+    }
+
     return (
-        <div className={props.length == 1 ? props.className + " flex-column between" : props.className + " column-reverse between"}
+        <div className={props?.length == 1 ? props.className + " flex-column between" : props.className + " column-reverse between"}
             style={
                 {
                     display: props.display,
@@ -151,7 +176,7 @@ const UserPosts = (props) => {
                                     }
 
                                     {
-                                        
+
                                         posts.ownerId.followers?.includes(ids) ? null : <Follow data={{ posts, ids, followedId: posts.ownerId._id }} />
                                     }
                                 </div>
@@ -167,8 +192,9 @@ const UserPosts = (props) => {
                                             </div>
                                             <div className="comment-icon-div flex align-center between" >
                                                 <IoChatbubbleOutline className='comment-icon' onClick={() => {
-                                                    props.setPostId(posts._id);
-                                                    props.setCommentDisplay("flex");
+                                                    setPostId(posts._id);
+                                                    setCommentDisplay("flex");
+                                                    setUser(props.userData)
                                                 }} />
                                                 <span className='count-span'>{posts.comments.length}</span>
                                             </div>
@@ -188,6 +214,7 @@ const UserPosts = (props) => {
                     )
                 })
             }
+            <CommentSection {...commentSectionProps} />
         </div>
     )
 }

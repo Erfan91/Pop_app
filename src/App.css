@@ -1,9 +1,7 @@
-.App{
+.App {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    place-content: center;
-    align-content: center;
-    place-items: center;
     background: linear-gradient(to right, #00d2ff, #3a7bd5);
     min-height: 100vh;
-    max-height: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }

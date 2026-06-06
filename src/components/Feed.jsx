@@ -3,7 +3,7 @@ import { data, useLocation, useNavigate } from 'react-router-dom';
 import Popup from './pop-ups/Popup.jsx';
 import UserPosts from './profile-nav-comps/UserPosts.jsx';
 import CommentSection from './CommentSection.jsx';
-
+import MoodFeedBar from './MoodFeedBar.jsx';
 
 const Feed = (props) => {
   const location = useLocation();
@@ -61,18 +61,9 @@ const Feed = (props) => {
     closeIconDisplay: "none",
     commentDisplay,
     setCommentDisplay,
+    userData
   
   }
-
-  const commentSectionProps = {
-    postId,
-    userData,
-    commentDisplay,
-    setCommentDisplay,
-    userId : ids,
-    getPostsFunc
-  
-  } 
 
 
   return (
@@ -80,8 +71,8 @@ const Feed = (props) => {
       <Popup display={popupDisplay} id={ids} />
       {firstLogin ? null :
         <div className="feed-main-child flex center">
+          <MoodFeedBar />
           <UserPosts {...userPostsProps} />
-          <CommentSection  {...commentSectionProps} />
         </div>
       }
     </div>

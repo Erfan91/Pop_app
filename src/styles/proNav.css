@@ -1,26 +1,26 @@
 .profile-nav-div {
-    position: absolute;
-    top: 3.5%;
-    width: 50%;
+    position: relative;
+    top: 18%;
+    width: 90%;
+    max-width: 400px;
     height: 3rem;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    background: rgba(139, 232, 255, 0.29);
     border-radius: 16px;
+    margin: 10px 0 15px 0;
+    background: rgba(139, 232, 255, 0.29);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(4.2px);
     -webkit-backdrop-filter: blur(4.2px);
     border: 1px solid rgba(139, 232, 255, 0.3);
+    align-self: center;
 }
 
 .profile-nav-main-child {
-    position: absolute;
+    position: relative;
     height: 100%;
     width: 100%;
     align-items: center;
     place-items: center;
     justify-content: space-between;
-
     gap: 4px;
 }
 
