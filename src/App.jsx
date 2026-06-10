@@ -29,6 +29,7 @@ import "./styles/infoMsg.css";
 import "./styles/comSec.css";
 import "./styles/editDelete.css";
 import "./styles/chat.css";
+import "./styles/chatbox.css";
 import "./styles/userProfile.css";
 import "./styles/notification.css";
 

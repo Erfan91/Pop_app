@@ -42,7 +42,7 @@ const ProfileData = (props) => {
                         <h1 className='_text'> {profile.name}</h1>
                         <span>@{profile.username}</span>
                         <span>{profile.bio}</span>
-                        <span><MdLocationPin className='location-icon' /> Unknown</span>
+                        <span><MdLocationPin className='location-icon' /> {profile.livesIn || "Unknown"}</span>
                     </div>
                 )
             })}

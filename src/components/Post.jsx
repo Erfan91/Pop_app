@@ -4,10 +4,13 @@ import { SiZcool } from "react-icons/si";
 import { PiStickerDuotone } from "react-icons/pi";
 import { IoClose, IoCheckmarkOutline } from "react-icons/io5";
 import { MdCloseFullscreen } from "react-icons/md";
+import { MoodPicker } from "./MoodAnimations";
 import axios from 'axios';
 
 const Post = (props) => {
     const [text, setText] = useState("");
+    const [mood, setMood] = useState(null)
+    const [showMoodPicker, setShowMoodPicker] = useState(false)
 
     const imageUploader = useRef(null);
     const uploadedImage = useRef(null);
@@ -66,13 +69,16 @@ const Post = (props) => {
                 ownerId: ids,
                 description: text,
                 content: url,
+                mood: mood ? [mood] : []
             })
         }).then(result => result.json())
             .then(response => {
                 console.log(response.message)
-                if(response.state){
+                if (response.state) {
                     alert(response.message);
                     setText("");
+                    setMood(null)
+                    setShowMoodPicker(false)
                     setSelectedImg(null);
                     props.handleDisplay("none")
                 }
@@ -111,36 +117,71 @@ const Post = (props) => {
         props.handleDisplay("none");
         setSelectedImg(null);
         setText("");
-    } 
+        setMood(null)           // ← reset mood
+        setShowMoodPicker(false)
+    }
 
     return (
         <div className='post-main-div flex-column' style={{ display: props.display }}>
+
             <div className="post-text-div">
-                <textarea  className='post-textarea' placeholder="what's on your mind" onChange={handleTextChange} value={text}/>
-                <div className="post-options-div flex">
-                    <input type="file" accept='/image' onChange={handleImgChange} ref={imageUploader} style={{ display: "none" }} />
-                    <div className="post-pic-optn post-option flex center" onClick={() => {
-                        imageUploader.current.click();
-                    }}>
-                        <TbPhoto className='photo-icon' />
-                    </div>
-                    <div className="post-mood-optn post-option flex center">
-                        <SiZcool className='photo-icon' />
-                    </div>
-                    <div className="post-sticker-optn post-option flex center">
-                        <PiStickerDuotone className='photo-icon' />
-                    </div>
-                </div>
+                <textarea
+                    className='post-textarea'
+                    placeholder="what's on your mind"
+                    onChange={handleTextChange}
+                    value={text}
+                />
                 <div className={divDisplay} onClick={handleDisplay}>
                     {selectedImg ? <img src={selectedImg} ref={uploadedImage} className={imgDisplay} /> : null}
                     <MdCloseFullscreen className="closeFS-icon" style={{ display: iconDisplay }} />
                 </div>
             </div>
+
+            <div className="post-options-div flex">
+                <input type="file" accept='/image' onChange={handleImgChange} ref={imageUploader} style={{ display: "none" }} />
+                <div className="post-pic-optn post-option flex center" onClick={() => imageUploader.current.click()}>
+                    <TbPhoto className='photo-icon' />
+                </div>
+                <div
+                    className={`post-mood-optn post-option flex center ${mood ? 'mood-active' : ''}`}
+                    onClick={() => setShowMoodPicker(!showMoodPicker)}
+                >
+                    {mood
+                        ? <div className={`post-selected-mood-ring mood-ring mood-${mood}`} />
+                        : <SiZcool className='photo-icon' />
+                    }
+                </div>
+                <div className="post-sticker-optn post-option flex center">
+                    <PiStickerDuotone className='photo-icon' />
+                </div>
+            </div>
+
+            {showMoodPicker && (
+                <div className="post-mood-picker-wrapper">
+                    <MoodPicker
+                        selected={mood}
+                        onSelect={(selectedMood) => {
+                            setMood(selectedMood)
+                            setShowMoodPicker(false)
+                        }}
+                    />
+                </div>
+            )}
+
             <div className="post-btn-div flex">
-                <button className='post-discard-btn' onClick={handleDiscard}><IoClose className='close-icon' /></button>
-                <button className={text !== "" && image ? "post-btn" : "invalid-button"} id='post-btn' onClick={uploadImage}><IoCheckmarkOutline className='done-icon' /></button>
+                <button className='post-discard-btn' onClick={handleDiscard}>
+                    <IoClose className='close-icon' />
+                </button>
+                <button
+                    className={text !== "" && image ? "post-btn" : "invalid-button"}
+                    onClick={uploadImage}
+                >
+                    <IoCheckmarkOutline className='done-icon' />
+                </button>
             </div>
         </div>
+
+
     )
 }
 

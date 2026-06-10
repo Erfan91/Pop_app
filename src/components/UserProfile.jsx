@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import UserPosts from "./profile-nav-comps/UserPosts";
 import UserPics from "./profile-nav-comps/UserPics";
 import CommentSection from "./CommentSection";
+import MoodBubble from "./MoodAnimations";
 
 const UserProfile = () => {
     const { id } = useParams()
@@ -10,6 +11,7 @@ const UserProfile = () => {
     const currentUser = localStorage.getItem("_id")
 
     const [user, setUser] = useState(null)
+    const [userMood, setUserMood] = useState(null)
     const [posts, setPosts] = useState([])
     const [pics, setPics] = useState([])
     const [activeTab, setActiveTab] = useState("posts")
@@ -20,7 +22,7 @@ const UserProfile = () => {
     const [commentDisplay, setCommentDisplay] = useState("none");
     const [userPicsDisplay, setUserPicsDisplay] = useState("none");
 
-    // Fetch user info
+
     useEffect(() => {
         fetch(`http://localhost:3001/user/user-info/${id}`, {
             credentials: "include"
@@ -30,13 +32,14 @@ const UserProfile = () => {
                 if (data.state) {
                     setUser(data.user)
                     setIsFollowing(data.user.followers.includes(currentUser))
+                    if (data.user.mood) setUserMood(data.user.mood)
                 }
                 setLoading(false)
             })
             .catch(err => console.log(err))
     }, [id])
 
-    // Fetch posts
+
     useEffect(() => {
         fetch(`http://localhost:3001/post/user-posts/${id}`, {
             credentials: "include"
@@ -147,11 +150,19 @@ const UserProfile = () => {
     return (
         <div className="user-profile">
             <div className="profile-top">
-                <img
-                    src={user.image?.[0] || "/default-avatar.png"}
-                    alt={user.username}
-                    className="profile-avatar"
-                />
+                {userMood ? (
+                    <MoodBubble
+                        mood={userMood}
+                        user={user}
+                        onClick={() => { }}
+                    />
+                ) : (
+                    <img
+                        src={user.image?.[0] || "/default-avatar.png"}
+                        alt={user.username}
+                        className="profile-avatar"
+                    />
+                )}
                 <h2>{user.name}</h2>
                 <span className="profile-username">@{user.username}</span>
                 {user.bio && <p className="profile-bio">{user.bio}</p>}

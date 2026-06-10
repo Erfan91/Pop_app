@@ -23,6 +23,7 @@ const Feed = (props) => {
   const [className, setClassName] = useState("feed-userPosts-main-div");
 
   useEffect(() => {
+    props.navDisplay("flex");
     fetch(`http://localhost:3001/user/user-info/${ids}`)
       .then(result => result.json())
       .then(data => {
@@ -67,7 +68,7 @@ const Feed = (props) => {
 
 
   return (
-    <div className={firstLogin ? 'feed-main-div feed-blur' : 'feed-main-div flex center'}>
+    <div className='feed-main-div flex center'>
       <Popup display={popupDisplay} id={ids} />
       {firstLogin ? null :
         <div className="feed-main-child flex center">

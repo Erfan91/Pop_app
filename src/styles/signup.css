@@ -83,7 +83,7 @@
 
 .invalid-button{
     background-color: rgba(184, 184, 184, 0.729);
-    color: rgba(191, 209, 221, 0.596) !important;
+    color: rgba(191, 209, 221, 0.596);
     cursor: not-allowed;
     pointer-events: none;
 
@@ -185,4 +185,13 @@
 
 .signup-icon{
     color: rgb(155, 155, 155);
+}
+@media (max-width: 600px) {
+    .signup-main-div {
+        width: 92%;
+        padding: 24px 0;
+    }
+    .signup-form {
+        width: 85%;
+    }
 }

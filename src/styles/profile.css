@@ -29,6 +29,7 @@
     border: 1px solid rgba(167, 167, 167, 0.38);
     box-sizing: border-box;
     overflow: hidden;
+    position: relative;
 }
 
 .profile-data-div {
@@ -100,4 +101,195 @@
     height: 35px;
     top: 13%;
     left: 15%;
+}
+
+.profile-main-div {
+    width: 100%;
+    min-height: 100vh;
+    justify-content: center;
+    background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 40%, #1a0a2e 100%);
+}
+
+.app-content-section {
+    width: 100%;
+    max-width: 600px;
+    height: 100vh;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-data-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-right: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-top: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding-top: 20px;
+}
+
+/* Name */
+.profile-data-section h2,
+.profile-data-section span,
+.profile-data-section p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Username and secondary text */
+.profile-username,
+.profile-bio,
+.profile-location,
+.profile-stat-label {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Profile nav tabs */
+.profile-main-div .profile-nav-div {
+    background: rgba(255, 255, 255, 0.05);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    backdrop-filter: blur(10px);
+}
+
+.profile-main-div .pro-nav-option-div {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+.profile-main-div .pro-nav-option-div:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    transform: none;
+}
+
+.profile-main-div .pro-nav-option-div.active {
+    color: white;
+    background: rgba(0, 210, 255, 0.15);
+    border-radius: 7px;
+}
+
+/* Camera icon */
+.camera-icon-div {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Profile image ring */
+.profile-image-div {
+    border: 2px solid rgba(0, 210, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+}
+
+/* Posts section */
+.userPosts-main-div {
+    background: transparent;
+}
+
+/* Post cards on profile — keep light glass */
+.userProfile-posts-main-div .post-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.userProfile-posts-main-div .post-card span,
+.userProfile-posts-main-div .post-card p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.userProfile-posts-main-div .post-reactions-div {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.userProfile-posts-main-div .count-span {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.userProfile-posts-main-div .post-card-time-p {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+
+.profile-data-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0;
+    flex: 1;
+}
+
+/* All text in profile data white */
+.profile-data-div h2,
+.profile-data-div p,
+.profile-data-div span,
+.profile-data-div small {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Secondary text */
+.profile-data-div .profile-username {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.profile-data-div .location-p {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+}
+
+.profile-data-div h1 {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 8px 0 4px 0;
+}
+
+.profile-data-div span {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+}
+
+.profile-data-div ._text {
+    color: white;
+}
+
+.profile-data-section {
+    justify-content: center;
+    gap: 0;
+}
+
+.profile-data-div {
+    flex: unset;
+    margin-bottom: 32px;
+}
+
+.profile-main-div .pro-nav-option-div span,
+.profile-main-div .pro-nav-option-div p,
+.profile-main-div .pro-nav-option-div {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+}
+
+@media (max-width: 480px) {
+    .app-content-section {
+        max-width: 100%;
+    }
+    .profile-data-section {
+        border-left: none;
+        border-right: none;
+    }
 }

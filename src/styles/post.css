@@ -1,21 +1,28 @@
+/* ===== POST CONTAINER ===== */
 .post-main-div {
     position: absolute;
-    height: 62%;
-    width: 45%;
+    width: 86%;
+    max-width: 460px;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
     align-items: center;
+    z-index: 20;
+    gap: 10px;
 }
 
+/* ===== TEXTAREA BOX ===== */
 .post-text-div {
     position: relative;
     width: 100%;
-    height: 16rem;
-    min-width: 300px;
-    background: rgba(244, 244, 244, 0.73);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4.3px);
-    -webkit-backdrop-filter: blur(4.3px);
-    border: 1px solid rgba(244, 244, 244, 0.24);
+    height: 12rem;
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
 }
 
 .post-textarea {
@@ -23,131 +30,223 @@
     width: 100%;
     height: 100%;
     outline: none;
-    border-radius: 10px;
-    padding: 10px 0 0 10px;
+    border-radius: 18px;
+    padding: 14px;
     background-color: transparent;
     border: none;
+    font-size: 15px;
+    color: #1a1a2e;
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
+.post-textarea::-webkit-scrollbar {
+    display: none;
+}
 
+.post-textarea::placeholder {
+    color: rgba(80, 80, 120, 0.5);
+    font-size: 15px;
+}
+
+/* ===== OPTIONS ROW — glassy pill ===== */
 .post-options-div {
-    position: absolute;
-    left: 26%;
-    top: 80%;
-    width: 50%;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    gap: 14px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.3);
 }
 
 .post-option {
-    height: 45px;
-    width: 45px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
-    border: 1px solid cornflowerblue;
+    border: none;
     cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+}
+
+.post-option:hover {
+    transform: scale(1.1);
 }
 
 .post-pic-optn {
     font-size: x-large;
-    color: rgba(220, 223, 224, 0.825);
-    background-image: linear-gradient(155deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(322deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(33deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(315deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(41deg, rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%, rgb(198, 157, 133) 41%, rgb(198, 157, 133) 42%, rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%, rgb(136, 120, 151) 44%, rgb(136, 120, 151) 45%, rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%, rgb(74, 83, 168) 61%, rgb(74, 83, 168) 78%, rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%), linear-gradient(90deg, rgb(192, 100, 79), rgb(56, 158, 172));
-    background-blend-mode: overlay, overlay, overlay, overlay, overlay, normal;
+    color: rgba(255, 255, 255, 0.9);
+    background-image: linear-gradient(155deg,
+        rgb(229, 176, 124) 0%, rgb(229, 176, 124) 41%,
+        rgb(167, 139, 142) 42%, rgb(167, 139, 142) 44%,
+        rgb(105, 101, 159) 45%, rgb(105, 101, 159) 61%,
+        rgb(43, 64, 177) 78%, rgb(43, 64, 177) 100%),
+        linear-gradient(90deg, rgb(192, 100, 79), rgb(56, 158, 172));
+    background-blend-mode: overlay, normal;
+    box-shadow: 0 4px 15px rgba(74, 83, 168, 0.4);
 }
 
 .post-mood-optn {
-    color: rgba(235, 235, 235, 0.784);
+    color: rgba(255, 255, 255, 0.9);
     font-size: x-large;
-    background-position: center;
+    background-image: repeating-radial-gradient(ellipse at center,
+        rgb(75, 154, 242), rgb(43, 98, 200), rgb(1, 23, 143) 1px);
     background-size: 300%;
-    background-image: repeating-radial-gradient(ellipse at center center, rgb(75, 154, 242), rgb(64, 135, 228), rgb(54, 117, 214), rgb(43, 98, 200), rgb(33, 79, 185), rgb(22, 60, 171), rgb(12, 42, 157), rgb(1, 23, 143) 1px);
-    /* background-image: repeating-radial-gradient(circle at center center, rgb(51, 21, 217) 0px, rgb(51, 21, 217) 2px,rgb(254, 112, 5) 2px, rgb(254, 112, 5) 3px); background-size: 69px 69px; */
+    background-position: center;
+    box-shadow: 0 4px 15px rgba(33, 79, 185, 0.4);
 }
 
 .post-sticker-optn {
-    color: rgba(235, 235, 235, 0.784);
+    color: rgba(255, 255, 255, 0.9);
     font-size: x-large;
-    background-size: 100%;
-    background-image: radial-gradient(circle at 24% 76%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at 76% 76%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at 76% 24%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at 24% 24%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%, transparent 100%), radial-gradient(circle at center center, rgb(99, 20, 187) 0%, rgb(99, 20, 187) 71%, transparent 71%, transparent 100%), linear-gradient(90deg, rgb(132, 58, 234), rgb(132, 58, 234));
-    background-size: 49px 49px;
+    background-image:
+        radial-gradient(circle at 24% 76%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%),
+        radial-gradient(circle at 76% 76%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%),
+        radial-gradient(circle at 76% 24%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%),
+        radial-gradient(circle at 24% 24%, rgb(132, 58, 234) 0%, rgb(132, 58, 234) 20%, transparent 20%),
+        radial-gradient(circle at center, rgb(99, 20, 187) 0%, rgb(99, 20, 187) 71%, transparent 71%),
+        linear-gradient(90deg, rgb(132, 58, 234), rgb(132, 58, 234));
+    box-shadow: 0 4px 15px rgba(132, 58, 234, 0.4);
 }
 
-
-.close-icon {
-    color: rgb(255, 50, 50);
+/* When mood is active — remove the blue bg so ring shows cleanly */
+.mood-active {
+    background: transparent;
+    box-shadow: 0 0 16px var(--mood-glow, rgba(255,255,255,0.3));
+    border: none;
 }
 
-.done-icon{
-    color: rgb(148, 255, 219);
-
+/* Button ring — size override only, mood-ring class handles mask + content */
+.post-selected-mood-ring {
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.3);
+    overflow: visible;
 }
 
+/* ===== MOOD PICKER CARD ===== */
+.post-mood-picker-wrapper {
+    width: 100%;
+    background: rgba(12, 12, 22, 0.94);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 280px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.post-mood-picker-wrapper::-webkit-scrollbar { width: 3px; }
+.post-mood-picker-wrapper::-webkit-scrollbar-track { background: transparent; }
+.post-mood-picker-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+.post-mood-picker-wrapper .mood-picker { padding: 16px; }
+
+.post-mood-picker-wrapper .mood-picker-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.post-mood-picker-wrapper .mood-picker-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.post-mood-picker-wrapper .mood-option {
+    gap: 8px;
+    padding: 10px 2px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 10px;
+    color: rgba(255,255,255,0.65);
+}
+
+.post-mood-picker-wrapper .mood-option:hover {
+    background: rgba(255,255,255,0.07);
+    color: white;
+    transform: scale(1.06);
+}
+
+.post-mood-picker-wrapper .mood-selected {
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 14px var(--mood-color);
+    color: white;
+}
+
+/* Override only size — mask/content/animations come from mood-ring class now */
+.post-mood-picker-wrapper .mood-option-ring {
+    width: 52px;
+    height: 52px;
+    background: rgba(0, 0, 0, 0.4);
+    overflow: visible;
+}
+
+/* ===== BUTTONS ===== */
 .post-btn-div {
-    width: 40%;
-    justify-self: center;
+    width: 50%;
     justify-content: space-around;
-    margin-top: 10px;
+    align-items: center;
     flex-wrap: nowrap;
-   
-} 
+}
+
 .post-btn-div > button {
     min-height: 50px;
     min-width: 50px;
-    background: rgba(255, 255, 255, 0.23);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2.1px);
-    -webkit-backdrop-filter: blur(2.1px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     font-size: x-large;
     cursor: pointer;
-    
 }
 
-.post-discard-btn{
-    margin-right: 4px;
+.close-icon { color: rgb(255, 80, 80); }
+.done-icon  { color: rgb(100, 255, 200); }
+
+.post-discard-btn:hover {
+    background: rgba(255, 80, 80, 0.2);
+    border-color: rgb(255, 95, 95);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
-.post-discard-btn:hover{
-    transform: translate3d(-1px, 3px, 1px);
-    background: rgba(255, 149, 149, 0.312);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4.3px);
-    -webkit-backdrop-filter: blur(4.3px);
-    border: 1px solid rgb(255, 95, 95);
-    color: skyblue;
-    font-size: xx-large;
-    transition: all ease-in-out .7s;
+.post-btn:hover {
+    background: rgba(100, 255, 200, 0.2);
+    border-color: aquamarine;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
-.post-btn:hover{
-    transform: translate3d(3px, -3px, 1px);
-    background: rgba(188, 255, 228, 0.312);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4.3px);
-    -webkit-backdrop-filter: blur(4.3px);
-    border: 1px solid aquamarine;
-    color: skyblue;
-    font-size: xx-large;
-    transition: all ease-in-out .5s;
-
-}
-
-
-.post-photo-div{
+/* ===== IMAGE PREVIEW ===== */
+.post-photo-div {
     position: absolute;
     top: 5%;
     left: 77%;
 }
 
-.post-image{
+.post-image {
     height: 70px;
     width: 70px;
     border-radius: 50%;
     cursor: pointer;
-
 }
 
-.focused-photo-div{
+.focused-photo-div {
     position: absolute;
     left: 5%;
     top: 5%;
@@ -156,13 +255,13 @@
     z-index: 1;
 }
 
-.post-img-lg{
+.post-img-lg {
     height: 100%;
     width: 100%;
     border-radius: 10px;
 }
 
-.closeFS-icon{
+.closeFS-icon {
     display: flex;
     position: absolute;
     top: 1%;
@@ -170,8 +269,25 @@
     font-size: larger;
     cursor: pointer;
     color: rgb(112, 112, 112);
-
 }
-.display-none{
-    opacity: 0;
+
+.display-none { opacity: 0; }
+.selected-mood-preview { display: none; }
+
+@media (max-width: 600px) {
+    .post-main-div {
+        width: 96%;
+        top: 6%;
+    }
+    .post-mood-picker-wrapper .mood-option-ring {
+        width: 42px;
+        height: 42px;
+    }
+    .post-mood-picker-wrapper .mood-picker-grid {
+        gap: 4px;
+    }
+    .post-mood-picker-wrapper .mood-option {
+        font-size: 9px;
+        padding: 6px 2px;
+    }
 }

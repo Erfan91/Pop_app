@@ -1,45 +1,64 @@
 .profile-nav-div {
-    position: relative;
-    top: 18%;
-    width: 90%;
+    position: absolute;
+    bottom: 86px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
     max-width: 400px;
-    height: 3rem;
+    height: 52px;
     border-radius: 16px;
-    margin: 10px 0 15px 0;
-    background: rgba(139, 232, 255, 0.29);
+    z-index: 10;
+
+    /* Same as main nav */
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(7.7px);
+    -webkit-backdrop-filter: blur(7.7px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(4.2px);
-    -webkit-backdrop-filter: blur(4.2px);
-    border: 1px solid rgba(139, 232, 255, 0.3);
-    align-self: center;
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
 }
 
 .profile-nav-main-child {
-    position: relative;
     height: 100%;
     width: 100%;
+    display: flex;
     align-items: center;
-    place-items: center;
     justify-content: space-between;
-    gap: 4px;
+    padding: 0 8px;
+    box-sizing: border-box;
 }
 
 .pro-nav-option-div {
+    display: flex;
     align-items: center;
-    justify-content: space-around;
-    border-radius: 16px;
-    /* border: 1px solid rgba(255, 255, 255, 0.17); */
-    height: 50px;
-    width: 90px;
-    border-radius: 7px;
-    font-weight: 400;
+    justify-content: center;
+    flex: 1;
+    height: 36px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
-
+    color: rgba(0, 0, 0, 0.75);
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-
 .pro-nav-option-div:hover {
-    transform: scale(1.1);
-    transition: ease-in-out 1s;
+    background: rgba(255, 255, 255, 0.2);
+    color: #000;
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+}
+
+.pro-nav-option-div:active {
+    transform: scale(0.96);
+}
+
+@media (max-width: 480px) {
+    .profile-nav-div {
+        width: 96%;
+        bottom: 82px;
+    }
+    .pro-nav-option-div {
+        font-size: 11px;
+    }
 }

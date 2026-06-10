@@ -88,12 +88,15 @@ const Profile = (props) => {
         closeIconDisplay: "flex"
     }
 
+    const openPost = (val) => {
+        setPostDisplay(val)
+    }
+
     const profileDataProps = {
         display: proDataDisplay,
         navDisplay: props.navDisplay,
-        handleDisplay: setPostDisplay,
+        handleDisplay: openPost,
         setPfp: props.setPfp
-      
     }
 
     const profileNavProps = {
@@ -120,7 +123,7 @@ const Profile = (props) => {
                     <UserPosts {...userPostsProps} />
                     <UserPics {...usePicsProps} />
                     <ProfileNav {...profileNavProps} />
-                    <Post display={postDisplay} handleDisplay={setPostDisplay} />
+                    <Post display={postDisplay} handleDisplay={openPost} />
                     <InfoMessage display={infoDisplay} info={infoMessage} context={infoContext}/>
                 </section>
                 <div className="setting-nav"></div>

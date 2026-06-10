@@ -1,11 +1,40 @@
 .feed-main-div {
     height: 100vh;
     width: 100vw;
-    justofy-content: center;
-    background: linear-gradient(to right, #1d8f93, #7d93b1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 40%, #1a0a2e 100%);
     position: relative;
-    /* background: linear-gradient(to right, #6aa7bcb0, #2d2d2d); */
+    overflow: hidden;
+}
 
+
+
+.feed-main-div::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 210, 255, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.feed-main-div::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .feed-blur {
@@ -13,33 +42,175 @@
 }
 
 .feed-main-child {
-    height: 100%;
-    width: 60rem;
-    /* background: rgba(167, 167, 167, 0.18); */
-    background: rgba(43, 43, 43, 0.394);
-
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(3.5px);
-    -webkit-backdrop-filter: blur(3.5px);
-    border: 1px solid rgba(167, 167, 167, 0.38);
+    height: 100vh;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-right: 0.5px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
 }
 
 .feed-userPosts-main-div {
-    position: absolute;
-    height: 90%;
-    width: 32rem;
-    min-width: 350px;
-    border-radius: 7px;
-    align-items: center;
+    flex: 1;
+    width: 100%;
     overflow-y: scroll;
-    gap: 1rem;
+    padding: 8px 12px 120px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 }
 
 .feed-userPosts-main-div::-webkit-scrollbar {
-    background-color: transparent;
+    display: none;
 }
 
-.feed-post-card {
-    /* height: 20rem !important; */
-    margin: 1rem 0;
+.feed-main-div .feed-post-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.06);
+    border: 0.5px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 12px;
+}
+
+
+.feed-post-card .post-card-header span {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.feed-post-card .post-card-time-p {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 400;
+}
+
+.feed-post-card .post-card-caption-div {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.feed-post-card .post-card-caption-div span {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.feed-post-card .post-reactions-div {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    padding: 10px 0 6px 14px;
+    gap: 1.8rem;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+}
+
+.feed-post-card .count-span {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+.feed-post-card .userPosts-options-icon {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.feed-post-card .userPosts-options-icon:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.feed-post-card .post-card-image {
+    border-radius: 12px;
+    max-height: 450px;
+}
+
+.feed-post-card .post-card-pfp {
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.feed-post-card .follow-btn {
+    border: 1px solid rgba(0, 210, 255, 0.5);
+    color: rgba(0, 210, 255, 0.9);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.feed-post-card .follow-btn:hover {
+    background: rgba(0, 210, 255, 0.15);
+}
+
+.mood-feed-bar {
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 16px;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.feed-main-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.feed-main-div .mood-username {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px;
+}
+
+.feed-main-div .mood-label {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* Nav bar dark */
+.App .nav-div {
+    background: rgba(10, 14, 26, 0.8);
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.App .nav-div p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-icon {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-icon:hover, .nav-icon-active {
+    color: #00d2ff;
+}
+
+/* Options icon */
+.feed-post-card .userPosts-options-icon {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+
+
+@media (max-width: 768px) {
+    .feed-main-child {
+        width: 100%;
+        max-width: 100%;
+        border-left: none;
+        border-right: none;
+    }
+
+    .feed-userPosts-main-div {
+        padding: 0 8px 100px 8px;
+    }
 }
