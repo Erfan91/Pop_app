@@ -12,7 +12,8 @@ import {
     getUserProfile,
     getUser,
     addFollow,
-    removeFollower
+    removeFollower,
+    setMood
 } from "../controllers/user.controller.js";
 
 const router = Router();
@@ -30,5 +31,6 @@ router.route("/update-user/:id").patch(updateUser);
 router.route("/delete-user/:id").delete(deleteUser);
 router.route("/add-follow").post(addFollow);
 router.route("/remove-follower").post(removeFollower);
+router.route("/set-mood").patch(setMood);
 
 export default router

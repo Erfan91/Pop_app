@@ -77,6 +77,12 @@ const userSchema = new mongoose.Schema(
             ref: "Notification"
         },
 
+        mood: {
+            type: String,
+            enum: ['fire', 'chill', 'lit', 'wavy', 'vibes', 'love', 'grind', 'moody', 'glowing', 'rainy', null],
+            default: null
+        },
+
     },
 
     {

@@ -325,6 +325,25 @@ const uploadImage = (req, res, next) => {
     })
 }
 
+const setMood = async (req, res) => {
+    try {
+        const { userId, mood } = req.body
+        const validMoods = ['fire', 'chill', 'lit', 'wavy', 'vibes', 'love', 'grind', 'moody', 'glowing', 'rainy']
+        if (mood && !validMoods.includes(mood)) {
+            return res.status(400).json({ message: 'Invalid mood', state: false })
+        }
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { mood: mood || null },
+            { new: true }
+        ).select('-password')
+        if (!user) return res.status(404).json({ message: 'User not found', state: false })
+        res.status(200).json({ message: 'Mood updated', mood: user.mood, state: true })
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error', error: error.message })
+    }
+}
+
 export {
     createAccount,
     loginUser,
@@ -338,5 +357,6 @@ export {
     getUserProfile,
     getUser,
     addFollow,
-    removeFollower
+    removeFollower,
+    setMood
 }

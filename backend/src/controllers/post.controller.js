@@ -158,6 +158,29 @@ const addLike = async (req, res, next) => {
     }
 }
 
+
+export const getFollowingMoods = async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.user._id)
+        const following = currentUser.following
+
+        const usersWithMood = await User.find({
+            _id: { $in: following },
+            mood: { $exists: true, $ne: null }
+        }).select('_id username name image mood')
+
+        const result = usersWithMood.map(u => ({
+            mood: u.mood,
+            user: { _id: u._id, username: u.username, name: u.name, image: u.image }
+        }))
+
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch moods', error })
+    }
+}
+
+
 const deletePost = async (req, res, next) => {
     const _id = req.params.id;
     await Post.findByIdAndDelete(_id)
@@ -165,6 +188,7 @@ const deletePost = async (req, res, next) => {
             !result ? res.status(400).json({ message: "Post not found" }) : res.status(200).json({ message: "Post deleted successfuly" })
         });
 }
+
 
 let imageName = "";
 const storage = multer.diskStorage({
