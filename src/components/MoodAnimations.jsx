@@ -296,8 +296,8 @@ export const MoodBubble = ({ mood, user, onClick, size = 80 }) => {
                 height={size}
                 className="mood-canvas"
             />
-            <span className="mood-username">{user?.username}</span>
-            <span className="mood-label">{mood}</span>
+            {/* <span className="mood-username">{user?.username}</span> */}
+            {/* <span className="mood-label">{mood}</span> */}
         </div>
     )
 }

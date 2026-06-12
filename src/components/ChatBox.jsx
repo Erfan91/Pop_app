@@ -2,15 +2,48 @@ import { useState, useEffect, useRef } from "react";
 import { useSocket } from "../context/SocketContext";
 import { IoClose, IoArrowBack, IoArrowUpCircleSharp } from "react-icons/io5";
 
-const ChatBox = ({ display, onClose }) => {
+const ChatBox = ({ display, onClose, initialUser = null }) => {
     const { socket } = useSocket()
     const [selectedUser, setSelectedUser] = useState(null)
     const [inbox, setInbox] = useState([])
     const [messages, setMessages] = useState([])
     const [content, setContent] = useState("")
+    const [myMood, setMyMood] = useState(null)
     const id = localStorage.getItem('_id');
     const currentUser = JSON.parse(JSON.stringify(id));
     const bottomRef = useRef(null)
+
+    const moodColors = {
+        fire: ['#ff4e00', '#ec9f05'],
+        chill: ['#00d2ff', '#3a7bd5'],
+        lit: ['#f9ca24', '#f0932b'],
+        wavy: ['#2193b0', '#6dd5ed'],
+        vibes: ['#a855f7', '#6366f1'],
+        love: ['#ff416c', '#ff4b2b'],
+        grind: ['#f7971e', '#ffd200'],
+        moody: ['#2c3e50', '#4ca1af'],
+        glowing: ['#f6d365', '#fda085'],
+        rainy: ['#4e54c8', '#8f94fb'],
+    }
+
+    const getSplitBg = (otherMood, myMood) => {
+        const top = moodColors[otherMood] || ['#0d1b2e', '#0d1b2e']
+        const bottom = moodColors[myMood] || ['#0d1b2e', '#0d1b2e']
+        return `linear-gradient(90deg, ${top[0]} 0%, ${top[1]} 48%, ${bottom[0]} 52%, ${bottom[1]} 100%)`
+    }
+
+
+    useEffect(() => {
+        fetch(`http://localhost:3001/user/user-info/${currentUser}`, {
+            credentials: "include"
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.user?.mood) setMyMood(data.user.mood)
+            })
+            .catch(err => console.log(err))
+    }, [])
+
 
     const loadInbox = () => {
         fetch(`http://localhost:3001/message/inbox`, { credentials: "include" })
@@ -22,6 +55,13 @@ const ChatBox = ({ display, onClose }) => {
     useEffect(() => {
         if (display) loadInbox()
     }, [display])
+
+    // When opened with a target user (e.g. the "Message" button on a profile),
+    // jump straight into that user's conversation.
+    useEffect(() => {
+        if (display && initialUser?._id) openConversation(initialUser)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [display, initialUser])
 
     const openConversation = (user) => {
         setSelectedUser(user)
@@ -135,7 +175,10 @@ const ChatBox = ({ display, onClose }) => {
                             <span className="chatbox-conv-username">{selectedUser.username}</span>
                         </div>
 
-                        <div className="chatbox-messages">
+                        <div
+                            className={`chatbox-messages mood-bg-${selectedUser.mood} || 'moody`}
+                            // style={{ background: getSplitBg(selectedUser.mood, myMood) }}
+                        >
                             {messages.map((msg) => (
                                 <div
                                     key={msg._id}

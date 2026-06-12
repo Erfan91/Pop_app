@@ -12,6 +12,22 @@ import { FcCancel } from "react-icons/fc";
 import EditDelete from '../EditDelete';
 import Follow from '../Follow';
 import CommentSection from '../CommentSection';
+import MoodBubble from '../MoodAnimations';
+
+// Truncates long captions like Instagram/Facebook with a "see more" toggle.
+const PostCaption = ({ text, limit = 150 }) => {
+    const [expanded, setExpanded] = useState(false);
+    if (!text) return null;
+    if (text.length <= limit) return <span>{text}</span>;
+    return (
+        <span>
+            {expanded ? text : text.slice(0, limit).trimEnd() + "… "}
+            <span className='see-more-toggle' onClick={() => setExpanded(prev => !prev)}>
+                {expanded ? " see less" : "see more"}
+            </span>
+        </span>
+    );
+};
 
 const UserPosts = (props) => {
     const id = localStorage.getItem('_id');
@@ -128,7 +144,7 @@ const UserPosts = (props) => {
     }
 
     return (
-        <div className={props?.length == 1 ? props.className + " flex-column between" : props.className + " column-reverse between"}
+        <div className={props?.length == 1 ? props.className + " flex-column between" : props.className + " between"}
             style={
                 {
                     display: props.display,
@@ -152,7 +168,18 @@ const UserPosts = (props) => {
                         <div className={props.cardClass + " flex-column between"}>
                             <div className="post-card-header flex between">
                                 <div className="post-card-pfp-div flex" onClick={() => navigate(`/profile/${posts.ownerId._id}`)}>
-                                    <img src={posts.ownerId.image[0]} alt="user profile picture" className='post-card-pfp border-circle' />
+                                    {posts.mood && posts.mood.length > 0 ? (
+                                        <div className="post-card-mood-pfp">
+                                            <MoodBubble
+                                                mood={posts.mood[0]}
+                                                user={posts.ownerId}
+                                                onClick={() => { }}
+                                                size={42}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <img src={posts.ownerId.image[0]} alt="user profile picture" className='post-card-pfp border-circle' />
+                                    )}
                                     <div className="flex-column ">
                                         <span>{posts.ownerId.name}</span>
                                         <p className='post-card-time-p'><small>{moment(posts.createdAt).startOf("hour").startOf("minute").fromNow()}</small></p>
@@ -207,7 +234,7 @@ const UserPosts = (props) => {
                             </div>
                             <div className="post-card-caption-div flex">
                                 {
-                                    inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <span>{posts.description}</span>
+                                    inputIndexB === index ? <textarea name="text" className='post-edit-textarea' onChange={handleText} value={text} /> : <PostCaption text={posts.description} />
                                 }
                             </div>
                         </div>

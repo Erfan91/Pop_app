@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import UserPosts from "./profile-nav-comps/UserPosts";
 import UserPics from "./profile-nav-comps/UserPics";
 import CommentSection from "./CommentSection";
 import MoodBubble from "./MoodAnimations";
+import ChatBox from "./ChatBox";
 
 const UserProfile = () => {
     const { id } = useParams()
-    const navigate = useNavigate()
     const currentUser = localStorage.getItem("_id")
 
     const [user, setUser] = useState(null)
@@ -21,6 +21,7 @@ const UserProfile = () => {
     const [postId, setPostId] = useState(null);
     const [commentDisplay, setCommentDisplay] = useState("none");
     const [userPicsDisplay, setUserPicsDisplay] = useState("none");
+    const [chatDisplay, setChatDisplay] = useState(false);
 
 
     useEffect(() => {
@@ -104,7 +105,7 @@ const UserProfile = () => {
     }
 
     const handleMessage = () => {
-        navigate("/chat", { state: { selectedUser: user } })
+        setChatDisplay(true)
     }
 
     const userPostsProps = {
@@ -154,6 +155,7 @@ const UserProfile = () => {
                     <MoodBubble
                         mood={userMood}
                         user={user}
+                        size={250}
                         onClick={() => { }}
                     />
                 ) : (
@@ -253,6 +255,12 @@ const UserProfile = () => {
                     </div>
                 )}
             </div>
+
+            <ChatBox
+                display={chatDisplay}
+                onClose={() => setChatDisplay(false)}
+                initialUser={user}
+            />
         </div>
     )
 }
