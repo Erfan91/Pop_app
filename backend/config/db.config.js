@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
-    await mongoose.connect("mongodb://0.0.0.0:27017/popProject")
+    await mongoose.connect(process.env.URL_MONGO_DB)
     .then(() => console.log("connected to database"))
     .catch((err) => {
         console.log(err);

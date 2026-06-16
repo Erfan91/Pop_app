@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: path.resolve(process.cwd(), "config/.env") });
+dotenv.config();
 import path from "path";
 import express from "express";
 import connectDB from "../config/db.config.js";
@@ -32,10 +32,7 @@ app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/notification", notificationRouter);
 app.use("/message", messageRouter);
-app.use("/images",express.static('images'));
 
-
-//app.use("./images", express.static('images'))
 
 
 
